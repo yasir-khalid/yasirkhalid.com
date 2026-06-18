@@ -1,6 +1,6 @@
 # Yasir Khalid — Portfolio
 
-A single-page portfolio (plus **The Lab** — interactive CS/systems explainers) for an AI engineer, built with **Next.js 15 (App Router)** and **Tailwind CSS v4**. The design follows an **Airtable-style editorial system**: white canvas, near-black ink type, generous whitespace, and full-bleed **signature surface cards** (coral / forest / cream / dark navy) for brand voltage — flat depth, color-block first, no gradients. Type is Inter at modest weights (400 display / 500 sub-titles & buttons); the primary CTA is a near-black 12px-radius button. See **[DESIGN.md](./DESIGN.md)** for the full system.
+A portfolio for an AI engineer, built with **Next.js 15 (App Router)** and **Tailwind CSS v4**, plus an interactive learning lab at `/lab`. The design follows a **Revolut-style two-mode canvas** (see [`DESIGN.md`](./DESIGN.md)): true-black storytelling bands alternating with white catalogue bands, **Inter Tight 500** display type with tight negative tracking, **Inter** body, a scarce **cobalt-violet** (`#494fdf`) brand stamp, pill-shaped buttons (white-on-black primary CTA), and flat depth via canvas + surface-luminance shifts — no drop shadows.
 
 ## Develop
 
@@ -24,8 +24,12 @@ npm start
 
 ## Structure
 
-- `app/page.tsx` — all page sections (hero, summary, experience, projects, skills, speaking, education, contact, footer).
-- `app/globals.css` — design tokens + utility classes (mesh gradient, elevation, buttons, typography).
-- `components/Nav.tsx` — sticky nav with mobile menu.
+- `DESIGN.md` — the design guide (tokens, typography, components, do's & don'ts).
+- `app/page.tsx` — all page sections (hero, pillars, experience, projects, metrics, skills, contact, footer).
+- `app/globals.css` — design tokens + utility classes (canvas modes, pill buttons, typography, cards, lab animations).
+- `app/lab/` — the interactive lab: `page.tsx` gallery + one route per explainer.
+- `components/Nav.tsx` — sticky dark nav with mobile menu and social icons.
+- `components/icons.tsx` — GitHub / X / LinkedIn / email glyphs.
+- `components/lab/` — lab shell, shared controls (`ui.tsx`), and one component per explainer.
 - `components/Reveal.tsx` — scroll-reveal wrapper.
-- `lib/content.ts` — all CV content in one place; edit here to update the site.
+- `lib/content.ts` — all CV content in one place; `lib/lab.ts` — the lab registry.

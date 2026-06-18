@@ -18,7 +18,7 @@ export function Panel({
     ink: "bg-[var(--near-black)] text-white ring-1 ring-white/10",
   };
   return (
-    <div className={`rounded-[12px] ${tones[tone]} ${className}`}>{children}</div>
+    <div className={`rounded-[16px] ${tones[tone]} ${className}`}>{children}</div>
   );
 }
 
@@ -113,11 +113,11 @@ export function ActionButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`btn ${
-        variant === "primary" ? "btn-primary" : ""
-      } !px-5 !py-2.5 !text-[14px] ${
+      className={`btn !min-h-0 !px-5 !py-2.5 !text-[14px] ${
+        variant === "primary" ? "btn-dark" : ""
+      } ${
         variant === "ghost"
-          ? "border border-[var(--hairline)] text-[var(--ink)] hover:border-[var(--ink)]"
+          ? "border border-[var(--hairline-strong)] text-[var(--ink)] hover:bg-[var(--surface-soft)]"
           : ""
       } ${disabled ? "cursor-not-allowed opacity-40" : ""}`}
     >

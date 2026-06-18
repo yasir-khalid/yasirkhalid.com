@@ -1,27 +1,28 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ActionButton, Note, Panel, Slider } from "@/components/lab/ui";
+import { ActionButton, Note, Panel } from "@/components/lab/ui";
 
-const SEEDS = [2166136261, 5381, 52711, 0x9e3779b1, 0x85ebca6b, 0xc2b2ae35, 0x27d4eb2f];
+const M = 30; // bits
+const K = 3; // hash functions
 
-// k independent string hashes → bit indices in [0, m).
-function hashes(s: string, k: number, m: number): number[] {
-  return Array.from({ length: k }, (_, j) => {
-    let h = (SEEDS[j % SEEDS.length] ^ (j * 0x01000193)) >>> 0;
+// Three independent string hashes → bit indices in [0, M).
+function hashes(s: string): number[] {
+  const seeds = [2166136261, 5381, 52711];
+  return seeds.map((seed) => {
+    let h = seed >>> 0;
     for (let i = 0; i < s.length; i++) {
       h = (h ^ s.charCodeAt(i)) >>> 0;
       h = Math.imul(h, 16777619) >>> 0;
     }
-    return h % m;
+    return h % M;
   });
 }
 
 const SUGGESTIONS = ["apple", "banana", "cherry", "mango", "kiwi"];
 
 export default function BloomFilter() {
-  const [m, setM] = useState(30); // bits
-  const [k, setK] = useState(3); // hash functions
+  const [bits, setBits] = useState<boolean[]>(() => Array(M).fill(false));
   const [added, setAdded] = useState<string[]>([]);
   const [highlight, setHighlight] = useState<number[]>([]);
   const [addInput, setAddInput] = useState("");
@@ -33,30 +34,24 @@ export default function BloomFilter() {
     truly: boolean;
   } | null>(null);
 
-  // bits are derived from the word set, so changing m or k re-hashes everything
-  const bits = useMemo(() => {
-    const arr = Array(m).fill(false);
-    added.forEach((w) => hashes(w, k, m).forEach((i) => (arr[i] = true)));
-    return arr;
-  }, [added, k, m]);
-
   const setCount = bits.filter(Boolean).length;
   const fpRate = useMemo(() => {
     const n = added.length;
     if (n === 0) return 0;
-    return Math.pow(1 - Math.exp((-k * n) / m), k);
-  }, [added.length, k, m]);
-
-  function clearProbe() {
-    setHighlight([]);
-    setResult(null);
-  }
+    return Math.pow(1 - Math.exp((-K * n) / M), K);
+  }, [added.length]);
 
   function add(word: string) {
     const w = word.trim().toLowerCase();
     if (!w || added.includes(w)) return;
+    const idx = hashes(w);
+    setBits((prev) => {
+      const next = [...prev];
+      idx.forEach((i) => (next[i] = true));
+      return next;
+    });
     setAdded((prev) => [...prev, w]);
-    setHighlight(hashes(w, k, m));
+    setHighlight(idx);
     setResult(null);
     setAddInput("");
   }
@@ -64,63 +59,39 @@ export default function BloomFilter() {
   function query(word: string) {
     const w = word.trim().toLowerCase();
     if (!w) return;
-    const idx = hashes(w, k, m);
+    const idx = hashes(w);
     const present = idx.every((i) => bits[i]);
     setHighlight(idx);
     setResult({ word: w, indices: idx, present, truly: added.includes(w) });
   }
 
   function reset() {
+    setBits(Array(M).fill(false));
     setAdded([]);
-    clearProbe();
+    setHighlight([]);
+    setResult(null);
   }
 
   return (
     <div className="flex flex-col gap-8">
       <Note>
         A bloom filter is a row of bits, all starting at <strong>0</strong>. To
-        add a word, run it through <strong>{k}</strong> hash functions, each
-        pointing at one bit, and flip those bits to <strong>1</strong>. To check
-        membership, hash
+        add a word, run it through {K} hash functions, each pointing at one bit,
+        and flip those bits to <strong>1</strong>. To check membership, hash
         again: if <em>any</em> of those bits is still 0, the word was{" "}
         <strong>definitely never added</strong>. If all are 1, it&apos;s{" "}
         <strong>probably</strong> there — but other words may have set the same
         bits.
       </Note>
 
-      {/* Sizing controls */}
-      <Panel className="grid gap-6 p-6 sm:grid-cols-2">
-        <Slider
-          label="bit array size (m)"
-          min={16}
-          max={60}
-          value={m}
-          onChange={(v) => {
-            setM(v);
-            clearProbe();
-          }}
-          display={`${m} bits`}
-        />
-        <Slider
-          label="hash functions (k)"
-          min={1}
-          max={6}
-          value={k}
-          onChange={(v) => {
-            setK(v);
-            clearProbe();
-          }}
-        />
-      </Panel>
-
       {/* Bit array */}
       <Panel tone="ink" className="p-6">
         <div className="mb-4 flex items-center justify-between">
           <span className="mono-label text-white/45">
-            bit array · m = {m}
+            bit array · m = {M}
           </span>
           <span className="font-mono text-[12px] text-white/45">
-            {setCount}/{m} set
+            {setCount}/{M} set
           </span>
         </div>
         <div className="grid grid-cols-10 gap-1.5 sm:gap-2">
@@ -262,7 +233,7 @@ export default function BloomFilter() {
           <div>
             <p className="mono-label text-[var(--muted)]">fill</p>
             <p className="display mt-1 text-[24px] text-[var(--ink)]">
-              {Math.round((setCount / m) * 100)}%
+              {Math.round((setCount / M) * 100)}%
             </p>
           </div>
           <div>
@@ -283,10 +254,7 @@ export default function BloomFilter() {
         array gets, and the more often unrelated lookups collide into a false
         positive. That&apos;s the whole bargain: <strong>space</strong> for a{" "}
         <strong>small, controllable error rate</strong>, and never a wrong
-        &ldquo;no&rdquo;. Play with <strong>m</strong> and <strong>k</strong>:
-        a bigger array lowers the error rate, and there&apos;s a sweet spot for
-        the number of hash functions — too few and bits rarely distinguish
-        items, too many and you fill the array too fast.
+        &ldquo;no&rdquo;.
       </Note>
     </div>
   );

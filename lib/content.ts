@@ -6,6 +6,7 @@ export const profile = {
   phone: "+44 75777 98274",
   linkedin: "https://www.linkedin.com/in/yasir-khalid",
   github: "https://github.com/yasir-khalid",
+  x: "https://x.com/yasirrkhalid",
   site: "https://yasir-khalid.github.io/",
   current: "Lead Developer, HSBC",
   headline: "I build AI products — and own them end to end.",

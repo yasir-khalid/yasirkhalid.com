@@ -8,6 +8,8 @@ type Edge = "app-cache" | "cache-db" | "app-db";
 
 type Step = { edge: Edge; label: string; db?: boolean; async?: boolean };
 
+const LAT = { cache: 2, db: 30 }; // ms
+
 const STRATEGY_INFO: Record<Strategy, string> = {
   "cache-aside":
     "The app owns the cache. It checks the cache first; on a miss it reads the database itself, then stores the result. Writes go to the DB and invalidate the cached copy.",
@@ -60,9 +62,6 @@ function buildWrite(strategy: Strategy): Step[] {
 export default function Caching() {
   const [strategy, setStrategy] = useState<Strategy>("cache-aside");
   const [hitRate, setHitRate] = useState(80);
-  const [cacheMs, setCacheMs] = useState(2);
-  const [dbMs, setDbMs] = useState(30);
-  const LAT = { cache: cacheMs, db: dbMs };
   const [steps, setSteps] = useState<Step[]>([]);
   const [active, setActive] = useState(-1);
   const [stats, setStats] = useState({ ops: 0, hits: 0, dbOps: 0, latency: 0 });
@@ -130,31 +129,27 @@ export default function Caching() {
       </Note>
 
       {/* Controls */}
-      <Panel className="flex flex-col gap-5 p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <Segmented<Strategy>
-            label="strategy"
-            value={strategy}
-            onChange={(s) => {
-              setStrategy(s);
-              reset();
-            }}
-            options={[
-              { value: "cache-aside", label: "Cache-aside" },
-              { value: "read-through", label: "Read-through" },
-              { value: "write-through", label: "Write-through" },
-              { value: "write-behind", label: "Write-behind" },
-            ]}
-          />
-          <div className="flex gap-2">
-            <ActionButton onClick={sendRead}>Send read</ActionButton>
-            <ActionButton variant="ghost" onClick={sendWrite}>Send write</ActionButton>
-          </div>
-        </div>
-        <div className="grid gap-5 border-t border-[var(--hairline)] pt-5 sm:grid-cols-3">
+      <Panel className="flex flex-col gap-5 p-6 lg:flex-row lg:items-end lg:justify-between">
+        <Segmented<Strategy>
+          label="strategy"
+          value={strategy}
+          onChange={(s) => {
+            setStrategy(s);
+            reset();
+          }}
+          options={[
+            { value: "cache-aside", label: "Cache-aside" },
+            { value: "read-through", label: "Read-through" },
+            { value: "write-through", label: "Write-through" },
+            { value: "write-behind", label: "Write-behind" },
+          ]}
+        />
+        <div className="w-full max-w-[220px]">
           <Slider label="cache hit rate" min={0} max={100} value={hitRate} onChange={setHitRate} display={`${hitRate}%`} />
-          <Slider label="cache latency" min={1} max={20} value={cacheMs} onChange={setCacheMs} display={`${cacheMs} ms`} />
-          <Slider label="db latency" min={10} max={200} step={5} value={dbMs} onChange={setDbMs} display={`${dbMs} ms`} />
+        </div>
+        <div className="flex gap-2">
+          <ActionButton onClick={sendRead}>Send read</ActionButton>
+          <ActionButton variant="ghost" onClick={sendWrite}>Send write</ActionButton>
         </div>
       </Panel>
 
@@ -170,11 +165,11 @@ export default function Caching() {
           {/* edge app-cache */}
           <Connector on={activeEdge === "app-cache"} />
           {/* Cache */}
-          <DiagramNode label="Cache" sub={`~${cacheMs} ms`} active={isActive(["app-cache", "cache-db"])} tone="mint" />
+          <DiagramNode label="Cache" sub="~2 ms" active={isActive(["app-cache", "cache-db"])} tone="mint" />
           {/* edge cache-db */}
           <Connector on={activeEdge === "cache-db"} />
           {/* DB */}
-          <DiagramNode label="Database" sub={`~${dbMs} ms`} active={isActive(["cache-db", "app-db"])} tone="coral" />
+          <DiagramNode label="Database" sub="~30 ms" active={isActive(["cache-db", "app-db"])} tone="coral" />
         </div>
 
         {/* app-db direct edge indicator */}

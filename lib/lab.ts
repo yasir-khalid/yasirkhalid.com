@@ -50,36 +50,6 @@ export const lab: LabEntry[] = [
     status: "live",
   },
   {
-    slug: "queueing",
-    title: "Queueing",
-    blurb:
-      "Work arrives faster than it's served and a line forms. Tune arrival rate, workers, and capacity, then watch wait time explode as utilization nears 100%.",
-    kind: "essay",
-    topic: "Distributed systems",
-    tags: ["latency", "utilization", "little's law"],
-    status: "live",
-  },
-  {
-    slug: "retries",
-    title: "Retries",
-    blurb:
-      "Retrying a failed request seems harmless — until an outage makes every client retry at once. Compare immediate, backoff, and jitter, and watch the retry storm form.",
-    kind: "essay",
-    topic: "Reliability",
-    tags: ["backoff", "jitter", "thundering herd"],
-    status: "live",
-  },
-  {
-    slug: "memory-allocation",
-    title: "Memory allocation",
-    blurb:
-      "malloc and free on a single row of memory. Allocate, free, and auto-churn to watch fragmentation creep in — free space that's there but unusable.",
-    kind: "essay",
-    topic: "Systems programming",
-    tags: ["malloc", "fragmentation", "first-fit"],
-    status: "live",
-  },
-  {
     slug: "big-o",
     title: "Big O notation",
     blurb:
@@ -107,16 +77,6 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["cache", "latency", "consistency"],
-    status: "live",
-  },
-  {
-    slug: "cache-topology",
-    title: "Local vs distributed caching",
-    blurb:
-      "Where should the cache live? Give each pod its own, or share one Redis. Update a key and watch pods serve stale data — then fix it with TTL, pub/sub, or a shared cache.",
-    kind: "tool",
-    topic: "System design",
-    tags: ["redis", "invalidation", "coherence"],
     status: "live",
   },
   {

@@ -44,7 +44,7 @@ export default function LabIndex() {
             {lab.map((e, i) => {
               const card = (
                 <div
-                  className={`group flex h-full flex-col rounded-[12px] p-7 ring-1 transition-all ${
+                  className={`group flex h-full flex-col rounded-[22px] p-7 ring-1 transition-all ${
                     e.status === "live"
                       ? "bg-white ring-[var(--card-border)] hover:ring-[var(--ink)]"
                       : "bg-[var(--stone)] ring-transparent"
@@ -57,8 +57,8 @@ export default function LabIndex() {
                     <span
                       className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide ${
                         e.kind === "essay"
-                          ? "bg-[var(--green-wash)] text-[var(--green)]"
-                          : "bg-[var(--blue-wash)] text-[var(--blue)]"
+                          ? "bg-[var(--surface-soft)] text-[var(--charcoal)]"
+                          : "bg-[rgba(73,79,223,0.1)] text-[var(--primary)]"
                       }`}
                     >
                       {e.kind === "essay" ? "visual essay" : "tool"}

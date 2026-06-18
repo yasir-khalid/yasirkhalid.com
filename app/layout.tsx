@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Inter_Tight, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-// Haas Groot Disp / Haas Grotesk substitute → Inter (Inter Display) for both
-// display and text. Mono retained for data/code surfaces (the lab).
+// Inter Tight = open-source substitute for Aeonik Pro at display sizes.
+const display = Inter_Tight({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-display",
+  display: "swap",
+});
+
 const sans = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -48,7 +54,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
