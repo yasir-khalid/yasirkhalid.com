@@ -1,0 +1,293 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { ActionButton, Note, Panel, Slider } from "@/components/lab/ui";
+
+const SEEDS = [2166136261, 5381, 52711, 0x9e3779b1, 0x85ebca6b, 0xc2b2ae35, 0x27d4eb2f];
+
+// k independent string hashes → bit indices in [0, m).
+function hashes(s: string, k: number, m: number): number[] {
+  return Array.from({ length: k }, (_, j) => {
+    let h = (SEEDS[j % SEEDS.length] ^ (j * 0x01000193)) >>> 0;
+    for (let i = 0; i < s.length; i++) {
+      h = (h ^ s.charCodeAt(i)) >>> 0;
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h % m;
+  });
+}
+
+const SUGGESTIONS = ["apple", "banana", "cherry", "mango", "kiwi"];
+
+export default function BloomFilter() {
+  const [m, setM] = useState(30); // bits
+  const [k, setK] = useState(3); // hash functions
+  const [added, setAdded] = useState<string[]>([]);
+  const [highlight, setHighlight] = useState<number[]>([]);
+  const [addInput, setAddInput] = useState("");
+  const [queryInput, setQueryInput] = useState("");
+  const [result, setResult] = useState<{
+    word: string;
+    indices: number[];
+    present: boolean;
+    truly: boolean;
+  } | null>(null);
+
+  // bits are derived from the word set, so changing m or k re-hashes everything
+  const bits = useMemo(() => {
+    const arr = Array(m).fill(false);
+    added.forEach((w) => hashes(w, k, m).forEach((i) => (arr[i] = true)));
+    return arr;
+  }, [added, k, m]);
+
+  const setCount = bits.filter(Boolean).length;
+  const fpRate = useMemo(() => {
+    const n = added.length;
+    if (n === 0) return 0;
+    return Math.pow(1 - Math.exp((-k * n) / m), k);
+  }, [added.length, k, m]);
+
+  function clearProbe() {
+    setHighlight([]);
+    setResult(null);
+  }
+
+  function add(word: string) {
+    const w = word.trim().toLowerCase();
+    if (!w || added.includes(w)) return;
+    setAdded((prev) => [...prev, w]);
+    setHighlight(hashes(w, k, m));
+    setResult(null);
+    setAddInput("");
+  }
+
+  function query(word: string) {
+    const w = word.trim().toLowerCase();
+    if (!w) return;
+    const idx = hashes(w, k, m);
+    const present = idx.every((i) => bits[i]);
+    setHighlight(idx);
+    setResult({ word: w, indices: idx, present, truly: added.includes(w) });
+  }
+
+  function reset() {
+    setAdded([]);
+    clearProbe();
+  }
+
+  return (
+    <div className="flex flex-col gap-8">
+      <Note>
+        A bloom filter is a row of bits, all starting at <strong>0</strong>. To
+        add a word, run it through <strong>{k}</strong> hash functions, each
+        pointing at one bit, and flip those bits to <strong>1</strong>. To check
+        membership, hash
+        again: if <em>any</em> of those bits is still 0, the word was{" "}
+        <strong>definitely never added</strong>. If all are 1, it&apos;s{" "}
+        <strong>probably</strong> there — but other words may have set the same
+        bits.
+      </Note>
+
+      {/* Sizing controls */}
+      <Panel className="grid gap-6 p-6 sm:grid-cols-2">
+        <Slider
+          label="bit array size (m)"
+          min={16}
+          max={60}
+          value={m}
+          onChange={(v) => {
+            setM(v);
+            clearProbe();
+          }}
+          display={`${m} bits`}
+        />
+        <Slider
+          label="hash functions (k)"
+          min={1}
+          max={6}
+          value={k}
+          onChange={(v) => {
+            setK(v);
+            clearProbe();
+          }}
+        />
+      </Panel>
+
+      {/* Bit array */}
+      <Panel tone="ink" className="p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="mono-label text-white/45">
+            bit array · m = {m}
+          </span>
+          <span className="font-mono text-[12px] text-white/45">
+            {setCount}/{m} set
+          </span>
+        </div>
+        <div className="grid grid-cols-10 gap-1.5 sm:gap-2">
+          {bits.map((b, i) => {
+            const hot = highlight.includes(i);
+            return (
+              <div
+                key={i}
+                className={`relative flex aspect-square items-center justify-center rounded-[6px] font-mono text-[13px] transition-colors ${
+                  b
+                    ? "bg-[var(--coral)] text-white"
+                    : "bg-white/[0.06] text-white/30"
+                } ${hot ? "lab-pop ring-2 ring-white" : ""}`}
+              >
+                {b ? 1 : 0}
+                <span className="absolute -top-3.5 left-0 right-0 text-center font-mono text-[8px] text-white/25">
+                  {i}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </Panel>
+
+      {/* Controls */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Add */}
+        <Panel className="p-6">
+          <p className="mono-label text-[var(--slate)]">// add a word</p>
+          <div className="mt-4 flex gap-2">
+            <input
+              value={addInput}
+              onChange={(e) => setAddInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && add(addInput)}
+              placeholder="type a word…"
+              className="w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+            />
+            <ActionButton onClick={() => add(addInput)}>Add</ActionButton>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {SUGGESTIONS.map((s) => (
+              <button
+                key={s}
+                onClick={() => add(s)}
+                disabled={added.includes(s)}
+                className="tag-mono transition-colors hover:border-[var(--ink)] disabled:opacity-30"
+              >
+                + {s}
+              </button>
+            ))}
+          </div>
+          {added.length > 0 && (
+            <div className="mt-5 border-t border-[var(--hairline)] pt-4">
+              <p className="mono-label text-[var(--muted)]">
+                in the set ({added.length})
+              </p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {added.map((w) => (
+                  <span key={w} className="chip-coral">
+                    {w}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </Panel>
+
+        {/* Query */}
+        <Panel className="p-6">
+          <p className="mono-label text-[var(--slate)]">// check membership</p>
+          <div className="mt-4 flex gap-2">
+            <input
+              value={queryInput}
+              onChange={(e) => setQueryInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && query(queryInput)}
+              placeholder="is it in the set?"
+              className="w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+            />
+            <ActionButton variant="ghost" onClick={() => query(queryInput)}>
+              Check
+            </ActionButton>
+          </div>
+
+          {result && (
+            <div className="mt-5">
+              <div
+                className={`rounded-[10px] px-4 py-3 ${
+                  result.present
+                    ? "bg-[var(--green-wash)]"
+                    : "bg-[#fff5f2]"
+                }`}
+              >
+                <p className="font-mono text-[13px]">
+                  bits [{result.indices.join(", ")}]
+                </p>
+                <p
+                  className={`heading mt-1 text-[18px] ${
+                    result.present
+                      ? "text-[var(--green)]"
+                      : "text-[#c2412a]"
+                  }`}
+                >
+                  {result.present
+                    ? "Maybe present"
+                    : "Definitely not present"}
+                </p>
+                {result.present && !result.truly && (
+                  <p className="mt-1.5 text-[13px] font-medium text-[#c2412a]">
+                    ⚠ False positive — “{result.word}” was never added, but its
+                    bits were all set by other words.
+                  </p>
+                )}
+                {result.present && result.truly && (
+                  <p className="mt-1.5 text-[13px] text-[var(--slate)]">
+                    And it really is in the set. No false positive here.
+                  </p>
+                )}
+                {!result.present && (
+                  <p className="mt-1.5 text-[13px] text-[var(--slate)]">
+                    At least one bit is 0 — a bloom filter never gives false
+                    negatives.
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+        </Panel>
+      </div>
+
+      {/* Stats + reset */}
+      <Panel tone="stone" className="flex flex-wrap items-center justify-between gap-4 p-5">
+        <div className="flex flex-wrap gap-8">
+          <div>
+            <p className="mono-label text-[var(--muted)]">items added</p>
+            <p className="display mt-1 text-[24px] text-[var(--ink)]">
+              {added.length}
+            </p>
+          </div>
+          <div>
+            <p className="mono-label text-[var(--muted)]">fill</p>
+            <p className="display mt-1 text-[24px] text-[var(--ink)]">
+              {Math.round((setCount / m) * 100)}%
+            </p>
+          </div>
+          <div>
+            <p className="mono-label text-[var(--muted)]">est. false-positive rate</p>
+            <p className="display mt-1 text-[24px] text-[var(--coral)]">
+              {(fpRate * 100).toFixed(1)}%
+            </p>
+          </div>
+        </div>
+        <ActionButton variant="ghost" onClick={reset}>
+          Reset
+        </ActionButton>
+      </Panel>
+
+      <Note>
+        Notice the trade: the filter uses a tiny, fixed amount of memory no
+        matter how many items you add — but the more you add, the fuller the bit
+        array gets, and the more often unrelated lookups collide into a false
+        positive. That&apos;s the whole bargain: <strong>space</strong> for a{" "}
+        <strong>small, controllable error rate</strong>, and never a wrong
+        &ldquo;no&rdquo;. Play with <strong>m</strong> and <strong>k</strong>:
+        a bigger array lowers the error rate, and there&apos;s a sweet spot for
+        the number of hash functions — too few and bits rarely distinguish
+        items, too many and you fill the array too fast.
+      </Note>
+    </div>
+  );
+}

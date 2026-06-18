@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   Design tokens — Airtable-style editorial system.
+   White canvas · near-black ink type · generous whitespace · signature
+   full-bleed surface cards (coral / forest / cream / dark) for brand voltage.
+   Flat depth: color-block first, shadow second. No gradients, no mesh.
+   See DESIGN.md for the full system.
+---------------------------------------------------------------------------- */
+:root {
+  /* Brand & ink */
+  --primary: #181d26;        /* near-black — primary CTA + display type + dark surface */
+  --primary-active: #0d1218; /* primary button press state */
+  --ink: #181d26;            /* strongest text: h1/h2 display */
+  --body: #333840;           /* default running text */
+  --on-primary: #ffffff;     /* text on primary / dark surfaces */
+
+  /* Surfaces */
+  --canvas: #ffffff;
+  --surface-soft: #f8fafc;          /* tabbed feature cards, neutral panels */
+  --surface-strong: #e0e2e6;        /* light-gray CTA banner near footer */
+  --surface-dark: #181d26;          /* dark navy CTA cards */
+  --surface-dark-elevated: #1d1f25; /* articles hero base */
+
+  /* Signature card palette — brand voltage, used full-bleed not as accents */
+  --coral: #aa2d00;     /* largest signature card; also primary data accent */
+  --forest: #0a2e0e;    /* deep-green signature card */
+  --cream: #f5e9d4;     /* beige callout band */
+  --peach: #fcab79;
+  --mint: #a8d8c4;
+  --yellow: #f4d35e;
+  --mustard: #d9a441;
+  --coral-soft: #fcab79; /* alias → peach, for soft coral surfaces */
+
+  /* Text & lines */
+  --muted: #6b7079;          /* captions, eyebrows, tiny meta */
+  --slate: #41454d;          /* secondary running text */
+  --hairline: #dddddd;       /* 1px borders: inputs, dividers, outlines */
+  --border-light: #ededed;   /* section dividers */
+  --card-border: #ededed;
+  --border-strong: #9297a0;
+
+  /* Semantic */
+  --link: #1b61c9;
+  --link-active: #1a3866;
+  --info: #254fad;
+  --success: #006400;
+
+  /* Legacy aliases — existing components still reference these names.
+     They now resolve to the Airtable roles above. */
+  --black: #181d26;
+  --near-black: #181d26;     /* → surface-dark / primary */
+  --green: #0a2e0e;          /* → forest signature */
+  --navy: #181d26;           /* → surface-dark */
+  --blue: #1b61c9;           /* → link */
+  --stone: #f8fafc;          /* → surface-soft */
+  --green-wash: #eaf3ec;     /* soft mint tint */
+  --blue-wash: #eef3fb;      /* soft blue tint */
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-near-black: var(--near-black);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-canvas: var(--canvas);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-strong: var(--surface-strong);
+  --color-surface-dark: var(--surface-dark);
+  --color-coral: var(--coral);
+  --color-forest: var(--forest);
+  --color-cream: var(--cream);
+  --color-green: var(--green);
+  --color-navy: var(--navy);
+  --color-blue: var(--blue);
+  --color-stone: var(--stone);
+  --color-muted: var(--muted);
+  --color-slate: var(--slate);
+  --color-hairline: var(--hairline);
+  --color-link: var(--link);
+
+  /* Haas substitute → Inter Display. Mono retained for data/code surfaces. */
+  --font-display: var(--font-sans), "Inter Display", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-sans: var(--font-sans), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "IBM Plex Mono", monospace;
+
+  /* Airtable radius scale */
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--body);
+  font-family: var(--font-sans);
+  font-size: 14px;      /* body-md */
+  line-height: 1.5;
+}
+
+::selection {
+  background: var(--coral);
+  color: #fff;
+}
+
+/* ---- Display typography: large, calm, never bolder than 500 ----
+   Emphasis comes from size + color + signature surfaces, not weight. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+.heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+/* Editorial eyebrow / small uppercase category tag (was a mono label) */
+.mono-label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  border-radius: var(--radius-lg); /* 12px — confident, final, not decorative */
+  padding: 14px 24px;
+  transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+}
+/* Primary CTA — near-black ink. NOT the link blue. One per viewport. */
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.btn-primary:hover { background: var(--primary-active); }
+.btn-primary:active { background: var(--primary-active); }
+/* Secondary / on-dark — white button with ink text; stays white over dark. */
+.btn-on-dark {
+  background: var(--canvas);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+}
+.btn-on-dark:hover { opacity: 0.9; }
+
+/* Secondary text action = underlined ink link */
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 0.18s ease;
+}
+.btn-text:hover { color: var(--link); }
+
+/* Outlined tag (skills, taxonomy) — content-card radius, hairline outline */
+.pill-outline {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: 14px;
+  color: var(--body);
+  background: var(--canvas);
+}
+
+/* Warm chip (badges) — peach-toned, soft */
+.chip-coral {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--peach);
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  font-size: 13px;
+  color: #8a2400;
+  background: #fdeee3;
+}
+
+/* Mono technical tag — retained for data/code surfaces (the lab) */
+.tag-mono {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 4px 9px;
+  color: var(--slate);
+  background: var(--canvas);
+}
+
+/* Inline link — link blue, no underline by default */
+.link {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.link:hover { color: var(--link-active); }
+
+/* ---- Reveal on scroll ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ---- Lab range slider (theme-consistent) ---- */
+.lab-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--hairline);
+  outline: none;
+  cursor: pointer;
+}
+.lab-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--hairline);
+  transition: transform 0.12s ease;
+}
+.lab-range::-webkit-slider-thumb:hover { transform: scale(1.12); }
+.lab-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+
+/* Soft pulse used by lab animations */
+@keyframes lab-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.lab-pop { animation: lab-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes lab-flyx {
+  from { transform: translateX(0); }
+  to { transform: translateX(var(--fly-x, 100px)); }
+}
+
+/* Incoming-traffic stream: dots travel left → right across the track */
+@keyframes lab-stream {
+  0% { left: -4%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 104%; opacity: 0; }
+}
