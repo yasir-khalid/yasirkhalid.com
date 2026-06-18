@@ -51,7 +51,7 @@ export default function Nav() {
       )}
 
       <header className="border-b border-[var(--hairline-dark)] bg-black/90 backdrop-blur">
-        <nav className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-5 sm:px-8">
+        <nav className="mx-auto flex h-16 max-w-[1040px] items-center justify-between px-5 sm:px-8">
           <a href="#top" className="flex items-center gap-2.5">
             <span className="grid h-7 w-7 place-items-center rounded-[7px] bg-[var(--primary)] text-[12px] font-semibold text-white">
               YK

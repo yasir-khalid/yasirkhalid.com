@@ -1,7 +1,9 @@
+import Link from "next/link";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import AgentConsole from "@/components/AgentConsole";
 import { GitHubIcon, XIcon, LinkedInIcon, EmailIcon } from "@/components/icons";
+import { liveLab } from "@/lib/lab";
 import {
   profile,
   trustMarks,
@@ -47,17 +49,17 @@ export default function Home() {
 
       {/* ===================================================== Hero (dark band) */}
       <section className="bg-black">
-        <div className="mx-auto max-w-[1280px] px-5 pb-20 pt-20 sm:px-8 sm:pt-28 md:pb-28">
+        <div className="mx-auto max-w-[1040px] px-5 pb-20 pt-20 sm:px-8 sm:pt-28 md:pb-28">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">{profile.current}</p>
           </Reveal>
           <Reveal delay={60}>
-            <h1 className="display mt-6 max-w-[16ch] text-[clamp(2.8rem,8.5vw,7rem)] text-white">
+            <h1 className="display mt-6 max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
               {profile.headline}
             </h1>
           </Reveal>
           <Reveal delay={120}>
-            <p className="body-lg mt-8 max-w-[60ch] text-[var(--on-dark-mute)]">
+            <p className="mt-7 max-w-[54ch] text-[16px] leading-[1.55] text-[var(--on-dark-mute)]">
               {profile.sub}
             </p>
           </Reveal>
@@ -98,7 +100,7 @@ export default function Home() {
 
       {/* ============================================ Pillars (white catalogue) */}
       <section className="border-b border-[var(--hairline-light)] bg-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-20 sm:px-8 md:py-24">
+        <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">// in short</p>
           </Reveal>
@@ -122,7 +124,7 @@ export default function Home() {
 
       {/* ====================================================== Trust strip */}
       <section className="border-b border-[var(--hairline-light)] bg-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-14 text-center sm:px-8">
+        <div className="mx-auto max-w-[1040px] px-5 py-14 text-center sm:px-8">
           <Reveal>
             <p className="mono-label text-[var(--stone-text)]">Built &amp; shipped with</p>
           </Reveal>
@@ -143,10 +145,10 @@ export default function Home() {
 
       {/* ====================================== Agentic AI proof (dark band) */}
       <section className="bg-black text-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-8 md:py-32">
+        <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">// agentic AI, specifically</p>
-            <h2 className="heading mt-6 max-w-[20ch] text-[clamp(2rem,5vw,3.6rem)] text-white">
+            <h2 className="heading mt-6 max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-white">
               The parts that decide whether agents work in production.
             </h2>
           </Reveal>
@@ -168,10 +170,10 @@ export default function Home() {
 
       {/* ================================================ Experience (table) */}
       <section id="work" className="border-b border-[var(--hairline-light)] bg-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-8 md:py-32">
+        <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">// experience</p>
-            <h2 className="heading mt-6 text-[clamp(2rem,5vw,3.6rem)] text-[var(--ink)]">
+            <h2 className="heading mt-6 text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
               Where I&apos;ve shipped.
             </h2>
           </Reveal>
@@ -215,10 +217,10 @@ export default function Home() {
 
       {/* ============================================ Projects (feature cards) */}
       <section id="projects" className="border-b border-[var(--hairline-light)] bg-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-8 md:py-32">
+        <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">// building</p>
-            <h2 className="heading mt-6 text-[clamp(2rem,5vw,3.6rem)] text-[var(--ink)]">
+            <h2 className="heading mt-6 text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
               Things I own end to end.
             </h2>
           </Reveal>
@@ -261,9 +263,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ==================================== Simulation lab (feature link) */}
+      <section className="border-b border-[var(--hairline-light)] bg-[var(--surface-soft)]">
+        <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
+          <Reveal>
+            <p className="mono-label text-[var(--charcoal)]">// interactive</p>
+            <Link
+              href="/lab"
+              className="group mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-5"
+            >
+              <h2 className="display max-w-[15ch] text-[clamp(1.9rem,4.5vw,3.2rem)] text-[var(--ink)]">
+                Step inside the simulation lab
+                <span className="ml-3 inline-block text-[var(--primary)] transition-transform group-hover:translate-x-2">
+                  →
+                </span>
+              </h2>
+              <span className="btn btn-cobalt">Open the lab</span>
+            </Link>
+            <p className="mt-6 max-w-[58ch] text-[16px] leading-[1.55] text-[var(--mute)]">
+              Visual, hands-on explainers — bloom filters, hashing, load
+              balancing, caching, big-O and more. Drag a slider, send a request,
+              watch the idea click into place.
+            </p>
+          </Reveal>
+          <div className="mt-8 flex flex-wrap gap-2.5">
+            {liveLab.map((e) => (
+              <Link
+                key={e.slug}
+                href={`/lab/${e.slug}`}
+                className="pill-outline bg-white transition-colors hover:border-[var(--ink)]"
+              >
+                {e.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ============================================== Metrics (dark band) */}
       <section className="bg-black text-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-20 sm:px-8 md:py-24">
+        <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">// impact</p>
           </Reveal>
@@ -271,7 +310,7 @@ export default function Home() {
             {metrics.map((m, i) => (
               <Reveal key={m.label} delay={i * 60}>
                 <div className="border-t border-[var(--hairline-dark)] pt-5">
-                  <div className="display text-[clamp(2.2rem,4vw,3.4rem)] text-white">
+                  <div className="display text-[clamp(1.7rem,3vw,2.4rem)] text-white">
                     {m.value}
                   </div>
                   <p className="mt-2 text-[14px] leading-snug text-[var(--on-dark-mute)]">
@@ -286,11 +325,11 @@ export default function Home() {
 
       {/* ===================================================== Skills + sidebar */}
       <section id="skills" className="border-b border-[var(--hairline-light)] bg-white">
-        <div className="mx-auto grid max-w-[1280px] gap-16 px-5 py-24 sm:px-8 md:grid-cols-[1.7fr_1fr] md:py-32">
+        <div className="mx-auto grid max-w-[1040px] gap-16 px-5 py-24 sm:px-8 md:grid-cols-[1.7fr_1fr] md:py-24">
           <div>
             <Reveal>
               <p className="mono-label text-[var(--charcoal)]">// toolkit</p>
-              <h2 className="heading mt-6 text-[clamp(1.9rem,4.5vw,3rem)] text-[var(--ink)]">
+              <h2 className="heading mt-6 text-[clamp(1.5rem,3.2vw,2.2rem)] text-[var(--ink)]">
                 The stack I reach for.
               </h2>
             </Reveal>
@@ -384,11 +423,11 @@ export default function Home() {
 
       {/* ========================================================= Contact CTA */}
       <section id="contact" className="bg-black text-white">
-        <div className="mx-auto max-w-[1280px] px-5 py-28 sm:px-8 md:py-36">
+        <div className="mx-auto max-w-[1040px] px-5 py-28 sm:px-8 md:py-28">
           <div className="grid gap-12 md:grid-cols-[1.3fr_1fr] md:items-end">
             <Reveal>
               <p className="mono-label text-[var(--on-dark-mute)]">// get in touch</p>
-              <h2 className="display mt-6 max-w-[16ch] text-[clamp(2.4rem,6vw,5rem)] text-white">
+              <h2 className="display mt-6 max-w-[16ch] text-[clamp(1.9rem,4.5vw,3.2rem)] text-white">
                 Let&apos;s build something dependable.
               </h2>
               <p className="mt-6 max-w-[46ch] text-[17px] leading-[1.55] text-[var(--on-dark-mute)]">
@@ -452,7 +491,7 @@ export default function Home() {
 
       {/* ============================================================== Footer */}
       <footer className="bg-black text-white">
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-5 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-[1040px] flex-col gap-8 px-5 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div>
             <div className="flex items-center gap-2.5">
               <span className="grid h-6 w-6 place-items-center rounded-[6px] bg-[var(--primary)] text-[11px] font-semibold text-white">
@@ -502,7 +541,7 @@ export default function Home() {
           </div>
         </div>
         <div className="border-t border-[var(--hairline-dark)]">
-          <p className="mono-label mx-auto max-w-[1280px] px-5 py-5 text-[11px] text-[var(--stone-text)] sm:px-8">
+          <p className="mono-label mx-auto max-w-[1040px] px-5 py-5 text-[11px] text-[var(--stone-text)] sm:px-8">
             © {new Date().getFullYear()} Yasir Khalid — built with Next.js.
           </p>
         </div>

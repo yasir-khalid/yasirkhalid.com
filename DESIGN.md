@@ -145,9 +145,9 @@ keep `lineHeight: 1.0` and apply ~-1% letter-spacing.
 |---|---|---|
 | 0 — flat | No shadow, no border | Default canvas bands, hero. |
 | 1 — surface card | `{colors.surface-card}` on `{colors.surface-soft}` band, 1px `{colors.hairline-light}` | Cards in light bands. |
-| 2 — surface elevated | `{colors.surface-elevated}` on `{colors.canvas-dark}` | Cards/panels in dark regions, lab `Panel tone="ink"`. |
+| 2 — surface elevated | `{colors.surface-elevated}` on `{colors.canvas-dark}` | Cards/panels in dark regions (AgentConsole, hero frame). |
 | 3 — featured | `{colors.primary}` on `{colors.canvas-dark}` | The single cobalt featured card. |
-| 4 — illustration | Self-contained mockup/lab asset | AgentConsole, lab visualizations. |
+| 4 — illustration | Light stage (`{colors.surface-soft}` / white + hairline) with accent-coded elements | The interactive lab visualizations — kept light for contrast/legibility. |
 
 No drop-shadow language. Depth = canvas switches + surface-luminance shifts.
 
@@ -218,5 +218,5 @@ No drop-shadow language. Depth = canvas switches + surface-luminance shifts.
 
 ## Known Gaps
 - Pressed/active states are documented for buttons only; other components rely on the browser focus ring.
-- The lab visualizations are treated as illustration surfaces — the accent palette is used freely there for legibility, per the "accents live in illustrations" rule.
+- The lab visualizations are treated as illustration surfaces on **light stages** (`{colors.surface-soft}` / white with hairline borders) for maximum contrast — the accent palette (teal = healthy, danger = overload, cobalt = active) is used freely there for legibility, per the "accents live in illustrations" rule.
 - Aeonik Pro is substituted with Inter Tight; swap in the licensed face at display sizes when available.

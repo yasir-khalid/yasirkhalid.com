@@ -175,39 +175,39 @@ export default function LoadBalancing() {
       </Panel>
 
       {/* Visualisation */}
-      <Panel tone="ink" className="p-6 sm:p-8">
+      <Panel tone="stone" className="p-6 sm:p-8">
         <div className="flex items-center gap-2">
           <span
-            className={`h-2 w-2 rounded-full ${running ? "bg-[var(--coral)]" : "bg-white/30"}`}
+            className={`h-2 w-2 rounded-full ${running ? "bg-[var(--primary)]" : "bg-[var(--faint)]"}`}
           />
-          <span className="mono-label text-white/45">
+          <span className="mono-label text-[var(--mute)]">
             balancer · {strategy} · {totalActive} in flight
           </span>
         </div>
 
         {/* Incoming traffic — the controllable inflow lane */}
-        <div className="mt-5 rounded-[10px] bg-white/[0.04] p-4">
+        <div className="mt-5 rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <div className="flex items-center justify-between">
-            <span className="mono-label text-white/45">incoming traffic</span>
-            <span className="font-mono text-[12px] text-white/55">
+            <span className="mono-label text-[var(--mute)]">incoming traffic</span>
+            <span className="font-mono text-[12px] text-[var(--charcoal)]">
               {arrivals} req this tick · {traffic} req/tick set
             </span>
           </div>
 
           {/* flowing request stream → toward the servers below */}
-          <div className="relative mt-3 h-7 overflow-hidden rounded-[6px] bg-white/[0.03]">
+          <div className="relative mt-3 h-7 overflow-hidden rounded-[6px] border border-[var(--hairline-light)] bg-[var(--surface-soft)]">
             {Array.from({ length: Math.min(arrivals, 14) }).map((_, k) => (
               <span
                 key={`${tick}-${k}`}
                 className="lab-inflow absolute top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full"
                 style={{
-                  background: saturating ? "var(--accent-danger)" : "#50e3c2",
+                  background: saturating ? "var(--accent-danger)" : "var(--accent-teal)",
                   animationDelay: `${k * 45}ms`,
                 }}
               />
             ))}
             {arrivals === 0 && (
-              <span className="absolute inset-0 flex items-center justify-center font-mono text-[11px] text-white/25">
+              <span className="absolute inset-0 flex items-center justify-center font-mono text-[11px] text-[var(--stone-text)]">
                 {running ? "no requests this tick" : "press start"}
               </span>
             )}
@@ -216,15 +216,15 @@ export default function LoadBalancing() {
           {/* utilization: arrival rate vs sustainable capacity */}
           <div className="mt-3">
             <div className="flex items-center justify-between font-mono text-[11px]">
-              <span className="text-white/40">load vs capacity</span>
-              <span className={saturating ? "text-[var(--accent-danger)]" : "text-white/60"}>
+              <span className="text-[var(--mute)]">load vs capacity</span>
+              <span className={saturating ? "font-medium text-[var(--accent-danger)]" : "text-[var(--ink)]"}>
                 {Math.round(utilization * 100)}%
               </span>
             </div>
-            <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[var(--hairline-light)]">
               <div
                 className={`h-full rounded-full transition-all duration-300 ${
-                  saturating ? "bg-[var(--accent-danger)]" : "bg-[#50e3c2]"
+                  saturating ? "bg-[var(--accent-danger)]" : "bg-[var(--accent-teal)]"
                 }`}
                 style={{ width: `${Math.min(100, utilization * 100)}%` }}
               />
@@ -247,17 +247,17 @@ export default function LoadBalancing() {
             const pct = Math.min(100, (s.active / CAPACITY) * 100);
             return (
               <div key={i} className="flex flex-col">
-                <div className="relative h-44 overflow-hidden rounded-[10px] bg-white/[0.05]">
+                <div className="relative h-44 overflow-hidden rounded-[10px] border border-[var(--hairline-light)] bg-white">
                   {/* capacity line */}
-                  <div className="absolute inset-x-0 top-0 border-b border-dashed border-white/15" />
+                  <div className="absolute inset-x-0 top-0 border-b border-dashed border-[var(--hairline-light)]" />
                   <div
                     className={`absolute inset-x-0 bottom-0 transition-all duration-500 ${
-                      over ? "bg-[var(--accent-danger)]" : "bg-[#50e3c2]"
-                    } ${pulse === i ? "opacity-100" : "opacity-80"}`}
+                      over ? "bg-[var(--accent-danger)]" : "bg-[var(--accent-teal)]"
+                    } ${pulse === i ? "opacity-100" : "opacity-85"}`}
                     style={{ height: `${pct}%` }}
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="display text-[28px] text-white">
+                    <span className="display text-[28px] text-[var(--ink)]">
                       {s.active}
                     </span>
                   </div>
@@ -267,10 +267,10 @@ export default function LoadBalancing() {
                     </span>
                   )}
                 </div>
-                <p className="mt-2 text-center font-mono text-[11px] text-white/50">
+                <p className="mt-2 text-center font-mono text-[11px] text-[var(--charcoal)]">
                   server {i}
                 </p>
-                <p className="text-center font-mono text-[11px] text-white/35">
+                <p className="text-center font-mono text-[11px] text-[var(--stone-text)]">
                   {s.handled} done
                 </p>
               </div>

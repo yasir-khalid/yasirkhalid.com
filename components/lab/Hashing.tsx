@@ -120,15 +120,15 @@ export default function Hashing() {
           const it = items.find((i) => i.id === lastId);
           if (!it) return null;
           return (
-            <Panel tone="ink" className="p-5">
-              <p className="font-mono text-[13px] leading-relaxed text-white/80">
-                <span className="text-[var(--coral-soft)]">
+            <Panel tone="stone" className="p-5">
+              <p className="font-mono text-[13px] leading-relaxed text-[var(--body)]">
+                <span className="font-medium text-[var(--primary)]">
                   &quot;{it.key}&quot;
                 </span>{" "}
                 → hash{" "}
-                <span className="text-white">{it.hash.toLocaleString()}</span>{" "}
-                <span className="text-white/40">% {buckets}</span> ={" "}
-                <span className="rounded bg-[var(--coral)] px-1.5 py-0.5 text-white">
+                <span className="text-[var(--ink)]">{it.hash.toLocaleString()}</span>{" "}
+                <span className="text-[var(--stone-text)]">% {buckets}</span> ={" "}
+                <span className="rounded bg-[var(--primary)] px-1.5 py-0.5 text-white">
                   bucket {it.hash % buckets}
                 </span>
               </p>

@@ -85,12 +85,12 @@ export default function BloomFilter() {
       </Note>
 
       {/* Bit array */}
-      <Panel tone="ink" className="p-6">
+      <Panel tone="stone" className="p-6 pt-7">
         <div className="mb-4 flex items-center justify-between">
-          <span className="mono-label text-white/45">
+          <span className="mono-label text-[var(--mute)]">
             bit array · m = {M}
           </span>
-          <span className="font-mono text-[12px] text-white/45">
+          <span className="font-mono text-[12px] text-[var(--mute)]">
             {setCount}/{M} set
           </span>
         </div>
@@ -100,14 +100,14 @@ export default function BloomFilter() {
             return (
               <div
                 key={i}
-                className={`relative flex aspect-square items-center justify-center rounded-[6px] font-mono text-[13px] transition-colors ${
+                className={`relative flex aspect-square items-center justify-center rounded-[6px] border font-mono text-[13px] transition-colors ${
                   b
-                    ? "bg-[var(--coral)] text-white"
-                    : "bg-white/[0.06] text-white/30"
-                } ${hot ? "lab-pop ring-2 ring-white" : ""}`}
+                    ? "border-transparent bg-[var(--primary)] text-white"
+                    : "border-[var(--hairline-light)] bg-white text-[var(--faint)]"
+                } ${hot ? "lab-pop ring-2 ring-[var(--ink)]" : ""}`}
               >
                 {b ? 1 : 0}
-                <span className="absolute -top-3.5 left-0 right-0 text-center font-mono text-[8px] text-white/25">
+                <span className="absolute -top-3.5 left-0 right-0 text-center font-mono text-[8px] text-[var(--stone-text)]">
                   {i}
                 </span>
               </div>

@@ -158,7 +158,7 @@ export default function Caching() {
       </p>
 
       {/* Diagram */}
-      <Panel tone="ink" className="p-6 sm:p-10">
+      <Panel tone="stone" className="p-6 sm:p-10">
         <div className="flex items-center justify-between gap-3 sm:gap-6">
           {/* App */}
           <DiagramNode label="App" active={isActive(["app-cache", "app-db"])} />
@@ -176,10 +176,10 @@ export default function Caching() {
         <div className="mt-3 flex items-center gap-2">
           <span
             className={`h-1.5 w-1.5 rounded-full transition-colors ${
-              activeEdge === "app-db" ? "bg-[var(--coral)]" : "bg-white/15"
+              activeEdge === "app-db" ? "bg-[var(--primary)]" : "bg-[var(--hairline-light)]"
             }`}
           />
-          <span className="font-mono text-[11px] text-white/40">
+          <span className="font-mono text-[11px] text-[var(--mute)]">
             {strategy === "cache-aside"
               ? "app ↔ database (direct path on miss / write)"
               : "app never touches the database directly"}
@@ -187,9 +187,9 @@ export default function Caching() {
         </div>
 
         {/* step log */}
-        <div className="mt-6 min-h-[3.5rem] border-t border-white/10 pt-4">
+        <div className="mt-6 min-h-[3.5rem] border-t border-[var(--hairline-light)] pt-4">
           {steps.length === 0 ? (
-            <p className="font-mono text-[12px] text-white/35">
+            <p className="font-mono text-[12px] text-[var(--stone-text)]">
               fire a request to trace the path…
             </p>
           ) : (
@@ -198,10 +198,14 @@ export default function Caching() {
                 <li
                   key={i}
                   className={`flex items-center gap-2 transition-colors ${
-                    i === active ? "text-[var(--coral-soft)]" : i < active || active === -1 ? "text-white/70" : "text-white/25"
+                    i === active
+                      ? "font-medium text-[var(--primary)]"
+                      : i < active || active === -1
+                        ? "text-[var(--body)]"
+                        : "text-[var(--faint)]"
                   }`}
                 >
-                  {i > 0 && <span className="text-white/20">→</span>}
+                  {i > 0 && <span className="text-[var(--faint)]">→</span>}
                   {s.label}
                 </li>
               ))}
@@ -257,27 +261,37 @@ function DiagramNode({
   tone?: "plain" | "mint" | "coral";
 }) {
   const ring =
-    tone === "mint" ? "#50e3c2" : tone === "coral" ? "var(--coral)" : "#ffffff";
+    tone === "mint"
+      ? "var(--accent-teal)"
+      : tone === "coral"
+        ? "var(--primary)"
+        : "var(--ink)";
+  const tint =
+    tone === "mint"
+      ? "rgba(0,168,126,0.08)"
+      : tone === "coral"
+        ? "rgba(73,79,223,0.08)"
+        : "rgba(25,28,31,0.05)";
   return (
     <div
-      className="flex min-w-0 flex-1 flex-col items-center rounded-[12px] border px-2 py-5 text-center transition-all"
+      className="flex min-w-0 flex-1 flex-col items-center rounded-[12px] border bg-white px-2 py-5 text-center transition-all"
       style={{
-        borderColor: active ? ring : "rgba(255,255,255,0.12)",
-        background: active ? "rgba(255,255,255,0.06)" : "transparent",
+        borderColor: active ? ring : "var(--hairline-light)",
+        background: active ? tint : "#ffffff",
         boxShadow: active ? `0 0 0 1px ${ring}` : "none",
       }}
     >
-      <span className="heading text-[15px] text-white sm:text-[18px]">{label}</span>
-      {sub && <span className="mt-1 font-mono text-[10px] text-white/40">{sub}</span>}
+      <span className="heading text-[15px] text-[var(--ink)] sm:text-[18px]">{label}</span>
+      {sub && <span className="mt-1 font-mono text-[10px] text-[var(--stone-text)]">{sub}</span>}
     </div>
   );
 }
 
 function Connector({ on }: { on: boolean }) {
   return (
-    <div className="relative h-px w-6 shrink-0 bg-white/15 sm:w-12">
+    <div className="relative h-0.5 w-6 shrink-0 bg-[var(--hairline-light)] sm:w-12">
       <div
-        className={`absolute inset-0 origin-left bg-[var(--coral)] transition-transform duration-300 ${
+        className={`absolute inset-0 origin-left bg-[var(--primary)] transition-transform duration-300 ${
           on ? "scale-x-100" : "scale-x-0"
         }`}
       />
