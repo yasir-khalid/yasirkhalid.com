@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
-import AgentConsole from "@/components/AgentConsole";
 import { GitHubIcon, XIcon, LinkedInIcon, EmailIcon } from "@/components/icons";
 import { liveLab } from "@/lib/lab";
 import {
@@ -51,10 +50,7 @@ export default function Home() {
       <section className="bg-black">
         <div className="mx-auto max-w-[1040px] px-5 pb-20 pt-20 sm:px-8 sm:pt-28 md:pb-28">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">{profile.current}</p>
-          </Reveal>
-          <Reveal delay={60}>
-            <h1 className="display mt-6 max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
+            <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
               {profile.headline}
             </h1>
           </Reveal>
@@ -71,30 +67,11 @@ export default function Home() {
               <a href="#work" className="btn btn-outline-dark">
                 Explore my work
               </a>
+              <Link href="/lab" className="btn btn-outline-dark">
+                Explore simulation lab →
+              </Link>
             </div>
           </Reveal>
-
-          {/* Two-card media composition */}
-          <div className="mt-16 grid gap-5 lg:grid-cols-[1.5fr_1fr]">
-            <Reveal delay={120}>
-              <AgentConsole />
-            </Reveal>
-            <Reveal delay={200}>
-              {/* The single cobalt stamp — featured card */}
-              <div className="card-featured flex h-full flex-col justify-between p-8">
-                <p className="mono-label text-white/70">// now</p>
-                <div>
-                  <p className="heading mt-6 text-[24px] leading-[1.15] text-white">
-                    Owning a multi-agent platform in regulated banking.
-                  </p>
-                  <p className="mt-4 text-[15px] leading-[1.5] text-white/80">
-                    Evals on every PR · OpenTelemetry tracing · MCP tool calling
-                    · Kubernetes-native.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
         </div>
       </section>
 

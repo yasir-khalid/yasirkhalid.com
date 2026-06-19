@@ -2,6 +2,50 @@
 
 import { useState } from "react";
 import { Note, Panel, Slider, Stat } from "@/components/lab/ui";
+import {
+  ChipIcon,
+  MemoryIcon,
+  StorageIcon,
+  NetworkIcon,
+} from "@/components/icons";
+
+// "Latency numbers every engineer should know" (after Jeff Dean / Colin Scott).
+type Cat = "cpu" | "memory" | "storage" | "network";
+
+const CAT_META: Record<Cat, { label: string; color: string; Icon: typeof ChipIcon }> = {
+  cpu: { label: "CPU / cache", color: "var(--charcoal)", Icon: ChipIcon },
+  memory: { label: "Memory", color: "var(--primary)", Icon: MemoryIcon },
+  storage: { label: "Storage", color: "var(--accent-warning)", Icon: StorageIcon },
+  network: { label: "Network", color: "var(--accent-teal)", Icon: NetworkIcon },
+};
+
+const LATENCIES: { label: string; ns: number; cat: Cat }[] = [
+  { label: "L1 cache reference", ns: 1, cat: "cpu" },
+  { label: "Branch mispredict", ns: 3, cat: "cpu" },
+  { label: "L2 cache reference", ns: 4, cat: "cpu" },
+  { label: "Mutex lock / unlock", ns: 17, cat: "cpu" },
+  { label: "Main memory reference", ns: 100, cat: "memory" },
+  { label: "Compress 1 KB (Snappy)", ns: 2_000, cat: "cpu" },
+  { label: "Send 1 KB over 1 Gbps network", ns: 10_000, cat: "network" },
+  { label: "SSD random read", ns: 16_000, cat: "storage" },
+  { label: "Read 1 MB sequentially from memory", ns: 250_000, cat: "memory" },
+  { label: "Round trip within same datacenter", ns: 500_000, cat: "network" },
+  { label: "Read 1 MB sequentially from SSD", ns: 1_000_000, cat: "storage" },
+  { label: "Disk seek", ns: 10_000_000, cat: "storage" },
+  { label: "Read 1 MB sequentially from disk", ns: 20_000_000, cat: "storage" },
+  { label: "Round trip CA ↔ Netherlands", ns: 150_000_000, cat: "network" },
+];
+
+function fmtNs(ns: number): string {
+  if (ns < 1_000) return `${ns} ns`;
+  if (ns < 1_000_000) return `${+(ns / 1_000).toFixed(ns < 10_000 ? 1 : 0)} µs`;
+  return `${+(ns / 1_000_000).toFixed(ns < 10_000_000 ? 1 : 0)} ms`;
+}
+
+const LAT_MIN = Math.log10(1);
+const LAT_MAX = Math.log10(150_000_000);
+const logWidth = (ns: number) =>
+  ((Math.log10(ns) - LAT_MIN) / (LAT_MAX - LAT_MIN)) * 100;
 
 // log-scale slider over DAU so a single drag spans 1k → 100M.
 const DAU_MIN_EXP = 3; // 1,000
@@ -136,6 +180,55 @@ export default function SystemMath() {
         architectures. Push DAU to 100M and watch a single-box design become
         an obviously distributed one.
       </Note>
+
+      {/* Latency numbers every engineer should know */}
+      <div className="mt-4">
+        <p className="mono-label text-[var(--charcoal)]">// latency numbers every engineer should know</p>
+        <p className="mt-3 max-w-[60ch] text-[15px] leading-[1.55] text-[var(--mute)]">
+          The other half of capacity math: how long operations actually take.
+          The scale is logarithmic — each step right is roughly 10× slower — so
+          you can feel why a cache hit, an SSD read and a transatlantic round
+          trip live in completely different worlds.
+        </p>
+
+        {/* legend */}
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+          {(Object.keys(CAT_META) as Cat[]).map((c) => {
+            const { label, color, Icon } = CAT_META[c];
+            return (
+              <span key={c} className="inline-flex items-center gap-1.5 text-[12px] text-[var(--mute)]">
+                <Icon className="h-4 w-4" />
+                <span style={{ color }}>{label}</span>
+              </span>
+            );
+          })}
+        </div>
+
+        <Panel tone="stone" className="mt-5 divide-y divide-[var(--hairline-light)] p-2 sm:p-4">
+          {LATENCIES.map((l) => {
+            const { color, Icon } = CAT_META[l.cat];
+            return (
+              <div key={l.label} className="flex items-center gap-3 px-2 py-2.5 sm:gap-4">
+                <span className="shrink-0" style={{ color }}>
+                  <Icon className="h-4 w-4" />
+                </span>
+                <span className="w-[44%] shrink-0 truncate text-[13px] text-[var(--ink)] sm:w-[40%]">
+                  {l.label}
+                </span>
+                <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-[var(--hairline-light)]">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full"
+                    style={{ width: `${Math.max(2, logWidth(l.ns))}%`, background: color }}
+                  />
+                </div>
+                <span className="w-[64px] shrink-0 text-right font-mono text-[12px] text-[var(--charcoal)]">
+                  {fmtNs(l.ns)}
+                </span>
+              </div>
+            );
+          })}
+        </Panel>
+      </div>
     </div>
   );
 }

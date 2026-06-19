@@ -80,6 +80,36 @@ export const lab: LabEntry[] = [
     status: "live",
   },
   {
+    slug: "distributed-caching",
+    title: "Local vs distributed caching",
+    blurb:
+      "Every pod keeps its own in-memory cache — fast, but they drift apart. Update the database, then watch local caches go stale while a shared Redis stays consistent. Invalidation, made visible.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["redis", "invalidation", "coherence"],
+    status: "live",
+  },
+  {
+    slug: "queueing",
+    title: "Queueing",
+    blurb:
+      "Requests pile up faster than a server can drain them. Send traffic into FIFO, LIFO and priority queues, watch the line grow, and see tail latency explode as load approaches capacity.",
+    kind: "essay",
+    topic: "Distributed systems",
+    tags: ["throughput", "backpressure", "p99"],
+    status: "live",
+  },
+  {
+    slug: "retries",
+    title: "Retries",
+    blurb:
+      "Retrying a failed request seems harmless — until every client retries at once and buries a struggling service. Compare naive retries, fixed delay, exponential backoff and jitter, and watch the retry storm form (or not).",
+    kind: "essay",
+    topic: "Distributed systems",
+    tags: ["backoff", "jitter", "retry storm"],
+    status: "live",
+  },
+  {
     slug: "system-evolution",
     title: "System evolution",
     blurb:

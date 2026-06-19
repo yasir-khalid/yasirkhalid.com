@@ -23,7 +23,6 @@ export const trustMarks = [
   "KPMG",
   "Quantexa",
   "NatWest",
-  "Y Combinator",
   "Ipsos",
 ];
 
