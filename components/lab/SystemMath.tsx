@@ -172,6 +172,19 @@ function TrafficCurve({ avg, peak }: { avg: number; peak: number }) {
   );
 }
 
+// Bordered metric card (the headline numbers in the reference layout)
+function MetricCard({ label, value, tone = "ink" }: { label: string; value: string; tone?: "ink" | "blue" | "red" }) {
+  const c = tone === "blue" ? "var(--accent-blue-link)" : tone === "red" ? "var(--accent-danger)" : "var(--ink)";
+  return (
+    <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+      <p className="mono-label text-[10px] text-[var(--stone-text)]">{label}</p>
+      <p className="display mt-2 text-[clamp(1.3rem,2.2vw,1.9rem)]" style={{ color: c }}>
+        {value}
+      </p>
+    </div>
+  );
+}
+
 export default function SystemMath() {
   const [exp, setExp] = useState(7); // 10M DAU
   const [reqPerUser, setReqPerUser] = useState(20);
@@ -443,11 +456,6 @@ export default function SystemMath() {
       {/* 02 · DAU → requests/second */}
       <section className="flex flex-col gap-5">
         <SectionHeader n="02" title="DAU → requests / second" />
-        <Panel className="grid gap-6 p-6 sm:grid-cols-3">
-          <Slider label="daily active users" min={DAU_MIN_EXP} max={DAU_MAX_EXP} step={0.01} value={exp} onChange={setExp} display={human(dau)} />
-          <Slider label="requests / user / day" min={1} max={200} value={reqPerUser} onChange={setReqPerUser} />
-          <Slider label="peak multiplier" min={1} max={10} step={0.1} value={peak} onChange={setPeak} display={`${peak}×`} />
-        </Panel>
 
         {/* running formula - say the numbers out loud */}
         <Panel className="p-4 sm:p-5">
@@ -462,19 +470,30 @@ export default function SystemMath() {
           </p>
         </Panel>
 
-        <div className="grid grid-cols-3 gap-x-8 gap-y-6">
-          <Stat label="Requests / day" value={human(reqPerDay)} sub={`${reqPerUser} per user`} />
-          <Stat label="Average RPS" value={`${human(avgRps)}/s`} sub="over 86,400 s" />
-          <Stat label="Peak RPS" value={`${human(peakRps)}/s`} accent sub={`${peak}× average`} />
-        </div>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr]">
+          {/* left: inputs */}
+          <Panel className="flex flex-col gap-6 self-start p-6">
+            <p className="mono-label text-[var(--mute)]">your product</p>
+            <Slider label="daily active users" min={DAU_MIN_EXP} max={DAU_MAX_EXP} step={0.01} value={exp} onChange={setExp} display={human(dau)} />
+            <Slider label="requests / user / day" min={1} max={200} value={reqPerUser} onChange={setReqPerUser} />
+            <Slider label="peak multiplier" min={1} max={10} step={0.1} value={peak} onChange={setPeak} display={`${peak}×`} />
+          </Panel>
 
-        {/* daily traffic curve */}
-        <Panel tone="stone" className="p-4 sm:p-6">
-          <p className="mono-label text-[var(--mute)]">a day of traffic</p>
-          <div className="mt-3">
-            <TrafficCurve avg={avgRps} peak={peakRps} />
+          {/* right: headline metrics + traffic curve */}
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-3 gap-3">
+              <MetricCard label="req / day" value={human(reqPerDay)} />
+              <MetricCard label="average" value={`${human(avgRps)}/s`} tone="blue" />
+              <MetricCard label="peak" value={`${human(peakRps)}/s`} tone="red" />
+            </div>
+            <Panel tone="stone" className="p-4 sm:p-6">
+              <p className="mono-label text-[var(--mute)]">a day of traffic</p>
+              <div className="mt-3">
+                <TrafficCurve avg={avgRps} peak={peakRps} />
+              </div>
+            </Panel>
           </div>
-        </Panel>
+        </div>
       </section>
 
       {/* 03 · Server fleet */}
@@ -493,7 +512,8 @@ export default function SystemMath() {
       {/* 04 · Cache & read distribution */}
       <section className="flex flex-col gap-5">
         <SectionHeader n="04" title="Cache & read distribution" />
-        <Panel className="grid gap-6 p-6 sm:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr]">
+        <Panel className="flex flex-col gap-6 self-start p-6">
           <Slider label="read share" min={0} max={100} value={readShare} onChange={setReadShare} display={`${readShare}%`} />
           <Slider label="cache hit rate" min={0} max={100} value={hitRate} onChange={setHitRate} display={`${hitRate}%`} />
           <Slider label="avg object size" min={0.1} max={1000} step={0.1} value={objectKb} onChange={setObjectKb} display={objectKb >= 1 ? `${Math.round(objectKb)} KB` : `${objectKb} KB`} />
@@ -527,6 +547,7 @@ export default function SystemMath() {
             </div>
           </div>
         </Panel>
+        </div>
       </section>
 
       {/* 05 · Database nodes */}
@@ -546,38 +567,43 @@ export default function SystemMath() {
       {/* 06 · Storage & bandwidth */}
       <section className="flex flex-col gap-5">
         <SectionHeader n="06" title="Storage & bandwidth" />
-        <Panel className="grid gap-6 p-6 sm:grid-cols-2">
-          <Slider label="replication factor" min={1} max={5} value={replication} onChange={setReplication} display={`${replication}×`} />
-          <Slider label="retention" min={1} max={10} value={retention} onChange={setRetention} display={`${retention} yr`} />
-        </Panel>
-        <div className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
-          <Stat label="New data / day" value={bytesFmt(dailyWriteBytes)} sub={`×${replication} replication`} />
-          <Stat label="Per year" value={bytesFmt(annualBytes)} />
-          <Stat label={`At ${retention} yr retention`} value={bytesFmt(fullRetentionBytes)} accent />
-          <Stat label="Peak egress" value={`${human(egressMbps)} Mbps`} sub="peak reads × size" />
-        </div>
-        {/* cumulative storage bars */}
-        <Panel tone="stone" className="p-6">
-          <p className="mono-label text-[var(--mute)]">cumulative storage by year</p>
-          <div className="mt-5 flex items-end gap-3">
-            {Array.from({ length: retention }).map((_, i) => {
-              const cum = annualBytes * (i + 1);
-              return (
-                <div key={i} className="flex flex-1 flex-col items-center gap-2">
-                  <span className="font-mono text-[10px] text-[var(--charcoal)]">{bytesFmt(cum)}</span>
-                  {/* fixed-height track so the % bar has something to resolve against */}
-                  <div className="flex h-28 w-full items-end">
-                    <div
-                      className="w-full rounded-t-[6px] bg-[var(--primary)] transition-all"
-                      style={{ height: `${Math.max(3, (cum / maxCumBytes) * 100)}%` }}
-                    />
-                  </div>
-                  <span className="font-mono text-[10px] text-[var(--stone-text)]">yr {i + 1}</span>
-                </div>
-              );
-            })}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr]">
+          {/* left: inputs + numeric outputs */}
+          <div className="flex flex-col gap-6 self-start">
+            <Panel className="flex flex-col gap-6 p-6">
+              <Slider label="replication factor" min={1} max={5} value={replication} onChange={setReplication} display={`${replication}×`} />
+              <Slider label="retention" min={1} max={10} value={retention} onChange={setRetention} display={`${retention} yr`} />
+            </Panel>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+              <Stat label="New data / day" value={bytesFmt(dailyWriteBytes)} sub={`×${replication} replication`} />
+              <Stat label="Per year" value={bytesFmt(annualBytes)} />
+              <Stat label={`At ${retention} yr retention`} value={bytesFmt(fullRetentionBytes)} accent />
+              <Stat label="Peak egress" value={`${human(egressMbps)} Mbps`} sub="peak reads × size" />
+            </div>
           </div>
-        </Panel>
+          {/* right: cumulative storage bars */}
+          <Panel tone="stone" className="p-6">
+            <p className="mono-label text-[var(--mute)]">cumulative storage by year</p>
+            <div className="mt-5 flex items-end gap-3">
+              {Array.from({ length: retention }).map((_, i) => {
+                const cum = annualBytes * (i + 1);
+                return (
+                  <div key={i} className="flex flex-1 flex-col items-center gap-2">
+                    <span className="font-mono text-[10px] text-[var(--charcoal)]">{bytesFmt(cum)}</span>
+                    {/* fixed-height track so the % bar has something to resolve against */}
+                    <div className="flex h-40 w-full items-end">
+                      <div
+                        className="w-full rounded-t-[6px] bg-[var(--primary)] transition-all"
+                        style={{ height: `${Math.max(3, (cum / maxCumBytes) * 100)}%` }}
+                      />
+                    </div>
+                    <span className="font-mono text-[10px] text-[var(--stone-text)]">yr {i + 1}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </Panel>
+        </div>
       </section>
 
       <Note>

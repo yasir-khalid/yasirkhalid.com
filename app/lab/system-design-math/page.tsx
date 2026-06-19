@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <LabShell entry={entry}>
+    <LabShell entry={entry} wide>
       <SystemMath />
     </LabShell>
   );

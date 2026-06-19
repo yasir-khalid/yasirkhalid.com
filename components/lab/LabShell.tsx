@@ -6,13 +6,20 @@ import type { LabEntry } from "@/lib/lab";
 export default function LabShell({
   entry,
   children,
+  wide = false,
 }: {
   entry: LabEntry;
   children: React.ReactNode;
+  /** widen the content column for dashboard-style two-pane explainers */
+  wide?: boolean;
 }) {
   return (
     <main className="min-h-screen bg-white">
-      <article className="mx-auto max-w-[1100px] px-5 pb-28 pt-10 sm:px-8 sm:pt-14">
+      <article
+        className={`mx-auto px-5 pb-28 pt-10 sm:px-8 sm:pt-14 ${
+          wide ? "max-w-[1320px]" : "max-w-[1100px]"
+        }`}
+      >
         <Link
           href="/lab"
           className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
