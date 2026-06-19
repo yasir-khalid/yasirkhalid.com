@@ -123,6 +123,55 @@ function Donut({ segments }: { segments: { label: string; value: number; color: 
   );
 }
 
+// --- 24-hour daily traffic curve (a bell peaking mid-afternoon) ---
+function TrafficCurve({ avg, peak }: { avg: number; peak: number }) {
+  const W = 760;
+  const H = 240;
+  const padX = 10;
+  const padT = 26;
+  const padB = 26;
+  const yMax = Math.max(peak * 1.15, 1);
+  // req/s over the day: average, modulated to peak at ~14:00 and dip overnight
+  const rps = (t: number) =>
+    Math.max(0, avg + (peak - avg) * Math.cos(((t - 14) / 24) * 2 * Math.PI));
+  const x = (t: number) => padX + (t / 24) * (W - 2 * padX);
+  const y = (v: number) => padT + (1 - v / yMax) * (H - padT - padB);
+
+  let line = "";
+  for (let t = 0; t <= 24; t += 0.5) {
+    line += `${t === 0 ? "M" : "L"}${x(t).toFixed(1)} ${y(rps(t)).toFixed(1)} `;
+  }
+  const area = `${line}L${x(24).toFixed(1)} ${y(0).toFixed(1)} L${x(0).toFixed(1)} ${y(0).toFixed(1)} Z`;
+  const yAvg = y(avg);
+  const yPeak = y(peak);
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Daily traffic curve">
+      <path d={area} fill="rgba(73,79,223,0.08)" />
+      <path d={line} fill="none" stroke="var(--primary)" strokeWidth={2.5} strokeLinecap="round" />
+
+      {/* peak line */}
+      <line x1={padX} x2={W - padX} y1={yPeak} y2={yPeak} stroke="var(--accent-danger)" strokeWidth={1} strokeDasharray="4 4" />
+      <text x={padX} y={yPeak - 6} className="font-mono" fontSize={11} fill="var(--accent-danger)">
+        peak {human(peak)}/s
+      </text>
+
+      {/* avg line */}
+      <line x1={padX} x2={W - padX} y1={yAvg} y2={yAvg} stroke="var(--accent-blue-link)" strokeWidth={1} strokeDasharray="4 4" />
+      <text x={padX} y={yAvg - 6} className="font-mono" fontSize={11} fill="var(--accent-blue-link)">
+        avg {human(avg)}/s
+      </text>
+
+      {/* hour axis */}
+      {[0, 6, 12, 18, 24].map((h) => (
+        <text key={h} x={x(h)} y={H - 8} textAnchor={h === 0 ? "start" : h === 24 ? "end" : "middle"} className="font-mono" fontSize={10} fill="var(--stone-text)">
+          {h}h
+        </text>
+      ))}
+    </svg>
+  );
+}
+
 export default function SystemMath() {
   const [exp, setExp] = useState(7); // 10M DAU
   const [reqPerUser, setReqPerUser] = useState(20);
@@ -220,13 +269,35 @@ export default function SystemMath() {
         <Panel className="grid gap-6 p-6 sm:grid-cols-3">
           <Slider label="daily active users" min={DAU_MIN_EXP} max={DAU_MAX_EXP} step={0.01} value={exp} onChange={setExp} display={human(dau)} />
           <Slider label="requests / user / day" min={1} max={200} value={reqPerUser} onChange={setReqPerUser} />
-          <Slider label="peak multiplier" min={1} max={10} value={peak} onChange={setPeak} display={`${peak}×`} />
+          <Slider label="peak multiplier" min={1} max={10} step={0.1} value={peak} onChange={setPeak} display={`${peak}×`} />
         </Panel>
+
+        {/* running formula - say the numbers out loud */}
+        <Panel className="p-4 sm:p-5">
+          <p className="font-mono text-[12px] leading-relaxed text-[var(--charcoal)] sm:text-[13px]">
+            <b className="text-[var(--ink)]">{human(dau)}</b> DAU ×{" "}
+            <b className="text-[var(--ink)]">{reqPerUser}</b> req/user/day ={" "}
+            <b className="text-[var(--ink)]">{human(reqPerDay)}</b> req/day ÷ 86,400 s ={" "}
+            <b className="font-semibold text-[var(--accent-blue-link)]">{human(avgRps)}</b> req/s avg{" "}
+            ··· ×{" "}
+            <b className="text-[var(--ink)]">{peak}</b> peak ={" "}
+            <b className="font-semibold text-[var(--accent-danger)]">{human(peakRps)}</b> req/s peak
+          </p>
+        </Panel>
+
         <div className="grid grid-cols-3 gap-x-8 gap-y-6">
           <Stat label="Requests / day" value={human(reqPerDay)} sub={`${reqPerUser} per user`} />
-          <Stat label="Average RPS" value={human(avgRps)} sub="over 86,400 s" />
-          <Stat label="Peak RPS" value={human(peakRps)} accent sub={`${peak}× average`} />
+          <Stat label="Average RPS" value={`${human(avgRps)}/s`} sub="over 86,400 s" />
+          <Stat label="Peak RPS" value={`${human(peakRps)}/s`} accent sub={`${peak}× average`} />
         </div>
+
+        {/* daily traffic curve */}
+        <Panel tone="stone" className="p-4 sm:p-6">
+          <p className="mono-label text-[var(--mute)]">a day of traffic</p>
+          <div className="mt-3">
+            <TrafficCurve avg={avgRps} peak={peakRps} />
+          </div>
+        </Panel>
       </section>
 
       {/* 03 · Server fleet */}
