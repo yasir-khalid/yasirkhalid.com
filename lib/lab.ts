@@ -113,7 +113,7 @@ export const lab: LabEntry[] = [
     slug: "system-evolution",
     title: "System evolution",
     blurb:
-      "Step a product from a single box to a distributed architecture. Each stage adds one piece and shows you the bottleneck it was added to fix.",
+      "Step a product from a single VM to a sharded, replicated architecture — splitting the DB, measuring before scaling, load-balancing, caching, moving slow work to queues, then replicas and shards. Each stage shows the bottleneck it fixes and the trade-off it brings.",
     kind: "tool",
     topic: "System design",
     tags: ["scaling", "architecture", "stages"],
