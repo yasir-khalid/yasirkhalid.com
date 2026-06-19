@@ -1,13 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Note, Panel, Slider, Stat } from "@/components/lab/ui";
+import { Note, Panel, Slider, Stat, Toggle } from "@/components/lab/ui";
 import {
   ChipIcon,
   MemoryIcon,
   StorageIcon,
   NetworkIcon,
+  ActivityIcon,
+  ServerIcon,
+  BoltIcon,
+  DatabaseIcon,
+  DriveIcon,
+  ListIcon,
+  ClockIcon,
 } from "@/components/icons";
+
+type IconType = typeof ChipIcon;
 
 // =====================================================================
 // "Napkin math" - turn DAU into infrastructure, one section at a time.
@@ -191,6 +200,7 @@ export default function SystemMath() {
   const [peak, setPeak] = useState(3);
   const [readShare, setReadShare] = useState(90);
   const [hitRate, setHitRate] = useState(80);
+  const [cacheEnabled, setCacheEnabled] = useState(true);
   const [objectKb, setObjectKb] = useState(2);
   const [appCap, setAppCap] = useState(1000);
   const [readsPerNode, setReadsPerNode] = useState(5000);
@@ -220,13 +230,15 @@ export default function SystemMath() {
   const fleetTotal = fleetNeeded + 1; // +1 spare for redundancy
 
   // ---- 04 · cache & read distribution ----
+  // With caching disabled, every read falls through to the database.
+  const hitRateEff = cacheEnabled ? hitRate : 0;
   const readsRps = peakRps * (readShare / 100);
   const writesRps = peakRps * (1 - readShare / 100);
-  const cacheHitsRps = readsRps * (hitRate / 100);
-  const dbReadsRps = readsRps * (1 - hitRate / 100);
+  const cacheHitsRps = readsRps * (hitRateEff / 100);
+  const dbReadsRps = readsRps * (1 - hitRateEff / 100);
   const dailyReads = reqPerDay * (readShare / 100);
   // 80/20: cache the ~20% of objects that serve ~80% of reads
-  const cacheMemBytes = dailyReads * 0.2 * objectKb * 1024;
+  const cacheMemBytes = cacheEnabled ? dailyReads * 0.2 * objectKb * 1024 : 0;
 
   // ---- 05 · database nodes ----
   const shards = Math.max(1, Math.ceil(writesRps / writesPerNode));
@@ -257,7 +269,8 @@ export default function SystemMath() {
           ["Requests / user / day", `${reqPerUser}`],
           ["Peak multiplier", `${peak}×`],
           ["Read share", `${readShare}%`],
-          ["Cache hit rate", `${hitRate}%`],
+          ["Caching", cacheEnabled ? "enabled" : "disabled"],
+          ["Cache hit rate", cacheEnabled ? `${hitRate}%` : "n/a"],
           ["Avg object size", `${objectKb} KB`],
           ["App server capacity", `${human(appCap)}/s`],
           ["DB reads / node", `${human(readsPerNode)}/s`],
@@ -414,9 +427,12 @@ export default function SystemMath() {
     URL.revokeObjectURL(url);
   }
 
-  function SectionHeader({ n, title }: { n: string; title: string }) {
+  function SectionHeader({ n, title, Icon }: { n: string; title: string; Icon: IconType }) {
     return (
-      <div className="flex items-baseline gap-3">
+      <div className="flex items-center gap-3">
+        <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-[rgba(73,79,223,0.1)] text-[var(--primary)]">
+          <Icon className="h-[18px] w-[18px]" />
+        </span>
         <span className="mono-label text-[var(--primary)]">{n}</span>
         <h3 className="heading text-[19px] text-[var(--ink)]">{title}</h3>
       </div>
@@ -455,7 +471,7 @@ export default function SystemMath() {
 
       {/* 02 · DAU → requests/second */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="02" title="DAU → requests / second" />
+        <SectionHeader n="02" title="DAU → requests / second" Icon={ActivityIcon} />
 
         {/* running formula - say the numbers out loud */}
         <Panel className="p-4 sm:p-5">
@@ -498,7 +514,7 @@ export default function SystemMath() {
 
       {/* 03 · Server fleet */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="03" title="App server fleet" />
+        <SectionHeader n="03" title="App server fleet" Icon={ServerIcon} />
         <Panel className="p-6">
           <Slider label="capacity per server (req/s)" min={200} max={5000} step={100} value={appCap} onChange={setAppCap} display={`${human(appCap)}/s`} />
         </Panel>
@@ -511,24 +527,37 @@ export default function SystemMath() {
 
       {/* 04 · Cache & read distribution */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="04" title="Cache & read distribution" />
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <SectionHeader n="04" title="Cache & read distribution" Icon={BoltIcon} />
+          <Toggle label={cacheEnabled ? "Caching on" : "Caching off"} checked={cacheEnabled} onChange={setCacheEnabled} />
+        </div>
         <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr]">
         <Panel className="flex flex-col gap-6 self-start p-6">
           <Slider label="read share" min={0} max={100} value={readShare} onChange={setReadShare} display={`${readShare}%`} />
-          <Slider label="cache hit rate" min={0} max={100} value={hitRate} onChange={setHitRate} display={`${hitRate}%`} />
+          {cacheEnabled ? (
+            <Slider label="cache hit rate" min={0} max={100} value={hitRate} onChange={setHitRate} display={`${hitRate}%`} />
+          ) : (
+            <div className="opacity-50">
+              <div className="mb-2 flex items-baseline justify-between">
+                <span className="mono-label text-[var(--slate)]">cache hit rate</span>
+                <span className="font-mono text-[14px] text-[var(--ink)]">disabled</span>
+              </div>
+              <div className="h-1 w-full rounded-full bg-[var(--hairline-light)]" />
+            </div>
+          )}
           <Slider label="avg object size" min={0.1} max={1000} step={0.1} value={objectKb} onChange={setObjectKb} display={objectKb >= 1 ? `${Math.round(objectKb)} KB` : `${objectKb} KB`} />
         </Panel>
         <Panel tone="stone" className="flex flex-col items-center gap-8 p-6 sm:flex-row sm:items-center sm:gap-10">
           <Donut
             segments={[
-              { label: "cache hits", value: cacheHitsRps, color: "var(--accent-teal)" },
+              ...(cacheEnabled ? [{ label: "cache hits", value: cacheHitsRps, color: "var(--accent-teal)" }] : []),
               { label: "db reads", value: dbReadsRps, color: "var(--primary)" },
               { label: "writes", value: writesRps, color: "var(--accent-warning)" },
             ]}
           />
           <div className="flex flex-1 flex-col gap-3">
             {[
-              { label: "Cache hits (absorbed)", v: cacheHitsRps, color: "var(--accent-teal)" },
+              ...(cacheEnabled ? [{ label: "Cache hits (absorbed)", v: cacheHitsRps, color: "var(--accent-teal)" }] : []),
               { label: "Database reads", v: dbReadsRps, color: "var(--primary)" },
               { label: "Database writes", v: writesRps, color: "var(--accent-warning)" },
             ].map((r) => (
@@ -543,7 +572,13 @@ export default function SystemMath() {
               </div>
             ))}
             <div className="mt-2 border-t border-[var(--hairline-light)] pt-3">
-              <Stat label="Cache memory (80/20 rule)" value={bytesFmt(cacheMemBytes)} sub="20% of daily read objects" accent />
+              {cacheEnabled ? (
+                <Stat label="Cache memory (80/20 rule)" value={bytesFmt(cacheMemBytes)} sub="20% of daily read objects" accent />
+              ) : (
+                <p className="text-[13px] leading-[1.5] text-[var(--accent-danger)]">
+                  Caching disabled - every read hits the database, so the read load downstream is the full {human(readsRps)}/s.
+                </p>
+              )}
             </div>
           </div>
         </Panel>
@@ -552,7 +587,7 @@ export default function SystemMath() {
 
       {/* 05 · Database nodes */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="05" title="Database nodes" />
+        <SectionHeader n="05" title="Database nodes" Icon={DatabaseIcon} />
         <Panel className="grid gap-6 p-6 sm:grid-cols-2">
           <Slider label="reads / node (capacity)" min={1000} max={20000} step={500} value={readsPerNode} onChange={setReadsPerNode} display={`${human(readsPerNode)}/s`} />
           <Slider label="writes / node (capacity)" min={500} max={10000} step={250} value={writesPerNode} onChange={setWritesPerNode} display={`${human(writesPerNode)}/s`} />
@@ -566,7 +601,7 @@ export default function SystemMath() {
 
       {/* 06 · Storage & bandwidth */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="06" title="Storage & bandwidth" />
+        <SectionHeader n="06" title="Storage & bandwidth" Icon={DriveIcon} />
         <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr]">
           {/* left: inputs + numeric outputs */}
           <div className="flex flex-col gap-6 self-start">
@@ -617,7 +652,7 @@ export default function SystemMath() {
 
       {/* Cheat sheet */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="07" title="Cheat sheet - rules of thumb" />
+        <SectionHeader n="07" title="Cheat sheet - rules of thumb" Icon={ListIcon} />
         <Panel tone="stone" className="divide-y divide-[var(--hairline-light)] p-2 sm:p-4">
           {[
             ["1 day", "≈ 86,400 s ≈ 100,000 s - drop 5 zeros from req/day to get req/s"],
@@ -639,7 +674,7 @@ export default function SystemMath() {
 
       {/* 08 · Latency numbers */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="08" title="Latency numbers every engineer should know" />
+        <SectionHeader n="08" title="Latency numbers every engineer should know" Icon={ClockIcon} />
         <p className="max-w-[60ch] text-[15px] leading-[1.55] text-[var(--mute)]">
           The other half of the math: how long operations actually take. The
           scale is logarithmic - each step right is roughly 10× slower - so you

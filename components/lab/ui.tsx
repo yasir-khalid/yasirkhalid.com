@@ -60,6 +60,39 @@ export function Segmented<T extends string>({
   );
 }
 
+export function Toggle({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={() => onChange(!checked)}
+      className="inline-flex items-center gap-2.5"
+    >
+      <span
+        className={`relative h-5 w-9 rounded-full transition-colors ${
+          checked ? "bg-[var(--primary)]" : "bg-[var(--hairline-light)]"
+        }`}
+      >
+        <span
+          className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-all ${
+            checked ? "left-[18px]" : "left-0.5"
+          }`}
+        />
+      </span>
+      <span className="text-[14px] font-medium text-[var(--ink)]">{label}</span>
+    </button>
+  );
+}
+
 export function Slider({
   label,
   min,
