@@ -104,11 +104,11 @@ export default function Retries() {
     <div className="flex flex-col gap-8">
       <Note>
         Retrying a failed request is the most natural instinct in distributed
-        systems — and one of the most dangerous. When a service wobbles, every
+        systems - and one of the most dangerous. When a service wobbles, every
         client retries at once, <em>multiplying</em> the load on the very server
         that&apos;s already struggling. That feedback loop is a{" "}
         <strong>retry storm</strong>. The fix isn&apos;t &ldquo;don&apos;t
-        retry&rdquo; — it&apos;s <strong>how</strong> you space them out.
+        retry&rdquo; - it&apos;s <strong>how</strong> you space them out.
       </Note>
 
       {/* Controls */}
@@ -215,10 +215,10 @@ export default function Retries() {
       <Note>
         Set failure rate high and start with <strong>Immediate</strong>: every
         failure retries next tick, attempts stack on attempts, and the load bars
-        blow past capacity — a textbook retry storm. <strong>Fixed delay</strong>{" "}
+        blow past capacity - a textbook retry storm. <strong>Fixed delay</strong>{" "}
         helps a little. <strong>Exponential backoff</strong> spaces retries out
         geometrically (1, 2, 4, 8…) so the server gets breathing room. But pure
-        backoff still <em>synchronises</em> — all the clients that failed
+        backoff still <em>synchronises</em> - all the clients that failed
         together retry together. <strong>Backoff + jitter</strong> randomises
         each delay, smearing the retries across time so the peak load stays
         flat. Watch the <em>amplification</em> and <em>peak load</em> drop as you

@@ -21,7 +21,7 @@ const CURVES: Curve[] = [
 ];
 
 const MAX_N = 40;
-const CEIL = 120; // operations ceiling — curves clip above this
+const CEIL = 120; // operations ceiling - curves clip above this
 const W = 720;
 const H = 420;
 const PAD = 44;
@@ -55,7 +55,7 @@ export default function BigO() {
     <div className="flex flex-col gap-8">
       <Note>
         Big O describes how an algorithm&apos;s work grows as its input{" "}
-        <strong>n</strong> gets large. The constants don&apos;t matter — the{" "}
+        <strong>n</strong> gets large. The constants don&apos;t matter - the{" "}
         <em>shape</em> does. Drag <strong>n</strong> and watch which curves stay
         flat and which ones rocket off the top of the chart.
       </Note>
@@ -167,7 +167,7 @@ export default function BigO() {
         At <strong>n = 10</strong> the difference looks academic. Push n to 40
         and O(2ⁿ) is over a <em>trillion</em> operations while O(log n) is still
         under 6. This is why an algorithm that&apos;s &ldquo;fast enough&rdquo;
-        on test data can fall off a cliff in production — the input grew, and
+        on test data can fall off a cliff in production - the input grew, and
         the <em>shape</em> caught up with it.
       </Note>
     </div>

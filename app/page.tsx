@@ -258,7 +258,7 @@ export default function Home() {
               <span className="btn btn-cobalt">Open the lab</span>
             </Link>
             <p className="mt-6 max-w-[58ch] text-[16px] leading-[1.55] text-[var(--mute)]">
-              Visual, hands-on explainers — bloom filters, hashing, load
+              Visual, hands-on explainers - bloom filters, hashing, load
               balancing, caching, big-O and more. Drag a slider, send a request,
               watch the idea click into place.
             </p>
@@ -408,7 +408,7 @@ export default function Home() {
                 Let&apos;s build something dependable.
               </h2>
               <p className="mt-6 max-w-[46ch] text-[17px] leading-[1.55] text-[var(--on-dark-mute)]">
-                Looking for a builder who takes things end to end — in agentic
+                Looking for a builder who takes things end to end - in agentic
                 AI, data, or product. Let&apos;s talk.
               </p>
             </Reveal>
@@ -519,7 +519,7 @@ export default function Home() {
         </div>
         <div className="border-t border-[var(--hairline-dark)]">
           <p className="mono-label mx-auto max-w-[1040px] px-5 py-5 text-[11px] text-[var(--stone-text)] sm:px-8">
-            © {new Date().getFullYear()} Yasir Khalid — built with Next.js.
+            © {new Date().getFullYear()} Yasir Khalid - built with Next.js.
           </p>
         </div>
       </footer>

@@ -185,7 +185,7 @@ export default function LoadBalancing() {
           </span>
         </div>
 
-        {/* Incoming traffic — the controllable inflow lane */}
+        {/* Incoming traffic - the controllable inflow lane */}
         <div className="mt-5 rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <div className="flex items-center justify-between">
             <span className="mono-label text-[var(--mute)]">incoming traffic</span>
@@ -232,7 +232,7 @@ export default function LoadBalancing() {
             {saturating && (
               <p className="mt-2 font-mono text-[11px] text-[var(--accent-danger)]">
                 ⚠ inflow exceeds what {count} server{count > 1 ? "s" : ""} can
-                sustain — queues build and servers tip into overload.
+                sustain - queues build and servers tip into overload.
               </p>
             )}
           </div>
@@ -306,15 +306,15 @@ export default function LoadBalancing() {
         load-vs-capacity bar climb. Below 100% the fleet keeps up; cross it and
         requests arrive faster than servers can drain them, so the bars fill
         and tip into <em>overload</em>. You have two levers to fix it: send less
-        traffic, or add servers — that&apos;s autoscaling in one picture.
+        traffic, or add servers - that&apos;s autoscaling in one picture.
       </Note>
 
       <Note>
-        <strong>Round-robin</strong> hands out requests in a fixed cycle —
+        <strong>Round-robin</strong> hands out requests in a fixed cycle -
         simple, but it ignores how busy each server already is, so a slow
         request can pile up behind it. <strong>Random</strong> is even simpler
         and surprisingly close in practice. <strong>Least-connections</strong>{" "}
-        actively steers new work to the quietest server — watch the load{" "}
+        actively steers new work to the quietest server - watch the load{" "}
         <em>spread (σ)</em> stay lowest here, especially with bursty traffic.
       </Note>
     </div>

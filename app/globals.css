@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------------------------------
-   Design tokens — Revolut-style two-mode canvas (see DESIGN.md).
+   Design tokens - Revolut-style two-mode canvas (see DESIGN.md).
    True-black storytelling bands · white catalogue bands · cobalt-violet stamp.
    Inter Tight (display) · Inter (body) · IBM Plex Mono (technical/lab).
    Flat depth: canvas switches + surface-luminance shifts. No drop shadows.
 ---------------------------------------------------------------------------- */
 :root {
-  /* Brand & accent — cobalt violet, used scarcely */
+  /* Brand & accent - cobalt violet, used scarcely */
   --primary: #494fdf;
   --primary-bright: #4f55f1;
   --primary-deep: #3a40c4;
@@ -52,7 +52,7 @@
   --link: #376cd5;
 
   /* --------------------------------------------------------------------------
-     Legacy aliases — older component classNames reference these. Re-pointed
+     Legacy aliases - older component classNames reference these. Re-pointed
      onto the new system so the lab and any leftover utilities stay coherent.
      -------------------------------------------------------------------------- */
   --black: #000000;
@@ -154,7 +154,7 @@ body {
   text-transform: uppercase;
 }
 
-/* ---- Buttons — all pills ---- */
+/* ---- Buttons - all pills ---- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -249,7 +249,7 @@ body {
   background: var(--primary);
 }
 
-/* Feature badge — cobalt stamp */
+/* Feature badge - cobalt stamp */
 .badge-feature {
   display: inline-flex;
   align-items: center;

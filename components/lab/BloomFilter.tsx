@@ -80,7 +80,7 @@ export default function BloomFilter() {
         and flip those bits to <strong>1</strong>. To check membership, hash
         again: if <em>any</em> of those bits is still 0, the word was{" "}
         <strong>definitely never added</strong>. If all are 1, it&apos;s{" "}
-        <strong>probably</strong> there — but other words may have set the same
+        <strong>probably</strong> there - but other words may have set the same
         bits.
       </Note>
 
@@ -200,7 +200,7 @@ export default function BloomFilter() {
                 </p>
                 {result.present && !result.truly && (
                   <p className="mt-1.5 text-[13px] font-medium text-[#c2412a]">
-                    ⚠ False positive — “{result.word}” was never added, but its
+                    ⚠ False positive - “{result.word}” was never added, but its
                     bits were all set by other words.
                   </p>
                 )}
@@ -211,7 +211,7 @@ export default function BloomFilter() {
                 )}
                 {!result.present && (
                   <p className="mt-1.5 text-[13px] text-[var(--slate)]">
-                    At least one bit is 0 — a bloom filter never gives false
+                    At least one bit is 0 - a bloom filter never gives false
                     negatives.
                   </p>
                 )}
@@ -250,7 +250,7 @@ export default function BloomFilter() {
 
       <Note>
         Notice the trade: the filter uses a tiny, fixed amount of memory no
-        matter how many items you add — but the more you add, the fuller the bit
+        matter how many items you add - but the more you add, the fuller the bit
         array gets, and the more often unrelated lookups collide into a false
         positive. That&apos;s the whole bargain: <strong>space</strong> for a{" "}
         <strong>small, controllable error rate</strong>, and never a wrong

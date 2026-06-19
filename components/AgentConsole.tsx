@@ -1,4 +1,4 @@
-/* Abstract agent-console mockup — represents trace/eval semantics, no invented data. */
+/* Abstract agent-console mockup - represents trace/eval semantics, no invented data. */
 export default function AgentConsole() {
   const rows = [
     { name: "orchestrator", kind: "run", status: "ok", dur: "1.2s" },

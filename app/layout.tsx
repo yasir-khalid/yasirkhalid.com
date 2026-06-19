@@ -26,7 +26,7 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://yasirkhalid.dev"),
-  title: "Yasir Khalid — AI Engineer",
+  title: "Yasir Khalid - AI Engineer",
   description:
     "AI engineer building production agent systems in regulated enterprise. Lead Developer at HSBC, owning a multi-agent platform serving 15,000+ users across 100+ jurisdictions.",
   keywords: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Yasir Khalid" }],
   openGraph: {
-    title: "Yasir Khalid — AI Engineer",
+    title: "Yasir Khalid - AI Engineer",
     description:
       "Building production agent systems in regulated enterprise. Lead Developer at HSBC.",
     type: "website",

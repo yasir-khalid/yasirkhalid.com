@@ -5,7 +5,7 @@ import { ActionButton, Note, Panel, Segmented, Slider } from "@/components/lab/u
 
 type Mode = "local" | "distributed";
 
-// The cached payload is just a version number — "the value of key user:42".
+// The cached payload is just a version number - "the value of key user:42".
 // dbVersion is the source of truth; a cached copy is FRESH if it matches it,
 // STALE if it lags behind.
 export default function DistributedCaching() {
@@ -52,7 +52,7 @@ export default function DistributedCaching() {
     const next = dbVersion + 1;
     setDbVersion(next);
     setMsg(
-      `Database updated to v${next} (e.g. the user changed their name). No cache was touched — every cached copy is now STALE until invalidated.`
+      `Database updated to v${next} (e.g. the user changed their name). No cache was touched - every cached copy is now STALE until invalidated.`
     );
   }
 
@@ -91,10 +91,10 @@ export default function DistributedCaching() {
         next[i] = null;
         return next;
       });
-      setMsg(`Cleared pod ${i + 1}'s cache only. The other pods still hold their own copies — to fix them all you'd have to broadcast the invalidation to every pod.`);
+      setMsg(`Cleared pod ${i + 1}'s cache only. The other pods still hold their own copies - to fix them all you'd have to broadcast the invalidation to every pod.`);
     } else {
       setShared(null);
-      setMsg(`Cleared the one shared entry in Redis. Every pod is now consistent on its next read — a single invalidation did it.`);
+      setMsg(`Cleared the one shared entry in Redis. Every pod is now consistent on its next read - a single invalidation did it.`);
     }
   }
 
@@ -127,7 +127,7 @@ export default function DistributedCaching() {
     <div className="flex flex-col gap-8">
       <Note>
         Run several copies of your app (<strong>pods</strong>) and each one can
-        keep a cache in its own memory — blazing fast, no network hop. The catch:
+        keep a cache in its own memory - blazing fast, no network hop. The catch:
         every pod has its <em>own</em> copy, so when the data changes they drift
         out of sync. A <strong>distributed cache</strong> (Redis) trades a little
         latency for one shared source the whole fleet agrees on. Update the DB
@@ -304,12 +304,12 @@ export default function DistributedCaching() {
 
       <Note>
         The lesson for the team: <strong>local caches are fastest but can&apos;t
-        be trusted to agree</strong> — invalidating one pod leaves the others
+        be trusted to agree</strong> - invalidating one pod leaves the others
         stale, so you need a broadcast (and hope no pod misses it), or a short
         TTL so staleness self-heals. A <strong>distributed cache centralises the
         truth</strong>: one invalidation fixes everyone, at the cost of a network
         hop and a shared dependency you must keep highly available. Most real
-        systems layer both — a tiny local cache in front of Redis — and accept a
+        systems layer both - a tiny local cache in front of Redis - and accept a
         bounded window of staleness on purpose.
       </Note>
     </div>

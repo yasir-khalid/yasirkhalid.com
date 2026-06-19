@@ -1,7 +1,7 @@
 "use client";
 
 // Shared, theme-consistent controls for lab explainers.
-// Coral accent, hairline borders, mono labels — matches globals.css tokens.
+// Coral accent, hairline borders, mono labels - matches globals.css tokens.
 
 export function Panel({
   children,

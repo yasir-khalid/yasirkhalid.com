@@ -4,9 +4,9 @@ import Reveal from "@/components/Reveal";
 import { lab, type LabEntry } from "@/lib/lab";
 
 export const metadata: Metadata = {
-  title: "The Lab — Interactive explainers · Yasir Khalid",
+  title: "The Lab - Interactive explainers · Yasir Khalid",
   description:
-    "Hands-on, visual explanations of computer science and systems concepts — bloom filters, hashing, load balancing, caching, big-O, and system design. Built to think out loud.",
+    "Hands-on, visual explanations of computer science and systems concepts - bloom filters, hashing, load balancing, caching, big-O, and system design. Built to think out loud.",
 };
 
 // Feature the two system-design overviews at the top, everything else below.
@@ -106,7 +106,7 @@ export default function LabIndex() {
           </Reveal>
           <Reveal delay={120}>
             <p className="mt-7 max-w-[62ch] text-[18px] leading-[1.55] text-[var(--ink)]">
-              A growing set of interactive, visual explainers — built to make
+              A growing set of interactive, visual explainers - built to make
               abstract systems and algorithms concrete. Drag a slider, send a
               request, trip a false positive. The best way to understand
               something is to play with it.
@@ -115,10 +115,10 @@ export default function LabIndex() {
         </div>
       </section>
 
-      {/* Gallery — system design featured, then the rest */}
+      {/* Gallery - system design featured, then the rest */}
       <section className="bg-white">
         <div className="mx-auto flex max-w-[1100px] flex-col gap-14 px-5 py-16 sm:px-8 md:py-20">
-          <LabGroup label="// system design — start here" entries={featured} />
+          <LabGroup label="// system design - start here" entries={featured} />
           <LabGroup label="// concepts" entries={rest} />
         </div>
       </section>

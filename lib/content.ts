@@ -9,12 +9,12 @@ export const profile = {
   x: "https://x.com/yasirrkhalid",
   site: "https://yasir-khalid.github.io/",
   current: "Lead Developer, HSBC",
-  headline: "I build AI products — and own them end to end.",
-  sub: "Lead developer shipping agentic AI in regulated banking. I love figuring out what people actually need, taking raw data all the way to something they use, and owning the whole loop — research, design, engineering, release, support.",
+  headline: "I build AI products - and own them end to end.",
+  sub: "Lead developer shipping agentic AI in regulated banking. I love figuring out what people actually need, taking raw data all the way to something they use, and owning the whole loop - research, design, engineering, release, support.",
 };
 
 export const announcement = {
-  text: "Spoke at Claude Code Central London — Eval pipelines for MCP-connected agents.",
+  text: "Spoke at Claude Code Central London - Eval pipelines for MCP-connected agents.",
   href: "https://www.linkedin.com/in/yasir-khalid",
 };
 
@@ -26,22 +26,22 @@ export const trustMarks = [
   "Ipsos",
 ];
 
-// High-level positioning — who I am at a glance
+// High-level positioning - who I am at a glance
 export const pillars = [
   {
     label: "01",
     title: "End-to-end builder",
-    body: "I take ideas to production and own the whole loop — research, design, engineering, release, and support.",
+    body: "I take ideas to production and own the whole loop - research, design, engineering, release, and support.",
   },
   {
     label: "02",
     title: "Agentic AI in production",
-    body: "Evals, tracing, guardrails, and MCP — the unglamorous parts that decide whether agents actually work.",
+    body: "Evals, tracing, guardrails, and MCP - the unglamorous parts that decide whether agents actually work.",
   },
   {
     label: "03",
     title: "Data, raw to useful",
-    body: "I take messy data, shape it, and ship it as something people use — like Sportscanner, built solo.",
+    body: "I take messy data, shape it, and ship it as something people use - like Sportscanner, built solo.",
   },
   {
     label: "04",
@@ -50,15 +50,15 @@ export const pillars = [
   },
 ];
 
-// Deeper technical proof — the agentic AI band
+// Deeper technical proof - the agentic AI band
 export const capabilities = [
   {
     label: "MCP integrations",
-    body: "Wiring agents to enterprise tools via Model Context Protocol — including Quantexa's MCP gateway for tool calling.",
+    body: "Wiring agents to enterprise tools via Model Context Protocol - including Quantexa's MCP gateway for tool calling.",
   },
   {
     label: "Evaluation pipelines",
-    body: "LLM-as-judge evals on every PR — scoring correctness, efficiency, gap handling, and completeness.",
+    body: "LLM-as-judge evals on every PR - scoring correctness, efficiency, gap handling, and completeness.",
   },
   {
     label: "LLMOps & observability",
@@ -84,10 +84,10 @@ export const experience: Job[] = [
     company: "HSBC",
     role: "Lead Developer / Manager",
     location: "London",
-    period: "2025 — Present",
+    period: "2025 - Present",
     points: [
       "Lead the design and delivery of agentic AI on Google ADK, integrated to Quantexa's MCP gateway for tool calling.",
-      "Own the full LLMOps lifecycle — prompt engineering, OpenTelemetry tracing, and LLM-as-judge evals on every PR.",
+      "Own the full LLMOps lifecycle - prompt engineering, OpenTelemetry tracing, and LLM-as-judge evals on every PR.",
       "Migrated 3,000+ users to Kubernetes-native infra for a 50% performance gain; lifted team velocity 30% with FastAPI tooling.",
     ],
     tags: ["Google ADK", "MCP", "Vertex AI", "OpenTelemetry", "Kubernetes"],
@@ -96,9 +96,9 @@ export const experience: Job[] = [
     company: "Sportscanner",
     role: "Founder / Engineer",
     location: "London",
-    period: "2025 — Present",
+    period: "2025 - Present",
     points: [
-      "Built solo from my own frustration finding courts — now 800+ players across 100+ venues, zero paid marketing.",
+      "Built solo from my own frustration finding courts - now 800+ players across 100+ venues, zero paid marketing.",
       "Own the whole stack: Python scrapers → data pipeline → FastAPI → Next.js UI → support.",
       "Now exploring BI insights for club owners, operators, and investors.",
     ],
@@ -108,7 +108,7 @@ export const experience: Job[] = [
     company: "KPMG UK",
     role: "Assistant Manager / Senior Data Engineer",
     location: "London",
-    period: "2022 — 2025",
+    period: "2022 - 2025",
     points: [
       "Delivered a terabyte-scale transaction-monitoring system for NatWest (Scala, Spark, Elasticsearch, Airflow).",
       "Owned delivery for Quantexa trade-finance use cases; shipped end-to-end RAG prototypes for policy comparison.",
@@ -120,7 +120,7 @@ export const experience: Job[] = [
     company: "Afterschool",
     role: "Co-Founder",
     location: "Remote",
-    period: "2020 — 2022",
+    period: "2020 - 2022",
     points: [
       "Co-founded an e-learning platform; led the investment pitch in Y Combinator's final round (W21).",
       "Owned customer analytics and user-journey tracking across GA, GTM, Hotjar, and Microsoft Clarity.",
@@ -129,7 +129,7 @@ export const experience: Job[] = [
   },
   {
     company: "Ipsos UK",
-    role: "Data Scientist — Audience Measurement",
+    role: "Data Scientist - Audience Measurement",
     location: "London",
     period: "2022",
     points: [
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     name: "Sportscanner",
     href: "https://www.sportscanner.co.uk",
     badge: "Live · 800+ players",
-    blurb: "A marketplace for sports-court bookings in London — built solo.",
+    blurb: "A marketplace for sports-court bookings in London - built solo.",
     points: [
       "Compare badminton, squash & pickleball courts across 100+ venues in seconds.",
       "Raw data to useful product: scrapers crawl 10,000+ URLs → cleaned → served fast.",
@@ -184,7 +184,7 @@ export const projects: Project[] = [
     badge: "Building",
     blurb: "An evals & observability framework for multi-agent systems.",
     points: [
-      "Maps agent semantics — runs, steps, tool calls, sub-agent handoffs — into one trace layer.",
+      "Maps agent semantics - runs, steps, tool calls, sub-agent handoffs - into one trace layer.",
       "Works across frameworks: Google ADK, LangGraph, custom.",
       "No vendor-specific instrumentation shims required.",
     ],
@@ -263,12 +263,12 @@ export const education = [
     school: "University of Nottingham",
     degree: "MSc Information Systems & Operations",
     result: "Distinction",
-    period: "2020 — 2021",
+    period: "2020 - 2021",
   },
   {
     school: "National University of Sciences & Technology (NUST)",
     degree: "B.Eng. Mechatronics, Robotics & Automation",
     result: "",
-    period: "2016 — 2020",
+    period: "2016 - 2020",
   },
 ];

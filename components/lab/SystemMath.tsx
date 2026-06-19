@@ -10,7 +10,7 @@ import {
 } from "@/components/icons";
 
 // =====================================================================
-// "Napkin math" — turn DAU into infrastructure, one section at a time.
+// "Napkin math" - turn DAU into infrastructure, one section at a time.
 // Sliders propagate downstream. Mirrors arjaythedev.com/napkin-math.
 // =====================================================================
 
@@ -193,7 +193,7 @@ export default function SystemMath() {
   return (
     <div className="flex flex-col gap-10">
       <Note>
-        Capacity estimation — &ldquo;napkin math&rdquo; — is the first move in
+        Capacity estimation - &ldquo;napkin math&rdquo; - is the first move in
         any system design discussion. Start from one number,{" "}
         <strong>daily active users</strong>, and multiply your way out to
         servers, cache, database nodes, storage and bandwidth. Every slider
@@ -334,7 +334,7 @@ export default function SystemMath() {
 
       <Note>
         These are <em>order-of-magnitude</em> numbers, and that&apos;s the
-        point. A staff engineer doesn&apos;t need the cost to the dollar — they
+        point. A staff engineer doesn&apos;t need the cost to the dollar - they
         need to know whether the answer is &ldquo;3 servers&rdquo; or
         &ldquo;3,000&rdquo;, because those are completely different
         architectures. Try the presets, then push DAU to a billion and watch a
@@ -343,10 +343,10 @@ export default function SystemMath() {
 
       {/* Cheat sheet */}
       <section className="flex flex-col gap-5">
-        <SectionHeader n="07" title="Cheat sheet — rules of thumb" />
+        <SectionHeader n="07" title="Cheat sheet - rules of thumb" />
         <Panel tone="stone" className="divide-y divide-[var(--hairline-light)] p-2 sm:p-4">
           {[
-            ["1 day", "≈ 86,400 s ≈ 100,000 s — drop 5 zeros from req/day to get req/s"],
+            ["1 day", "≈ 86,400 s ≈ 100,000 s - drop 5 zeros from req/day to get req/s"],
             ["App server", "≈ 1,000 req/s for plain CRUD"],
             ["Postgres", "≈ 5,000 reads/s · 2,000 writes/s per node"],
             ["Redis", "≈ 100,000 ops/s"],
@@ -368,7 +368,7 @@ export default function SystemMath() {
         <SectionHeader n="08" title="Latency numbers every engineer should know" />
         <p className="max-w-[60ch] text-[15px] leading-[1.55] text-[var(--mute)]">
           The other half of the math: how long operations actually take. The
-          scale is logarithmic — each step right is roughly 10× slower — so you
+          scale is logarithmic - each step right is roughly 10× slower - so you
           can feel why a cache hit, an SSD read and a transatlantic round trip
           live in completely different worlds.
         </p>

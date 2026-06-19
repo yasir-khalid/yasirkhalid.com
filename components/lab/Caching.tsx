@@ -14,7 +14,7 @@ const STRATEGY_INFO: Record<Strategy, string> = {
   "cache-aside":
     "The app owns the cache. It checks the cache first; on a miss it reads the database itself, then stores the result. Writes go to the DB and invalidate the cached copy.",
   "read-through":
-    "The cache sits inline. The app only ever talks to the cache — on a miss, the cache fetches from the DB transparently and fills itself.",
+    "The cache sits inline. The app only ever talks to the cache - on a miss, the cache fetches from the DB transparently and fills itself.",
   "write-through":
     "Writes go to the cache and the database synchronously, so the cache is never stale. Slower writes, but reads are always fresh.",
   "write-behind":
@@ -123,7 +123,7 @@ export default function Caching() {
     <div className="flex flex-col gap-8">
       <Note>
         A cache is a small, fast store in front of a slow database. The{" "}
-        <strong>strategy</strong> decides who talks to whom, and when — which
+        <strong>strategy</strong> decides who talks to whom, and when - which
         changes how fresh your data is and how much load the database takes.
         Pick one, then fire reads and writes through it.
       </Note>
@@ -239,11 +239,11 @@ export default function Caching() {
 
       <Note>
         Crank the hit rate up and the <em>db load</em> and <em>avg latency</em>{" "}
-        both fall — every cache hit is a database query that never happened.
+        both fall - every cache hit is a database query that never happened.
         But notice the catch each strategy makes: write-through keeps the cache
         perfectly fresh at the cost of slow writes, while write-behind makes
         writes instant but risks losing data that hasn&apos;t flushed yet.
-        There is no free lunch — only the trade you choose.
+        There is no free lunch - only the trade you choose.
       </Note>
     </div>
   );

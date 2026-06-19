@@ -13,33 +13,33 @@ systems concepts (inspired by samwho.dev and arjaythedev.com / encore.dev).
 
 ```bash
 npm run dev      # local dev at http://localhost:3000
-npm run build    # production build — the gate; run this to verify changes
+npm run build    # production build - the gate; run this to verify changes
 npm start        # serve the production build
 npm run lint     # next lint
 ```
 
-There is no test suite. **`npm run build` is the verification step** — it
+There is no test suite. **`npm run build` is the verification step** - it
 type-checks and statically prerenders every route, so a clean build is the
 signal a change is good. There is nothing smaller to run than a full build.
 
 Next.js is pinned at **15.5.x** (≥15.5.19 patches CVE-2025-66478). The npm
-audit flags a PostCSS advisory transitive *inside* Next's toolchain — do **not**
+audit flags a PostCSS advisory transitive *inside* Next's toolchain - do **not**
 `npm audit fix --force`; it downgrades Next to v9.
 
 ## Architecture
 
 **Stack:** Next.js 15 (App Router, all pages statically prerendered / `○`),
-React 19, Tailwind CSS v4 (CSS-first config — no `tailwind.config`; tokens live
+React 19, Tailwind CSS v4 (CSS-first config - no `tailwind.config`; tokens live
 in `app/globals.css` under `@theme inline`), TypeScript. `@/*` path alias → repo
 root.
 
 **Design system is the spine.** `DESIGN.md` is the source of truth: a
-Revolut-style **two-mode canvas** — true-black (`#000000`) storytelling bands
+Revolut-style **two-mode canvas** - true-black (`#000000`) storytelling bands
 alternating with white catalogue bands, switched in full-bleed `<section>`s.
 Type is **Inter Tight 500** (display) + **Inter** (body) + **IBM Plex Mono**
 (technical/lab), loaded in `app/layout.tsx`. Brand accent is a **scarce** cobalt
 violet (`--primary #494fdf`); the primary CTA is a white pill on black
-(`.btn-primary`), dark pill on light is `.btn-dark`. No drop shadows — depth is
+(`.btn-primary`), dark pill on light is `.btn-dark`. No drop shadows - depth is
 canvas + surface-luminance shifts. When editing UI, read `DESIGN.md` first and
 reuse the token names / utility classes defined in `globals.css` (`.display`,
 `.heading`, `.mono-label`, `.btn-*`, `.card-*`, `.pill-outline`, `.tag-mono`).
@@ -51,14 +51,14 @@ palette, so older class references stay coherent without per-class rewrites.
 **Homepage** (`app/page.tsx`) is one file: a sequence of full-bleed bands
 (hero → pillars → trust → agentic-AI → experience → projects → lab CTA →
 metrics → skills → contact → footer). All copy comes from **`lib/content.ts`**
-— edit content there, not in the JSX.
+- edit content there, not in the JSX.
 
 **The lab is registry-driven.** `lib/lab.ts` exports `lab[]` (one `LabEntry`
 per explainer: slug, title, blurb, kind `"essay" | "tool"`, topic, tags,
 status). To add an explainer:
 1. add an entry to `lib/lab.ts` (it then auto-appears on the `/lab` gallery and the homepage lab CTA chips),
 2. create the interactive client component in `components/lab/`,
-3. create `app/lab/<slug>/page.tsx` — a thin wrapper that pulls the entry via `getEntry(slug)` and renders `<LabShell entry={entry}><Component/></LabShell>`.
+3. create `app/lab/<slug>/page.tsx` - a thin wrapper that pulls the entry via `getEntry(slug)` and renders `<LabShell entry={entry}><Component/></LabShell>`.
 
 Shared lab building blocks live in **`components/lab/ui.tsx`** (`Panel`,
 `Segmented`, `Slider`, `ActionButton`, `Stat`, `Note`) and `LabShell` / `LabNav`.
@@ -78,9 +78,12 @@ across the homepage.
 
 ## Conventions
 
+- **Never use em dashes (U+2014) anywhere on the site.** Not in copy, JSX,
+  metadata titles, or comments. Use a normal hyphen (`-`) where a dash is
+  genuinely needed, or rephrase. Applies to all new and edited content (docs too).
 - Display/heading text uses the `.display` / `.heading` utility classes (Inter
   Tight 500, tight negative tracking), never raw font weights.
-- Keep cobalt scarce — one featured/brand element per viewport; accents belong
+- Keep cobalt scarce - one featured/brand element per viewport; accents belong
   inside lab visualizations and mockups, never as button surfaces.
 - Reduced-motion is honoured globally (`prefers-reduced-motion` disables reveal
   + smooth scroll).

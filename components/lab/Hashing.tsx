@@ -6,7 +6,7 @@ import { ActionButton, Note, Panel, Slider } from "@/components/lab/ui";
 type Item = { id: number; key: string; hash: number };
 
 // Deterministic 32-bit string hash (FNV-1a). The raw hash is independent of
-// table size — only the final modulo decides the bucket.
+// table size - only the final modulo decides the bucket.
 function fnv1a(s: string): number {
   let h = 2166136261 >>> 0;
   for (let i = 0; i < s.length; i++) {
@@ -70,8 +70,8 @@ export default function Hashing() {
         A hash table turns a key into an array index. Run the key through a{" "}
         <strong>hash function</strong> to get a big number, then take it{" "}
         <strong>modulo the table size</strong> to land in a bucket. Two
-        different keys can land in the same bucket — a{" "}
-        <strong>collision</strong> — so each bucket holds a small chain.
+        different keys can land in the same bucket - a{" "}
+        <strong>collision</strong> - so each bucket holds a small chain.
       </Note>
 
       {/* Controls */}
@@ -210,7 +210,7 @@ export default function Hashing() {
 
       <Note>
         Try this: insert eight keys into eight buckets. You&apos;d hope for one
-        per bucket, but you won&apos;t get it — random hashing clusters (the{" "}
+        per bucket, but you won&apos;t get it - random hashing clusters (the{" "}
         <em>birthday paradox</em>). Now <strong>shrink the table</strong> and
         watch chains grow: a lookup has to walk the chain, so performance
         decays from O(1) toward O(n) as the load factor climbs. Real hash maps

@@ -1,4 +1,4 @@
-// Monochrome brand glyphs — currentColor so they inherit text colour.
+// Monochrome brand glyphs - currentColor so they inherit text colour.
 // Used as `social-icon`: on-dark-mute → on-dark in dark regions,
 // charcoal → ink on light. See DESIGN.md.
 

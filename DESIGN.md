@@ -1,41 +1,41 @@
-# Design Guide — yasirkhalid.com
+# Design Guide - yasirkhalid.com
 
 ## Overview
 
 This site runs a high-contrast **two-mode canvas system** adapted from
 Revolut's marketing language: a **true-black storytelling canvas**
-(`{colors.canvas-dark}` — `#000000`) that hosts the hero, the agentic-AI
+(`{colors.canvas-dark}` - `#000000`) that hosts the hero, the agentic-AI
 band, the impact metrics, and the closing CTA, alternating with **white
-catalogue bands** (`{colors.canvas-light}` — `#ffffff`) that host the
+catalogue bands** (`{colors.canvas-light}` - `#ffffff`) that host the
 pillars, experience table, projects, and skills. The two modes switch in
-full-bleed bands rather than soft transitions — sections slam against each
+full-bleed bands rather than soft transitions - sections slam against each
 other to create a magazine-spread rhythm.
 
 The display typography is **Inter Tight at weight 500** (the open-source
 substitute for Aeonik Pro), used from 20px to ~120px. The flagship hero sits
 at 64–120px with `lineHeight: 1.0` and tight negative letter-spacing. Body
-type is **Inter** at weight 400 — paired with slightly positive tracking
+type is **Inter** at weight 400 - paired with slightly positive tracking
 (`0.16–0.24px`) on UI labels for mechanical, fintech precision. A monospace
 (`IBM Plex Mono`) is reserved for technical labels and the interactive lab.
 
-The brand accent is `{colors.primary}` (`#494fdf`) — a saturated cobalt
-violet — but it appears **scarcely**. The actual primary CTA is the
+The brand accent is `{colors.primary}` (`#494fdf`) - a saturated cobalt
+violet - but it appears **scarcely**. The actual primary CTA is the
 **white pill on black** ("Get in touch"); cobalt is reserved for a single
 featured surface per viewport (the hero "now" card), the brand glyph, and
 secondary CTAs inside white bands. A wide accent palette lives only inside
-**illustrations** — the AgentConsole mockup and the interactive lab
-visualizations — never as button surfaces.
+**illustrations** - the AgentConsole mockup and the interactive lab
+visualizations - never as button surfaces.
 
 **Key Characteristics:**
-- Two-mode canvas — `{colors.canvas-dark}` (true black) for storytelling,
-  `{colors.canvas-light}` (white) for browsing — switched in full-bleed bands.
+- Two-mode canvas - `{colors.canvas-dark}` (true black) for storytelling,
+  `{colors.canvas-light}` (white) for browsing - switched in full-bleed bands.
 - Display type is **Inter Tight 500** at 20–120px with tight `lineHeight: 1.0`
   and negative letter-spacing that scales with size.
-- The primary CTA is `{component.button-primary}` — a **white pill with black
+- The primary CTA is `{component.button-primary}` - a **white pill with black
   text**, the brightest pixel on the dark canvas. Cobalt `{colors.primary}` is
   reserved for the featured card and secondary CTAs.
 - The accent palette (teal, pink, light-green, yellow, etc.) lives inside
-  illustrations and the lab only — never as button surfaces.
+  illustrations and the lab only - never as button surfaces.
 - All buttons are pill-shaped (`{rounded.full}`); cards use `{rounded.lg}`
   (20px); inputs and chips use `{rounded.md}` (12px); lab panels use
   `{rounded.lg}`.
@@ -44,58 +44,58 @@ visualizations — never as button surfaces.
 ## Colors
 
 ### Brand & Accent
-- **Cobalt Violet** (`{colors.primary}` — `#494fdf`): the brand accent.
+- **Cobalt Violet** (`{colors.primary}` - `#494fdf`): the brand accent.
   Reserved for the featured card (`{component.card-featured}`), the brand
   glyph, and secondary CTAs in white-canvas regions.
-- **Cobalt Bright** (`{colors.primary-bright}` — `#4f55f1`): inline link colour
+- **Cobalt Bright** (`{colors.primary-bright}` - `#4f55f1`): inline link colour
   and accent-photo headers.
-- **Cobalt Deep** (`{colors.primary-deep}` — `#3a40c4`): active/pressed state.
-- **On-Primary** (`{colors.on-primary}` — `#ffffff`): label on cobalt surfaces.
+- **Cobalt Deep** (`{colors.primary-deep}` - `#3a40c4`): active/pressed state.
+- **On-Primary** (`{colors.on-primary}` - `#ffffff`): label on cobalt surfaces.
 
 ### Surface
-- **Canvas Light** (`{colors.canvas-light}` — `#ffffff`): the white catalogue mode.
-- **Canvas Dark** (`{colors.canvas-dark}` — `#000000`): the storytelling canvas — true black, never near-black.
-- **Surface Soft** (`{colors.surface-soft}` — `#f4f4f4`): off-white for inset cards inside white bands.
-- **Surface Card** (`{colors.surface-card}` — `#ffffff`): pure white card surface.
-- **Surface Deep** (`{colors.surface-deep}` — `#0a0a0a`): inset cards inside black regions.
-- **Surface Elevated** (`{colors.surface-elevated}` — `#16181a`): lifted cards on the black canvas (hero "now" card frame, lab dark panels).
-- **Hairline Light** (`{colors.hairline-light}` — `#e2e2e7`): 1px dividers in white bands.
-- **Hairline Dark** (`{colors.hairline-dark}` — `rgba(255,255,255,0.12)`): dividers in dark regions.
-- **Hairline Strong** (`{colors.hairline-strong}` — `#191c1f`): structural dividers and light-card outlines.
+- **Canvas Light** (`{colors.canvas-light}` - `#ffffff`): the white catalogue mode.
+- **Canvas Dark** (`{colors.canvas-dark}` - `#000000`): the storytelling canvas - true black, never near-black.
+- **Surface Soft** (`{colors.surface-soft}` - `#f4f4f4`): off-white for inset cards inside white bands.
+- **Surface Card** (`{colors.surface-card}` - `#ffffff`): pure white card surface.
+- **Surface Deep** (`{colors.surface-deep}` - `#0a0a0a`): inset cards inside black regions.
+- **Surface Elevated** (`{colors.surface-elevated}` - `#16181a`): lifted cards on the black canvas (hero "now" card frame, lab dark panels).
+- **Hairline Light** (`{colors.hairline-light}` - `#e2e2e7`): 1px dividers in white bands.
+- **Hairline Dark** (`{colors.hairline-dark}` - `rgba(255,255,255,0.12)`): dividers in dark regions.
+- **Hairline Strong** (`{colors.hairline-strong}` - `#191c1f`): structural dividers and light-card outlines.
 
 ### Text
-- **Ink** (`{colors.ink}` — `#191c1f`): primary text — warmer than pure black.
-- **Body** (`{colors.body}` — `#1f2226`): long-form body.
-- **Charcoal** (`{colors.charcoal}` — `#3a3d40`): captions, secondary nav, mono labels on light.
-- **Mute** (`{colors.mute}` — `#505a63`): supporting text.
-- **Ash** (`{colors.ash}` — `#5c5e60`): tertiary text, footer copy.
-- **Stone** (`{colors.stone}` — `#8d969e`): metadata, subtle captions.
-- **Faint** (`{colors.faint}` — `#c9c9cd`): disabled foreground.
-- **On-Dark** (`{colors.on-dark}` — `#ffffff`): primary text on the dark canvas.
-- **On-Dark Mute** (`{colors.on-dark-mute}` — `rgba(255,255,255,0.72)`): secondary text in dark regions.
+- **Ink** (`{colors.ink}` - `#191c1f`): primary text - warmer than pure black.
+- **Body** (`{colors.body}` - `#1f2226`): long-form body.
+- **Charcoal** (`{colors.charcoal}` - `#3a3d40`): captions, secondary nav, mono labels on light.
+- **Mute** (`{colors.mute}` - `#505a63`): supporting text.
+- **Ash** (`{colors.ash}` - `#5c5e60`): tertiary text, footer copy.
+- **Stone** (`{colors.stone}` - `#8d969e`): metadata, subtle captions.
+- **Faint** (`{colors.faint}` - `#c9c9cd`): disabled foreground.
+- **On-Dark** (`{colors.on-dark}` - `#ffffff`): primary text on the dark canvas.
+- **On-Dark Mute** (`{colors.on-dark-mute}` - `rgba(255,255,255,0.72)`): secondary text in dark regions.
 
 ### Semantic / Illustration (lab & mockups only)
-- **Accent Teal** (`{colors.accent-teal}` — `#00a87e`): healthy/positive state in mockups & lab.
-- **Accent Light Blue** (`{colors.accent-light-blue}` — `#007bc2`).
-- **Accent Blue Link** (`{colors.accent-blue-link}` — `#376cd5`): default inline link on white.
-- **Accent Light Green** (`{colors.accent-light-green}` — `#428619`).
-- **Accent Yellow** (`{colors.accent-yellow}` — `#b09000`): caution/pending in mockups.
-- **Accent Warning** (`{colors.accent-warning}` — `#ec7e00`).
-- **Accent Pink** (`{colors.accent-pink}` — `#e61e49`).
-- **Accent Danger** (`{colors.accent-danger}` — `#e23b4a`): error/overload state.
-- **Accent Deep Red** (`{colors.accent-deep-red}` — `#8b0000`): inline error text.
-- **Accent Brown** (`{colors.accent-brown}` — `#936d62`).
-- **Link** (`{colors.link}` — `#376cd5`): default inline link colour.
+- **Accent Teal** (`{colors.accent-teal}` - `#00a87e`): healthy/positive state in mockups & lab.
+- **Accent Light Blue** (`{colors.accent-light-blue}` - `#007bc2`).
+- **Accent Blue Link** (`{colors.accent-blue-link}` - `#376cd5`): default inline link on white.
+- **Accent Light Green** (`{colors.accent-light-green}` - `#428619`).
+- **Accent Yellow** (`{colors.accent-yellow}` - `#b09000`): caution/pending in mockups.
+- **Accent Warning** (`{colors.accent-warning}` - `#ec7e00`).
+- **Accent Pink** (`{colors.accent-pink}` - `#e61e49`).
+- **Accent Danger** (`{colors.accent-danger}` - `#e23b4a`): error/overload state.
+- **Accent Deep Red** (`{colors.accent-deep-red}` - `#8b0000`): inline error text.
+- **Accent Brown** (`{colors.accent-brown}` - `#936d62`).
+- **Link** (`{colors.link}` - `#376cd5`): default inline link colour.
 
 ## Typography
 
 ### Font Family
-- **Inter Tight** — display sizes (20px+) at weight 500. Substitute for Aeonik
+- **Inter Tight** - display sizes (20px+) at weight 500. Substitute for Aeonik
   Pro; shares the warm geometric character and tightens with negative
   letter-spacing at large sizes.
-- **Inter** — body, button labels, captions, metadata. Weight 400 or 600, with
+- **Inter** - body, button labels, captions, metadata. Weight 400 or 600, with
   positive tracking (`0.16–0.24px`) on UI labels.
-- **IBM Plex Mono** — technical labels, the lab's mono tags and trace readouts.
+- **IBM Plex Mono** - technical labels, the lab's mono tags and trace readouts.
 
 When Aeonik Pro can be licensed, swap it in for Inter Tight at display sizes;
 keep `lineHeight: 1.0` and apply ~-1% letter-spacing.
@@ -120,7 +120,7 @@ keep `lineHeight: 1.0` and apply ~-1% letter-spacing.
 ### Principles
 - Display sizes run at weight 500 with `lineHeight: 1.0` (loosen to ~1.1 below 48px). Negative letter-spacing scales with size.
 - Body Inter sits at weight 400 with positive tracking (`0.24px`).
-- Never bump body Inter to weight 500 — use 400 (default) or 600 (emphatic).
+- Never bump body Inter to weight 500 - use 400 (default) or 600 (emphatic).
 - Mono labels are uppercase `{colors.charcoal}` on light, `{colors.on-dark-mute}` on dark.
 
 ## Layout
@@ -136,18 +136,18 @@ keep `lineHeight: 1.0` and apply ~-1% letter-spacing.
 - Feature/project cards: 2-up desktop → 1-up mobile.
 
 ### Whitespace
-- Generous and editorial — bands breathe at 88–120px so display headlines register without crowding.
+- Generous and editorial - bands breathe at 88–120px so display headlines register without crowding.
 - Hairline dividers replace shadow: `{colors.hairline-light}` on white, `{colors.hairline-dark}` on black.
 
 ## Elevation & Depth
 
 | Level | Treatment | Use |
 |---|---|---|
-| 0 — flat | No shadow, no border | Default canvas bands, hero. |
-| 1 — surface card | `{colors.surface-card}` on `{colors.surface-soft}` band, 1px `{colors.hairline-light}` | Cards in light bands. |
-| 2 — surface elevated | `{colors.surface-elevated}` on `{colors.canvas-dark}` | Cards/panels in dark regions (AgentConsole, hero frame). |
-| 3 — featured | `{colors.primary}` on `{colors.canvas-dark}` | The single cobalt featured card. |
-| 4 — illustration | Light stage (`{colors.surface-soft}` / white + hairline) with accent-coded elements | The interactive lab visualizations — kept light for contrast/legibility. |
+| 0 - flat | No shadow, no border | Default canvas bands, hero. |
+| 1 - surface card | `{colors.surface-card}` on `{colors.surface-soft}` band, 1px `{colors.hairline-light}` | Cards in light bands. |
+| 2 - surface elevated | `{colors.surface-elevated}` on `{colors.canvas-dark}` | Cards/panels in dark regions (AgentConsole, hero frame). |
+| 3 - featured | `{colors.primary}` on `{colors.canvas-dark}` | The single cobalt featured card. |
+| 4 - illustration | Light stage (`{colors.surface-soft}` / white + hairline) with accent-coded elements | The interactive lab visualizations - kept light for contrast/legibility. |
 
 No drop-shadow language. Depth = canvas switches + surface-luminance shifts.
 
@@ -165,41 +165,41 @@ No drop-shadow language. Depth = canvas switches + surface-luminance shifts.
 ## Components
 
 ### Buttons
-- **`button-primary`** — white pill on dark. Bg `{colors.canvas-light}`, label `{colors.canvas-dark}`, `{rounded.full}`, padding `14px 28px`, height 48px. The primary CTA on every dark band.
-- **`button-dark`** — dark pill on light. Bg `{colors.canvas-dark}`, label `{colors.on-dark}`, `{rounded.full}`. Used in white bands.
-- **`button-soft`** — soft surface CTA. Bg `{colors.surface-soft}`, label `{colors.ink}`, `{rounded.full}`.
-- **`button-outline-light`** — white bg, `{colors.ink}` label, 1px `{colors.hairline-strong}`, `{rounded.full}`.
-- **`button-outline-dark`** — dark bg, `{colors.on-dark}` label, 1px `{colors.on-dark}`, `{rounded.full}`. Tertiary action on dark bands.
-- **`button-text`** — underlined text link, `{colors.ink}` → `{colors.link}` on hover.
+- **`button-primary`** - white pill on dark. Bg `{colors.canvas-light}`, label `{colors.canvas-dark}`, `{rounded.full}`, padding `14px 28px`, height 48px. The primary CTA on every dark band.
+- **`button-dark`** - dark pill on light. Bg `{colors.canvas-dark}`, label `{colors.on-dark}`, `{rounded.full}`. Used in white bands.
+- **`button-soft`** - soft surface CTA. Bg `{colors.surface-soft}`, label `{colors.ink}`, `{rounded.full}`.
+- **`button-outline-light`** - white bg, `{colors.ink}` label, 1px `{colors.hairline-strong}`, `{rounded.full}`.
+- **`button-outline-dark`** - dark bg, `{colors.on-dark}` label, 1px `{colors.on-dark}`, `{rounded.full}`. Tertiary action on dark bands.
+- **`button-text`** - underlined text link, `{colors.ink}` → `{colors.link}` on hover.
 
 ### Cards
-- **`feature-card-light`** — bg `{colors.surface-card}`, 1px `{colors.hairline-light}`, `{rounded.lg}`, padding 32px. Projects, feature comparisons.
-- **`feature-card-dark`** — bg `{colors.surface-elevated}`, text `{colors.on-dark}`, `{rounded.lg}`, padding 32px.
-- **`card-featured`** — bg `{colors.primary}`, text `{colors.on-primary}`, `{rounded.lg}`. The single cobalt stamp (hero "now" card).
+- **`feature-card-light`** - bg `{colors.surface-card}`, 1px `{colors.hairline-light}`, `{rounded.lg}`, padding 32px. Projects, feature comparisons.
+- **`feature-card-dark`** - bg `{colors.surface-elevated}`, text `{colors.on-dark}`, `{rounded.lg}`, padding 32px.
+- **`card-featured`** - bg `{colors.primary}`, text `{colors.on-primary}`, `{rounded.lg}`. The single cobalt stamp (hero "now" card).
 
 ### Navigation
-- **`nav-bar`** — bg `{colors.canvas-dark}`, text `{colors.on-dark}`, height 64px. Left: wordmark. Centre: links. Right: GitHub/X icons + `{component.button-primary}`.
+- **`nav-bar`** - bg `{colors.canvas-dark}`, text `{colors.on-dark}`, height 64px. Left: wordmark. Centre: links. Right: GitHub/X icons + `{component.button-primary}`.
 
 ### Signature
-- **`badge-tag`** — bg `{colors.surface-soft}`, text `{colors.ink}`, `{rounded.full}`, `4px 12px`.
-- **`badge-feature`** — bg `{colors.primary}`, text `{colors.on-primary}`, `{rounded.full}`. "Live", "Most popular".
-- **`social-icon`** — 20px monochrome glyph (GitHub, X), `{colors.on-dark-mute}` → `{colors.on-dark}` on hover in dark regions; `{colors.charcoal}` → `{colors.ink}` on light.
-- **`footer`** — bg `{colors.canvas-dark}`, text `{colors.on-dark-mute}`, `{rounded.none}`, padding `80px 24px`.
+- **`badge-tag`** - bg `{colors.surface-soft}`, text `{colors.ink}`, `{rounded.full}`, `4px 12px`.
+- **`badge-feature`** - bg `{colors.primary}`, text `{colors.on-primary}`, `{rounded.full}`. "Live", "Most popular".
+- **`social-icon`** - 20px monochrome glyph (GitHub, X), `{colors.on-dark-mute}` → `{colors.on-dark}` on hover in dark regions; `{colors.charcoal}` → `{colors.ink}` on light.
+- **`footer`** - bg `{colors.canvas-dark}`, text `{colors.on-dark-mute}`, `{rounded.none}`, padding `80px 24px`.
 
 ## Do's and Don'ts
 
 ### Do
 - Switch full bands between `{colors.canvas-dark}` and `{colors.canvas-light}`. The two-mode rhythm is core.
 - Use `{component.button-primary}` (white pill on dark) as the loudest action on every dark band.
-- Reserve `{colors.primary}` for the featured card and the brand glyph — a deliberate stamp, not a theme.
+- Reserve `{colors.primary}` for the featured card and the brand glyph - a deliberate stamp, not a theme.
 - Set hero headlines in **Inter Tight 500** with `lineHeight: 1.0` and negative letter-spacing.
 - Keep accent colours inside illustrations and the lab only.
 - Apply `{rounded.full}` to buttons, `{rounded.lg}` to cards, `{rounded.md}` to inputs.
 
 ### Don't
 - Don't use accent colours as button surfaces.
-- Don't use a near-black canvas — the brand is `#000000`.
-- Don't pair white prose with cobalt — `{colors.primary}` is a surface, not body text.
+- Don't use a near-black canvas - the brand is `#000000`.
+- Don't pair white prose with cobalt - `{colors.primary}` is a surface, not body text.
 - Don't add drop shadows. Elevation is canvas + surface-luminance.
 - Don't introduce a second brand colour. Cobalt is the only stamp.
 - Don't loosen display `lineHeight` past 1.0 above 48px.
@@ -218,5 +218,5 @@ No drop-shadow language. Depth = canvas switches + surface-luminance shifts.
 
 ## Known Gaps
 - Pressed/active states are documented for buttons only; other components rely on the browser focus ring.
-- The lab visualizations are treated as illustration surfaces on **light stages** (`{colors.surface-soft}` / white with hairline borders) for maximum contrast — the accent palette (teal = healthy, danger = overload, cobalt = active) is used freely there for legibility, per the "accents live in illustrations" rule.
+- The lab visualizations are treated as illustration surfaces on **light stages** (`{colors.surface-soft}` / white with hairline borders) for maximum contrast - the accent palette (teal = healthy, danger = overload, cobalt = active) is used freely there for legibility, per the "accents live in illustrations" rule.
 - Aeonik Pro is substituted with Inter Tight; swap in the licensed face at display sizes when available.

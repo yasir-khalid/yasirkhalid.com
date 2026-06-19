@@ -31,7 +31,7 @@ const STAGES: Stage[] = [
     title: "A single VM",
     users: "first users",
     fixes:
-      "Nothing yet — the only goal is to ship. One box runs your web app, an in-process cache and the database, all together.",
+      "Nothing yet - the only goal is to ship. One box runs your web app, an in-process cache and the database, all together.",
     adds: "A single virtual machine. Cheap, simple, one thing to deploy and reason about. Perfectly fine to start.",
     watch:
       "One failure takes the whole site down, and the app and database fight over the same CPU, memory and disk.",
@@ -42,10 +42,10 @@ const STAGES: Stage[] = [
     title: "Split the database off",
     users: "thousands",
     fixes:
-      "The app and database were competing for the same machine — one heavy query could freeze the entire site.",
+      "The app and database were competing for the same machine - one heavy query could freeze the entire site.",
     adds: "Move the database onto its own box so each can be sized and tuned independently. The cheapest scaling is still vertical: give the DB more RAM and faster disks before anything cleverer.",
     watch:
-      "Now there's a network hop and a connection pool to manage — and a single database is still a single point of failure.",
+      "Now there's a network hop and a connection pool to manage - and a single database is still a single point of failure.",
     arch: { appCount: 1, cache: true, replicas: 0 },
     newKeys: ["db"],
   },
@@ -53,7 +53,7 @@ const STAGES: Stage[] = [
     title: "See what's actually happening",
     users: "thousands",
     fixes:
-      "You're about to scale — but on a hunch. Which layer is actually slow: the app, the database, or the network between them?",
+      "You're about to scale - but on a hunch. Which layer is actually slow: the app, the database, or the network between them?",
     adds: "Instrument everything before you scale: metrics (p50/p99 latency, throughput, error rate), structured logs, and distributed traces on a dashboard. Measure, don't guess.",
     watch:
       "Scaling the wrong layer wastes money and time. The real bottleneck is almost never where intuition says it is.",
@@ -64,8 +64,8 @@ const STAGES: Stage[] = [
     title: "More than one app server",
     users: "tens of thousands",
     fixes:
-      "A single app server pinned its CPU at peak — no headroom, and no redundancy if it died.",
-    adds: "Make the app stateless (push sessions into the cache or DB) and run several copies behind a load balancer. Scale out, not up — and survive a node failing.",
+      "A single app server pinned its CPU at peak - no headroom, and no redundancy if it died.",
+    adds: "Make the app stateless (push sessions into the cache or DB) and run several copies behind a load balancer. Scale out, not up - and survive a node failing.",
     watch:
       "State can no longer live inside the app process; deploys, sticky sessions and config drift all get trickier.",
     arch: { observability: true, lb: true, appCount: 3, cache: true, replicas: 0 },
@@ -76,7 +76,7 @@ const STAGES: Stage[] = [
     users: "hundreds of thousands",
     fixes:
       "The same database reads ran over and over, and every image and script was served straight from your origin.",
-    adds: "Put a shared cache (Redis) in front of the database for hot data, and a CDN at the edge for static assets and media — close to users, off your servers.",
+    adds: "Put a shared cache (Redis) in front of the database for hot data, and a CDN at the edge for static assets and media - close to users, off your servers.",
     watch:
       "Cache invalidation is now your problem: stale reads, and a thundering herd hammering the DB whenever the cache goes cold.",
     arch: { observability: true, cdn: true, lb: true, appCount: 3, cache: true, replicas: 0 },
@@ -86,7 +86,7 @@ const STAGES: Stage[] = [
     title: "Get slow work off the request path",
     users: "hundreds of thousands",
     fixes:
-      "Slow work — sending email, processing images, generating exports — blocked the request and tied up app threads.",
+      "Slow work - sending email, processing images, generating exports - blocked the request and tied up app threads.",
     adds: "Drop slow or non-urgent work onto a message queue and let background workers process it. The request returns immediately; the work happens out of band.",
     watch:
       "You've traded synchronous simplicity for eventual consistency, retries, dead-letter queues and one more system to monitor.",
@@ -160,10 +160,10 @@ export default function SystemEvolution() {
   return (
     <div className="flex flex-col gap-8">
       <Note>
-        No one designs for millions of users on day one — and they shouldn&apos;t.
+        No one designs for millions of users on day one - and they shouldn&apos;t.
         Architecture <strong>evolves</strong>, one bottleneck at a time. Step
         through the stages and watch each new piece appear exactly when the
-        previous design runs out of room — and what new problem it brings with it.
+        previous design runs out of room - and what new problem it brings with it.
       </Note>
 
       {/* Stepper */}
@@ -268,7 +268,7 @@ export default function SystemEvolution() {
         )}
       </Panel>
 
-      {/* Explanation — bottleneck / what we added / the trade-off */}
+      {/* Explanation - bottleneck / what we added / the trade-off */}
       <div className="grid gap-5 md:grid-cols-3">
         <Panel className="p-6">
           <p className="mono-label text-[var(--accent-danger)]">// the bottleneck</p>
@@ -288,7 +288,7 @@ export default function SystemEvolution() {
         Every box on this diagram was added to relieve real pressure, and each
         one brought new complexity: connection pools, cache invalidation,
         replication lag, eventual consistency, distributed tracing. The art of
-        system design isn&apos;t reaching the last stage — it&apos;s knowing
+        system design isn&apos;t reaching the last stage - it&apos;s knowing
         which stage you&apos;re actually at, and refusing to pay for the next one
         before you need it.
       </Note>

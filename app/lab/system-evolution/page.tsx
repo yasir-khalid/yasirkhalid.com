@@ -6,7 +6,7 @@ import { getEntry } from "@/lib/lab";
 const entry = getEntry("system-evolution")!;
 
 export const metadata: Metadata = {
-  title: `${entry.title} — The Lab · Yasir Khalid`,
+  title: `${entry.title} - The Lab · Yasir Khalid`,
   description: entry.blurb,
 };
 

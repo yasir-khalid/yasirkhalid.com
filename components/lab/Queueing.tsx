@@ -7,7 +7,7 @@ type Discipline = "fifo" | "lifo" | "priority";
 type Item = { id: number; prio: boolean; wait: number };
 
 const TICK_MS = 600;
-const MAX_QUEUE = 12; // capacity — beyond this, requests are dropped
+const MAX_QUEUE = 12; // capacity - beyond this, requests are dropped
 
 export default function Queueing() {
   const [discipline, setDiscipline] = useState<Discipline>("fifo");
@@ -105,8 +105,8 @@ export default function Queueing() {
       <Note>
         A queue lets a server absorb bursts: requests wait in line instead of
         being dropped. But a queue can&apos;t add capacity. When requests arrive
-        faster than the server drains them — <strong>utilisation ρ &gt; 1</strong>{" "}
-        — the line grows without bound and waiting time explodes. The{" "}
+        faster than the server drains them - <strong>utilisation ρ &gt; 1</strong>{" "}
+        - the line grows without bound and waiting time explodes. The{" "}
         <strong>discipline</strong> (who gets served next) decides who pays that
         cost.
       </Note>
@@ -217,9 +217,9 @@ export default function Queueing() {
       <Note>
         Two things to try. First, push <strong>arrival rate</strong> until ρ
         crosses 1 and watch the queue fill to capacity and start{" "}
-        <em>dropping</em> — latency was already climbing long before that. Second,
+        <em>dropping</em> - latency was already climbing long before that. Second,
         flip to <strong>LIFO</strong> under load: throughput is identical, but
-        the oldest requests starve at the back, wrecking p99 — which is why
+        the oldest requests starve at the back, wrecking p99 - which is why
         newest-first queues quietly destroy tail latency. <strong>Priority</strong>{" "}
         lets the cobalt requests jump the line so the work that matters stays
         fast while the rest absorbs the delay.
