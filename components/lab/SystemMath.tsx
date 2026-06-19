@@ -311,16 +311,19 @@ export default function SystemMath() {
         {/* cumulative storage bars */}
         <Panel tone="stone" className="p-6">
           <p className="mono-label text-[var(--mute)]">cumulative storage by year</p>
-          <div className="mt-5 flex h-40 items-end gap-3">
+          <div className="mt-5 flex items-end gap-3">
             {Array.from({ length: retention }).map((_, i) => {
               const cum = annualBytes * (i + 1);
               return (
-                <div key={i} className="flex flex-1 flex-col items-center justify-end gap-2">
+                <div key={i} className="flex flex-1 flex-col items-center gap-2">
                   <span className="font-mono text-[10px] text-[var(--charcoal)]">{bytesFmt(cum)}</span>
-                  <div
-                    className="w-full rounded-t-[6px] bg-[var(--primary)] transition-all"
-                    style={{ height: `${Math.max(4, (cum / maxCumBytes) * 100)}%` }}
-                  />
+                  {/* fixed-height track so the % bar has something to resolve against */}
+                  <div className="flex h-28 w-full items-end">
+                    <div
+                      className="w-full rounded-t-[6px] bg-[var(--primary)] transition-all"
+                      style={{ height: `${Math.max(3, (cum / maxCumBytes) * 100)}%` }}
+                    />
+                  </div>
                   <span className="font-mono text-[10px] text-[var(--stone-text)]">yr {i + 1}</span>
                 </div>
               );

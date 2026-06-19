@@ -1,9 +1,8 @@
 import Link from "next/link";
-import LabNav from "@/components/lab/LabNav";
 import type { LabEntry } from "@/lib/lab";
 
-// Shared page chrome for an individual explainer: nav, header block, the
-// interactive body (children), and a footer with prev/next-ish back link.
+// Shared page chrome for an individual explainer: a back button, the header
+// block, and the interactive body (children). No persistent nav bar.
 export default function LabShell({
   entry,
   children,
@@ -13,17 +12,15 @@ export default function LabShell({
 }) {
   return (
     <main className="min-h-screen bg-white">
-      <LabNav />
-
-      <article className="mx-auto max-w-[1100px] px-5 pb-28 pt-14 sm:px-8 sm:pt-20">
+      <article className="mx-auto max-w-[1100px] px-5 pb-28 pt-10 sm:px-8 sm:pt-14">
         <Link
           href="/lab"
-          className="mono-label text-[var(--muted)] transition-colors hover:text-[var(--blue)]"
+          className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
         >
-          ← The Lab
+          ← Back to The Lab
         </Link>
 
-        <header className="mt-6 border-b border-[var(--hairline)] pb-10">
+        <header className="mt-8 border-b border-[var(--hairline)] pb-10">
           <div className="flex flex-wrap items-center gap-3">
             <span className="mono-label text-[var(--coral)]">{entry.topic}</span>
             <span className="text-[var(--hairline)]">·</span>

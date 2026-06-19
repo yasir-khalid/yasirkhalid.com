@@ -166,7 +166,7 @@ export default function LoadBalancing() {
         </div>
         <div className="flex gap-2">
           <ActionButton onClick={() => setRunning((r) => !r)}>
-            {running ? "Pause" : "Start traffic"}
+            {running ? "⏸ Pause" : "▶ Start simulation"}
           </ActionButton>
           <ActionButton variant="ghost" onClick={reset}>
             Reset
