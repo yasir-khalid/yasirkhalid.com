@@ -230,6 +230,177 @@ export default function SystemMath() {
   const egressMbps = (peakReadsRps * objectKb * 1024 * 8) / 1e6;
   const maxCumBytes = annualBytes * retention || 1;
 
+  // Build a self-contained, printable HTML report and download it.
+  function downloadReport() {
+    const now = new Date();
+    const stamp = now.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" });
+
+    const sections: { n: string; title: string; rows: [string, string][] }[] = [
+      {
+        n: "01",
+        title: "Inputs",
+        rows: [
+          ["Daily active users", human(dau)],
+          ["Requests / user / day", `${reqPerUser}`],
+          ["Peak multiplier", `${peak}×`],
+          ["Read share", `${readShare}%`],
+          ["Cache hit rate", `${hitRate}%`],
+          ["Avg object size", `${objectKb} KB`],
+          ["App server capacity", `${human(appCap)}/s`],
+          ["DB reads / node", `${human(readsPerNode)}/s`],
+          ["DB writes / node", `${human(writesPerNode)}/s`],
+          ["Replication factor", `${replication}×`],
+          ["Retention", `${retention} yr`],
+        ],
+      },
+      {
+        n: "02",
+        title: "Traffic",
+        rows: [
+          ["Requests / day", human(reqPerDay)],
+          ["Average RPS", `${human(avgRps)}/s`],
+          ["Peak RPS", `${human(peakRps)}/s`],
+        ],
+      },
+      {
+        n: "03",
+        title: "App server fleet",
+        rows: [
+          ["Servers needed", human(fleetNeeded)],
+          ["Spare", "1"],
+          ["Fleet total", `${human(fleetTotal)} @ ${TARGET_UTIL * 100}% util`],
+        ],
+      },
+      {
+        n: "04",
+        title: "Cache & read distribution",
+        rows: [
+          ["Cache hits (absorbed)", `${human(cacheHitsRps)}/s`],
+          ["Database reads", `${human(dbReadsRps)}/s`],
+          ["Database writes", `${human(writesRps)}/s`],
+          ["Cache memory (80/20)", bytesFmt(cacheMemBytes)],
+        ],
+      },
+      {
+        n: "05",
+        title: "Database nodes",
+        rows: [
+          ["Shards", human(shards)],
+          ["Replicas / shard", human(replicasPerShard)],
+          ["Total nodes", human(totalNodes)],
+        ],
+      },
+      {
+        n: "06",
+        title: "Storage & bandwidth",
+        rows: [
+          ["New data / day", bytesFmt(dailyWriteBytes)],
+          ["Per year", bytesFmt(annualBytes)],
+          [`At ${retention} yr retention`, bytesFmt(fullRetentionBytes)],
+          ["Peak egress", `${human(egressMbps)} Mbps`],
+        ],
+      },
+    ];
+
+    const summary: [string, string][] = [
+      ["DAU", human(dau)],
+      ["Peak RPS", `${human(peakRps)}/s`],
+      ["App servers", human(fleetTotal)],
+      ["DB nodes", human(totalNodes)],
+      ["Storage", bytesFmt(fullRetentionBytes)],
+    ];
+
+    const nav = sections
+      .map((s) => `<a href="#s${s.n}"><span class="num">${s.n}</span>${s.title}</a>`)
+      .join("");
+
+    const summaryHtml = summary
+      .map(([k, v]) => `<div class="kpi"><div class="kpi-l">${k}</div><div class="kpi-v">${v}</div></div>`)
+      .join("");
+
+    const body = sections
+      .map(
+        (s) => `
+        <section id="s${s.n}">
+          <h2><span class="snum">${s.n}</span>${s.title}</h2>
+          <table>${s.rows
+            .map(([k, v]) => `<tr><td class="k">${k}</td><td class="v">${v}</td></tr>`)
+            .join("")}</table>
+        </section>`
+      )
+      .join("");
+
+    const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>System Design Estimate</title>
+<style>
+  :root{--ink:#191c1f;--mute:#505a63;--stone:#8d969e;--line:#e2e2e7;--soft:#f4f4f4;--primary:#494fdf;}
+  *{box-sizing:border-box;}
+  body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Inter",Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;}
+  .wrap{display:flex;max-width:1100px;margin:0 auto;min-height:100vh;}
+  aside{width:280px;flex:none;border-right:1px solid var(--line);padding:40px 28px;position:sticky;top:0;align-self:flex-start;height:100vh;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .glyph{width:28px;height:28px;border-radius:8px;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:600;font-size:12px;}
+  .brand b{font-size:15px;letter-spacing:-.01em;}
+  h1{font-size:22px;letter-spacing:-.02em;margin:28px 0 4px;}
+  .sub{color:var(--mute);font-size:13px;margin:0 0 24px;}
+  .kpis{display:flex;flex-direction:column;gap:10px;margin:0 0 28px;}
+  .kpi{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:8px;}
+  .kpi-l{color:var(--stone);font-size:12px;text-transform:uppercase;letter-spacing:.04em;font-family:ui-monospace,monospace;}
+  .kpi-v{font-weight:600;}
+  nav{display:flex;flex-direction:column;gap:2px;}
+  nav a{display:flex;align-items:center;gap:10px;color:var(--mute);text-decoration:none;font-size:14px;padding:7px 0;border-bottom:1px solid var(--line);}
+  nav a:hover{color:var(--primary);}
+  nav .num{font-family:ui-monospace,monospace;font-size:11px;color:var(--stone);}
+  main{flex:1;padding:40px 44px;}
+  .toolbar{display:flex;justify-content:flex-end;margin-bottom:24px;}
+  button.print{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 22px;font:600 14px/1 inherit;cursor:pointer;}
+  section{margin:0 0 36px;}
+  h2{font-size:18px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+  .snum{font-family:ui-monospace,monospace;font-size:12px;color:var(--primary);}
+  table{width:100%;border-collapse:collapse;}
+  td{padding:9px 0;border-bottom:1px solid var(--soft);}
+  td.k{color:var(--mute);}
+  td.v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;}
+  .formula{background:var(--soft);border-radius:12px;padding:16px 18px;font-family:ui-monospace,monospace;font-size:13px;color:var(--mute);margin-bottom:28px;}
+  .formula b{color:var(--ink);} .formula .a{color:#376cd5;} .formula .p{color:#e23b4a;}
+  footer{color:var(--stone);font-size:12px;border-top:1px solid var(--line);padding-top:16px;margin-top:8px;}
+  @media print{aside{position:static;height:auto;}.toolbar{display:none;}.wrap{display:block;}aside{width:auto;border-right:0;border-bottom:1px solid var(--line);}}
+  @media(max-width:760px){.wrap{display:block;}aside{width:auto;height:auto;position:static;border-right:0;border-bottom:1px solid var(--line);}}
+</style></head>
+<body>
+  <div class="wrap">
+    <aside>
+      <div class="brand"><span class="glyph">YK</span><b>System Design Estimate</b></div>
+      <h1>Capacity report</h1>
+      <p class="sub">${stamp}</p>
+      <div class="kpis">${summaryHtml}</div>
+      <nav>${nav}</nav>
+    </aside>
+    <main>
+      <div class="toolbar"><button class="print" onclick="window.print()">Print / Save as PDF</button></div>
+      <div class="formula">
+        <b>${human(dau)}</b> DAU × <b>${reqPerUser}</b> req/user/day = <b>${human(reqPerDay)}</b> req/day ÷ 86,400 s =
+        <b class="a">${human(avgRps)}</b> req/s avg ··· × <b>${peak}</b> peak = <b class="p">${human(peakRps)}</b> req/s peak
+      </div>
+      ${body}
+      <footer>Generated with the interactive napkin-math tool at yasirkhalid.com/lab · order-of-magnitude estimates, not production figures.</footer>
+    </main>
+  </div>
+</body></html>`;
+
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `system-design-estimate-${now.toISOString().slice(0, 10)}.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
   function SectionHeader({ n, title }: { n: string; title: string }) {
     return (
       <div className="flex items-baseline gap-3">
@@ -249,7 +420,7 @@ export default function SystemMath() {
         below cascades into the ones beneath it.
       </Note>
 
-      {/* Presets */}
+      {/* Presets + report */}
       <div className="flex flex-wrap items-center gap-2">
         <span className="mono-label text-[var(--mute)]">presets:</span>
         {PRESETS.map((p) => (
@@ -261,6 +432,12 @@ export default function SystemMath() {
             {p.name}
           </button>
         ))}
+        <button
+          onClick={downloadReport}
+          className="btn btn-cobalt !min-h-0 !px-5 !py-2 !text-[14px] sm:ml-auto"
+        >
+          ↓ Download report
+        </button>
       </div>
 
       {/* 02 · DAU → requests/second */}
