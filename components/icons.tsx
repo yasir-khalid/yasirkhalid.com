@@ -1,6 +1,7 @@
 // Monochrome brand glyphs - currentColor so they inherit text colour.
 // Used as `social-icon`: on-dark-mute → on-dark in dark regions,
 // charcoal → ink on light. See DESIGN.md.
+import type { ReactElement } from "react";
 
 export function GitHubIcon({ className = "" }: { className?: string }) {
   return (
@@ -160,3 +161,141 @@ export function EmailIcon({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+// --- Lab concept glyphs (stroke, currentColor) - one per explainer ---
+// Used on the /lab gallery cards. Same line-icon language as the latency
+// glyphs: 24x24, 1.7 stroke, rounded caps/joins.
+
+function BloomIcon({ className = "" }: { className?: string }) {
+  // a bit array with a few bits flipped on
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2.5" y="8.5" width="19" height="7" rx="1.5" />
+      <path d="M6.2 8.5v7M9.9 8.5v7M13.6 8.5v7M17.3 8.5v7" />
+      <rect x="2.9" y="8.9" width="3" height="6.2" rx="0.6" fill="currentColor" stroke="none" />
+      <rect x="10.3" y="8.9" width="3" height="6.2" rx="0.6" fill="currentColor" stroke="none" />
+      <rect x="17.7" y="8.9" width="3" height="6.2" rx="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function HashingIcon({ className = "" }: { className?: string }) {
+  // a key fanning into buckets
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 3.5 7.5 20.5M16.5 3.5 15 20.5M4 9h16M3.5 15h16" />
+    </svg>
+  );
+}
+
+function LoadBalanceIcon({ className = "" }: { className?: string }) {
+  // one source fanning out to three servers
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="4.5" r="2" />
+      <path d="M12 6.5v3M12 9.5h-7v2.5M12 9.5h7v2.5M12 9.5v2.5" />
+      <rect x="2.5" y="14.5" width="5" height="5" rx="1" />
+      <rect x="9.5" y="14.5" width="5" height="5" rx="1" />
+      <rect x="16.5" y="14.5" width="5" height="5" rx="1" />
+    </svg>
+  );
+}
+
+function BigOIcon({ className = "" }: { className?: string }) {
+  // axes with an exploding growth curve
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 3v17h17" />
+      <path d="M5 19c5-.5 8.5-3 10.5-7.5C17 8 18.5 5.5 20 4" />
+    </svg>
+  );
+}
+
+function MathIcon({ className = "" }: { className?: string }) {
+  // back-of-the-envelope calculator
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4.5" y="2.5" width="15" height="19" rx="2" />
+      <path d="M7.5 6.5h9" />
+      <path d="M8 11h.01M12 11h.01M16 11h.01M8 14.5h.01M12 14.5h.01M16 14.5h.01M8 18h.01M12 18h.01M16 18h.01" />
+    </svg>
+  );
+}
+
+function CacheIcon({ className = "" }: { className?: string }) {
+  // a fast-path bolt over a store
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 6.5c0-1.5 3.8-2.5 8.5-2.5s8.5 1 8.5 2.5-3.8 2.5-8.5 2.5S3.5 8 3.5 6.5Z" />
+      <path d="M3.5 6.5v11c0 1.5 3.8 2.5 8.5 2.5" />
+      <path d="M20.5 6.5v4.5" />
+      <path d="m17 13-3.5 4h3l-1 3.5 4-4.5h-3l1-3Z" />
+    </svg>
+  );
+}
+
+function DistributedCacheIcon({ className = "" }: { className?: string }) {
+  // nodes around a shared centre
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="2.5" />
+      <path d="M12 5.5v4M12 14.5v4M5.7 8.5l3.8 2.2M14.5 12.8l3.8 2.2M5.7 15.5l3.8-2.2M14.5 11.2l3.8-2.2" />
+      <circle cx="12" cy="3.5" r="1.6" />
+      <circle cx="12" cy="20.5" r="1.6" />
+      <circle cx="4" cy="7.5" r="1.6" />
+      <circle cx="20" cy="7.5" r="1.6" />
+      <circle cx="4" cy="16.5" r="1.6" />
+      <circle cx="20" cy="16.5" r="1.6" />
+    </svg>
+  );
+}
+
+function QueueIcon({ className = "" }: { className?: string }) {
+  // a line of items draining right
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2.5" y="8" width="3.5" height="8" rx="1" />
+      <rect x="7.5" y="8" width="3.5" height="8" rx="1" />
+      <rect x="12.5" y="8" width="3.5" height="8" rx="1" />
+      <path d="M18.5 12h3M19.5 9.5 22 12l-2.5 2.5" />
+    </svg>
+  );
+}
+
+function RetryIcon({ className = "" }: { className?: string }) {
+  // a retry loop
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 5.5v5h-5" />
+      <path d="M19.2 10.5A8 8 0 1 0 20 15" />
+    </svg>
+  );
+}
+
+function EvolutionIcon({ className = "" }: { className?: string }) {
+  // rising stages
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2.5" y="15.5" width="5" height="5" rx="1" />
+      <rect x="9.5" y="10.5" width="5" height="10" rx="1" />
+      <rect x="16.5" y="4.5" width="5" height="16" rx="1" />
+    </svg>
+  );
+}
+
+// Lookup by lab slug. Falls back are handled by the caller.
+export const labIcons: Record<
+  string,
+  ({ className }: { className?: string }) => ReactElement
+> = {
+  "bloom-filters": BloomIcon,
+  hashing: HashingIcon,
+  "load-balancing": LoadBalanceIcon,
+  "big-o": BigOIcon,
+  "system-design-math": MathIcon,
+  "caching-strategies": CacheIcon,
+  "distributed-caching": DistributedCacheIcon,
+  queueing: QueueIcon,
+  retries: RetryIcon,
+  "system-evolution": EvolutionIcon,
+};

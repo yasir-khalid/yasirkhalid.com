@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { lab, type LabEntry } from "@/lib/lab";
+import { labIcons } from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "The Lab - Interactive explainers · Yasir Khalid",
@@ -24,6 +25,7 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
       </Reveal>
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         {entries.map((e, i) => {
+          const Icon = labIcons[e.slug];
           const card = (
             <div
               className={`group flex h-full flex-col rounded-[22px] p-7 ring-1 transition-all ${
@@ -33,7 +35,15 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="mono-label text-[var(--primary)]">{e.topic}</span>
+                <span
+                  className={`flex h-11 w-11 items-center justify-center rounded-[13px] transition-colors ${
+                    e.status === "live"
+                      ? "bg-[var(--surface-soft)] text-[var(--charcoal)] group-hover:bg-[var(--ink)] group-hover:text-white"
+                      : "bg-white/60 text-[var(--muted)]"
+                  }`}
+                >
+                  {Icon ? <Icon className="h-[22px] w-[22px]" /> : null}
+                </span>
                 <span
                   className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide ${
                     e.kind === "essay"
@@ -45,7 +55,10 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
                 </span>
               </div>
 
-              <h2 className="heading mt-5 flex items-center gap-2 text-[27px] text-[var(--ink)]">
+              <span className="mono-label mt-6 text-[var(--primary)]">
+                {e.topic}
+              </span>
+              <h2 className="heading mt-2 flex items-center gap-2 text-[27px] text-[var(--ink)]">
                 {e.title}
                 {e.status === "live" && (
                   <span className="text-[var(--muted)] transition-transform group-hover:translate-x-1">
@@ -56,14 +69,6 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
               <p className="mt-3 flex-1 text-[15px] leading-[1.55] text-[var(--slate)]">
                 {e.blurb}
               </p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {e.tags.map((t) => (
-                  <span key={t} className="tag-mono">
-                    {t}
-                  </span>
-                ))}
-              </div>
             </div>
           );
 
