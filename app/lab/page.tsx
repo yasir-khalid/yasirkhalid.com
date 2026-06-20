@@ -143,10 +143,11 @@ export default function LabIndex() {
             <Reveal delay={60}>
               <p className="mt-4 max-w-[68ch] text-[16px] leading-[1.55] text-[var(--slate)]">
                 The classic system design interview questions, rebuilt as
-                simulations you can run instead of read. The goal: map the whole
-                playbook to animations so you can <em>feel</em> how each system
-                works without opening the book. Starting with a rate limiter -
-                more arriving one at a time.
+                simulations you can run instead of read. Every chapter of the
+                system design canon, mapped to an animation so you can{" "}
+                <em>feel</em> how each system works - rate limiting, consistent
+                hashing, unique IDs, feeds, chat, video and more - without opening
+                the book.
               </p>
             </Reveal>
             <div className="mt-7">
