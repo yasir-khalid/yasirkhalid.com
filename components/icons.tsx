@@ -302,6 +302,125 @@ function EvolutionIcon({ className = "" }: { className?: string }) {
   );
 }
 
+function RingIcon({ className = "" }: { className?: string }) {
+  // a hash ring with nodes placed around it
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="7.5" />
+      <circle cx="12" cy="4.5" r="1.7" fill="currentColor" stroke="none" />
+      <circle cx="18.5" cy="14.5" r="1.7" fill="currentColor" stroke="none" />
+      <circle cx="6" cy="16" r="1.7" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function GaugeIcon({ className = "" }: { className?: string }) {
+  // a throttle gauge
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 18a8 8 0 1 1 16 0" />
+      <path d="M12 18 16 9.5" />
+      <circle cx="12" cy="18" r="1.4" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function IdIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5.5" width="18" height="13" rx="2" />
+      <path d="M7 9.5v5M10 9.5v5M13.5 9.5v5M17 9.5v5" />
+    </svg>
+  );
+}
+
+function LinkIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9.5 14.5 14.5 9.5" />
+      <path d="M8 11 6 13a3.5 3.5 0 0 0 5 5l2-2" />
+      <path d="M16 13l2-2a3.5 3.5 0 0 0-5-5l-2 2" />
+    </svg>
+  );
+}
+
+function KeyIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="8" cy="8" r="4" />
+      <path d="m11 11 8 8M16 16l2-2M14.5 14.5 17 12" />
+    </svg>
+  );
+}
+
+function CrawlerIcon({ className = "" }: { className?: string }) {
+  // linked nodes - a crawl graph
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="5" cy="6" r="2" />
+      <circle cx="19" cy="9" r="2" />
+      <circle cx="12" cy="18" r="2" />
+      <path d="M6.7 7.3 10.5 16.5M13.8 16.8 17.6 10.4M6.8 6.4 17 8.5" />
+    </svg>
+  );
+}
+
+function BellIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z" />
+      <path d="M10 20a2.5 2.5 0 0 0 4 0" />
+    </svg>
+  );
+}
+
+function FeedIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3.5" y="4" width="17" height="6" rx="1.5" />
+      <path d="M3.5 13.5h12M3.5 17h17M3.5 20.5h9" />
+    </svg>
+  );
+}
+
+function ChatIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 5.5h16v11H9l-4 3.5v-3.5H4Z" />
+      <path d="M8 10h8M8 13h5" />
+    </svg>
+  );
+}
+
+function SearchIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10.5" cy="10.5" r="6" />
+      <path d="m15 15 5 5M8 10.5h5M8 13h3" />
+    </svg>
+  );
+}
+
+function PlayIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="m10 9.5 5 2.5-5 2.5Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function FolderSyncIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4l2 2.5h7A1.5 1.5 0 0 1 19 9" />
+      <path d="M3 6.5V17a1.5 1.5 0 0 0 1.5 1.5h9" />
+      <path d="M18 13v3h-3M21 19v-3h-3" />
+      <path d="M18.5 16a2.8 2.8 0 0 1 2.3-1.2M20.5 16a2.8 2.8 0 0 1-2.3 1.2" />
+    </svg>
+  );
+}
+
 // Lookup by lab slug. Falls back are handled by the caller.
 export const labIcons: Record<
   string,
@@ -317,4 +436,16 @@ export const labIcons: Record<
   queueing: QueueIcon,
   retries: RetryIcon,
   "system-evolution": EvolutionIcon,
+  "consistent-hashing": RingIcon,
+  "rate-limiter": GaugeIcon,
+  "unique-id-generator": IdIcon,
+  "url-shortener": LinkIcon,
+  "key-value-store": KeyIcon,
+  "web-crawler": CrawlerIcon,
+  "notification-system": BellIcon,
+  "news-feed": FeedIcon,
+  "chat-system": ChatIcon,
+  "search-autocomplete": SearchIcon,
+  "video-streaming": PlayIcon,
+  "file-storage": FolderSyncIcon,
 };

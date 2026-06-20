@@ -4,6 +4,13 @@
 
 export type LabKind = "essay" | "tool";
 
+/**
+ * "concept" = a single CS / systems idea (the original explainers).
+ * "design"  = a full "design X" walkthrough mapped from the system design
+ *             interview canon (Alex Xu vol.1), shown in its own gallery band.
+ */
+export type LabGroup = "concept" | "design";
+
 export type LabEntry = {
   slug: string;
   title: string;
@@ -16,6 +23,8 @@ export type LabEntry = {
   tags: string[];
   /** built & live, or listed as upcoming */
   status: "live" | "soon";
+  /** which gallery band it belongs to (defaults to "concept") */
+  group?: LabGroup;
 };
 
 export const lab: LabEntry[] = [
@@ -118,6 +127,139 @@ export const lab: LabEntry[] = [
     topic: "System design",
     tags: ["scaling", "architecture", "stages"],
     status: "live",
+  },
+  {
+    slug: "consistent-hashing",
+    title: "Consistent hashing",
+    blurb:
+      "Plain hash % N reshuffles almost every key when a server joins or leaves. Map servers and keys onto a ring instead, add virtual nodes, and watch only a thin slice of keys move - the trick behind Dynamo, Cassandra and every distributed cache.",
+    kind: "tool",
+    topic: "Distributed systems",
+    tags: ["hash ring", "virtual nodes", "rebalancing"],
+    status: "live",
+  },
+
+  // --- Example system designs (Alex Xu vol.1, ch.4-15) ---
+  {
+    slug: "rate-limiter",
+    title: "Design a rate limiter",
+    blurb:
+      "Throttle a flood of requests four different ways - token bucket, leaking bucket, fixed window and sliding window. Open the tap, watch requests get accepted or 429'd in real time, and feel exactly where each algorithm leaks or bursts.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["token bucket", "429", "throttling"],
+    status: "live",
+    group: "design",
+  },
+  {
+    slug: "unique-id-generator",
+    title: "Design a unique ID generator",
+    blurb:
+      "Sortable, 64-bit IDs across thousands of machines with no coordination - the Snowflake layout of timestamp, machine ID and sequence bits.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["snowflake", "distributed", "64-bit"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "url-shortener",
+    title: "Design a URL shortener",
+    blurb:
+      "Turn a long URL into a tiny one - base-62 encoding, hash collisions, and the read-heavy cache that makes the redirect instant.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["base62", "redirect", "read-heavy"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "key-value-store",
+    title: "Design a key-value store",
+    blurb:
+      "Build a distributed hash map: consistent hashing for placement, replication for durability, and the quorum dial between consistency and availability.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["quorum", "replication", "CAP"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "web-crawler",
+    title: "Design a web crawler",
+    blurb:
+      "A BFS frontier, politeness delays per host, and dedup with a bloom filter - crawl a tiny web without hammering any one domain.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["BFS", "frontier", "politeness"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "notification-system",
+    title: "Design a notification system",
+    blurb:
+      "Fan a single event out to push, SMS and email through queues and workers, with retries and rate limits at each provider.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["fan-out", "queues", "providers"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "news-feed",
+    title: "Design a news feed",
+    blurb:
+      "Fan-out on write vs on read - the timeline trade-off that decides whether a celebrity post melts your database.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["fan-out", "timeline", "celebrity"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "chat-system",
+    title: "Design a chat system",
+    blurb:
+      "WebSocket sessions, presence, and message ordering - deliver a message exactly once across a fleet of stateful chat servers.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["websocket", "presence", "ordering"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "search-autocomplete",
+    title: "Design search autocomplete",
+    blurb:
+      "A trie of top queries served in milliseconds - prefix lookups, cached suggestions, and ranking by popularity as you type.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["trie", "prefix", "top-k"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "video-streaming",
+    title: "Design a video platform",
+    blurb:
+      "Upload, transcode into multiple bitrates, and stream from a CDN - adaptive bitrate that scales from one viewer to millions.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["transcoding", "CDN", "adaptive bitrate"],
+    status: "soon",
+    group: "design",
+  },
+  {
+    slug: "file-storage",
+    title: "Design a file store",
+    blurb:
+      "Sync files across devices with block-level dedup, deltas and a metadata service - only the changed chunks ever cross the wire.",
+    kind: "tool",
+    topic: "System design",
+    tags: ["block sync", "dedup", "metadata"],
+    status: "soon",
+    group: "design",
   },
 ];
 

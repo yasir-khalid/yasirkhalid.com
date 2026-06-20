@@ -15,15 +15,22 @@ const FEATURED = ["system-design-math", "system-evolution"];
 const featured = FEATURED.map((s) => lab.find((e) => e.slug === s)).filter(
   (e): e is LabEntry => Boolean(e)
 );
-const rest = lab.filter((e) => !FEATURED.includes(e.slug));
+// Single-concept explainers (the original lab), minus the two featured ones.
+const concepts = lab.filter(
+  (e) => e.group !== "design" && !FEATURED.includes(e.slug)
+);
+// Full "design X" walkthroughs mapped from the system design interview canon.
+const designs = lab.filter((e) => e.group === "design");
 
 function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
   return (
     <div>
-      <Reveal>
-        <p className="mono-label text-[var(--charcoal)]">{label}</p>
-      </Reveal>
-      <div className="mt-6 grid gap-5 md:grid-cols-2">
+      {label && (
+        <Reveal>
+          <p className="mono-label text-[var(--charcoal)]">{label}</p>
+        </Reveal>
+      )}
+      <div className={`${label ? "mt-6" : ""} grid gap-5 md:grid-cols-2`}>
         {entries.map((e, i) => {
           const Icon = labIcons[e.slug];
           const card = (
@@ -124,7 +131,28 @@ export default function LabIndex() {
       <section className="bg-white">
         <div className="mx-auto flex max-w-[1100px] flex-col gap-14 px-5 py-16 sm:px-8 md:py-20">
           <LabGroup label="// system design - start here" entries={featured} />
-          <LabGroup label="// concepts" entries={rest} />
+          <LabGroup label="// concepts" entries={concepts} />
+
+          {/* Example system designs - the "design X" walkthroughs */}
+          <div>
+            <Reveal>
+              <p className="mono-label text-[var(--charcoal)]">
+                // example system designs
+              </p>
+            </Reveal>
+            <Reveal delay={60}>
+              <p className="mt-4 max-w-[68ch] text-[16px] leading-[1.55] text-[var(--slate)]">
+                The classic system design interview questions, rebuilt as
+                simulations you can run instead of read. The goal: map the whole
+                playbook to animations so you can <em>feel</em> how each system
+                works without opening the book. Starting with a rate limiter -
+                more arriving one at a time.
+              </p>
+            </Reveal>
+            <div className="mt-7">
+              <LabGroup label="" entries={designs} />
+            </div>
+          </div>
         </div>
       </section>
 
