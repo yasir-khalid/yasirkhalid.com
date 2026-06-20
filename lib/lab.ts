@@ -159,7 +159,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["snowflake", "distributed", "64-bit"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -170,7 +170,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["base62", "redirect", "read-heavy"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -181,7 +181,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["quorum", "replication", "CAP"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -192,7 +192,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["BFS", "frontier", "politeness"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -203,7 +203,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["fan-out", "queues", "providers"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -214,7 +214,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["fan-out", "timeline", "celebrity"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -225,7 +225,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["websocket", "presence", "ordering"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -236,7 +236,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["trie", "prefix", "top-k"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -247,7 +247,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["transcoding", "CDN", "adaptive bitrate"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
   {
@@ -258,7 +258,7 @@ export const lab: LabEntry[] = [
     kind: "tool",
     topic: "System design",
     tags: ["block sync", "dedup", "metadata"],
-    status: "soon",
+    status: "live",
     group: "design",
   },
 ];
