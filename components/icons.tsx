@@ -162,6 +162,25 @@ export function EmailIcon({ className = "" }: { className?: string }) {
   );
 }
 
+export function BinaryIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3.5" width="7" height="7" rx="1" />
+      <rect x="14" y="13.5" width="7" height="7" rx="1" />
+      <path d="M16 3.5h1.5v7M16 10.5h3M6 13.5H4.5v7M4.5 20.5h3" />
+    </svg>
+  );
+}
+
+export function ShieldIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 8.4 7.5 10 4.3-1.6 7.5-5.4 7.5-10v-6L12 2.5Z" />
+      <path d="m8.8 12 2.2 2.2 4.2-4.4" />
+    </svg>
+  );
+}
+
 // --- Lab concept glyphs (stroke, currentColor) - one per explainer ---
 // Used on the /lab gallery cards. Same line-icon language as the latency
 // glyphs: 24x24, 1.7 stroke, rounded caps/joins.

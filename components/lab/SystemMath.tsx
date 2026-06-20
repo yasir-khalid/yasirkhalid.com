@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Note, Panel, Slider, Stat, Toggle } from "@/components/lab/ui";
+import { Callout, Note, Panel, Quote, Segmented, Slider, Stat, Toggle } from "@/components/lab/ui";
 import {
   ChipIcon,
   MemoryIcon,
@@ -14,6 +14,8 @@ import {
   DriveIcon,
   ListIcon,
   ClockIcon,
+  BinaryIcon,
+  ShieldIcon,
 } from "@/components/icons";
 
 type IconType = typeof ChipIcon;
@@ -80,6 +82,31 @@ function fmtNs(ns: number): string {
 const LAT_MIN = Math.log10(1);
 const LAT_MAX = Math.log10(150_000_000);
 const logWidth = (ns: number) => ((Math.log10(ns) - LAT_MIN) / (LAT_MAX - LAT_MIN)) * 100;
+
+// --- Power of two: the data-volume units, all from a humble byte (8 bits) ---
+const POWERS: { pow: string; approx: string; unit: string; bytes: string }[] = [
+  { pow: "2¹⁰", approx: "1 thousand", unit: "1 KB", bytes: "1,024 bytes" },
+  { pow: "2²⁰", approx: "1 million", unit: "1 MB", bytes: "1,048,576 bytes" },
+  { pow: "2³⁰", approx: "1 billion", unit: "1 GB", bytes: "1,073,741,824 bytes" },
+  { pow: "2⁴⁰", approx: "1 trillion", unit: "1 TB", bytes: "1,099,511,627,776 bytes" },
+  { pow: "2⁵⁰", approx: "1 quadrillion", unit: "1 PB", bytes: "1,125,899,906,842,624 bytes" },
+];
+
+// --- Availability: uptime measured in "nines", and what each nine costs ---
+const SECONDS_PER_YEAR = 365 * 24 * 3600;
+function fmtDowntime(seconds: number): string {
+  if (seconds >= 86_400) return `${+(seconds / 86_400).toFixed(2)} days`;
+  if (seconds >= 3_600) return `${+(seconds / 3_600).toFixed(2)} hours`;
+  if (seconds >= 60) return `${+(seconds / 60).toFixed(2)} min`;
+  if (seconds >= 1) return `${+seconds.toFixed(1)} s`;
+  return `${Math.round(seconds * 1000)} ms`;
+}
+const NINES: { nines: number; pct: string; note: string }[] = [
+  { nines: 2, pct: "99%", note: "two nines - a hobby project; nearly 4 days down a year" },
+  { nines: 3, pct: "99.9%", note: "three nines - a common baseline SLA for cloud services" },
+  { nines: 4, pct: "99.99%", note: "four nines - serious production; under an hour a year" },
+  { nines: 5, pct: "99.999%", note: "five nines - the gold standard; ~5 minutes a year" },
+];
 
 // --- Presets ---
 type Preset = {
@@ -207,6 +234,7 @@ export default function SystemMath() {
   const [writesPerNode, setWritesPerNode] = useState(2000);
   const [replication, setReplication] = useState(3);
   const [retention, setRetention] = useState(3);
+  const [nines, setNines] = useState(3);
 
   function applyPreset(p: Preset) {
     setExp(p.exp);
@@ -254,6 +282,13 @@ export default function SystemMath() {
   const peakReadsRps = peakRps * (readShare / 100);
   const egressMbps = (peakReadsRps * objectKb * 1024 * 8) / 1e6;
   const maxCumBytes = annualBytes * retention || 1;
+
+  // ---- availability (the nines) ----
+  const downFrac = Math.pow(10, -nines);
+  const downPerYear = SECONDS_PER_YEAR * downFrac;
+  const downPerMonth = (SECONDS_PER_YEAR / 12) * downFrac;
+  const downPerDay = 86_400 * downFrac;
+  const selectedNine = NINES.find((n) => n.nines === nines) ?? NINES[1];
 
   // Build a self-contained, printable HTML report and download it.
   function downloadReport() {
@@ -448,6 +483,12 @@ export default function SystemMath() {
         servers, cache, database nodes, storage and bandwidth. Every slider
         below cascades into the ones beneath it.
       </Note>
+
+      <Quote cite="Jeff Dean · Google Senior Fellow">
+        Back-of-the-envelope calculations are estimates you create using a
+        combination of thought experiments and common performance numbers to get
+        a good feel for which designs will meet your requirements.
+      </Quote>
 
       {/* Presets + report */}
       <div className="flex flex-wrap items-center gap-2">
@@ -713,6 +754,68 @@ export default function SystemMath() {
             );
           })}
         </Panel>
+      </section>
+
+      {/* 09 · Power of two */}
+      <section className="flex flex-col gap-5">
+        <SectionHeader n="09" title="Power of two - the data units" Icon={BinaryIcon} />
+        <p className="max-w-[60ch] text-[15px] leading-[1.55] text-[var(--mute)]">
+          Every storage estimate bottoms out here. A byte is 8 bits; from there
+          the units climb in powers of 2, each ~1,000× (really 1,024×) the last.
+          Knowing these by heart is what lets you turn &ldquo;150M tweets ×
+          1&nbsp;MB&rdquo; into &ldquo;~55&nbsp;PB over five years&rdquo; in your
+          head.
+        </p>
+        <Panel tone="stone" className="overflow-hidden p-0">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[var(--hairline-light)] font-mono text-[10px] uppercase tracking-wide text-[var(--stone-text)]">
+                <th className="px-4 py-3 font-medium sm:px-5">Power</th>
+                <th className="px-4 py-3 font-medium sm:px-5">Approx</th>
+                <th className="px-4 py-3 font-medium sm:px-5">Unit</th>
+                <th className="hidden px-4 py-3 text-right font-medium sm:table-cell sm:px-5">Exact bytes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {POWERS.map((p) => (
+                <tr key={p.unit} className="border-b border-[var(--hairline-light)] last:border-0">
+                  <td className="px-4 py-3 font-mono text-[15px] text-[var(--primary)] sm:px-5">{p.pow}</td>
+                  <td className="px-4 py-3 text-[14px] text-[var(--mute)] sm:px-5">{p.approx}</td>
+                  <td className="px-4 py-3 font-mono text-[14px] font-medium text-[var(--ink)] sm:px-5">{p.unit}</td>
+                  <td className="hidden px-4 py-3 text-right font-mono text-[12px] text-[var(--charcoal)] sm:table-cell sm:px-5">{p.bytes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Panel>
+      </section>
+
+      {/* 10 · Availability - the nines */}
+      <section className="flex flex-col gap-5">
+        <SectionHeader n="10" title="Availability - the nines" Icon={ShieldIcon} />
+        <p className="max-w-[60ch] text-[15px] leading-[1.55] text-[var(--mute)]">
+          Uptime is quoted in nines. Each extra nine cuts allowed downtime by
+          10× - and gets dramatically harder and more expensive to deliver.
+          Cloud providers set their SLAs at 99.9% or above; pick a target and
+          see what it actually buys you.
+        </p>
+        <Segmented
+          label="target availability"
+          value={String(nines)}
+          onChange={(v) => setNines(Number(v))}
+          options={NINES.map((n) => ({ value: String(n.nines), label: n.pct }))}
+        />
+        <div className="grid grid-cols-3 gap-x-8 gap-y-6">
+          <Stat label="Downtime / day" value={fmtDowntime(downPerDay)} />
+          <Stat label="Downtime / month" value={fmtDowntime(downPerMonth)} />
+          <Stat label="Downtime / year" value={fmtDowntime(downPerYear)} accent />
+        </div>
+        <Callout label={`// ${selectedNine.pct} availability`} tone="info">
+          {selectedNine.note}. The catch: availability multiplies. A request that
+          touches five services each at 99.9% sees roughly 99.5% end-to-end -
+          which is why redundancy at <em>every</em> tier, not just one, is what
+          keeps the nines.
+        </Callout>
       </section>
     </div>
   );

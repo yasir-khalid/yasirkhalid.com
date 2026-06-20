@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ActionButton, Note, Panel } from "@/components/lab/ui";
+import { ActionButton, Callout, Note, Panel } from "@/components/lab/ui";
 
 type Arch = {
   combined?: boolean; // app + cache + db on one box
@@ -12,6 +12,7 @@ type Arch = {
   cache?: boolean;
   queue?: boolean;
   workers?: boolean;
+  multiRegion?: boolean;
   replicas: number;
   shards?: boolean;
 };
@@ -94,6 +95,17 @@ const STAGES: Stage[] = [
     newKeys: ["queue", "workers"],
   },
   {
+    title: "Go multi-region",
+    users: "millions, worldwide",
+    fixes:
+      "Everyone hit one data center. Users on the far side of the planet paid a transcontinental round trip on every request, and a single regional outage took the whole product offline.",
+    adds: "Run a full copy of the stack in a second data center and put geo-DNS in front. Users are routed to their nearest healthy region; if one region fails, all traffic shifts to the other.",
+    watch:
+      "Data now has to stay in sync across regions. Asynchronous cross-region replication means a write in one region isn't instantly visible in the other - and resolving conflicting writes becomes your problem.",
+    arch: { observability: true, cdn: true, lb: true, appCount: 3, cache: true, queue: true, workers: true, multiRegion: true, replicas: 0 },
+    newKeys: ["multiRegion"],
+  },
+  {
     title: "Read replicas and sharding",
     users: "millions",
     fixes:
@@ -101,7 +113,7 @@ const STAGES: Stage[] = [
     adds: "Add read replicas and route reads to them. When writes themselves saturate the primary, shard the data across multiple primaries by key.",
     watch:
       "Replication lag means a read can be stale right after a write, and sharding kills cross-shard joins and transactions. This is where 'simple' ends.",
-    arch: { observability: true, cdn: true, lb: true, appCount: 4, cache: true, queue: true, workers: true, shards: true, replicas: 2 },
+    arch: { observability: true, cdn: true, lb: true, appCount: 4, cache: true, queue: true, workers: true, multiRegion: true, shards: true, replicas: 2 },
     newKeys: ["shards", "replica0", "replica1"],
   },
 ];
@@ -199,6 +211,27 @@ export default function SystemEvolution() {
 
       {/* Diagram */}
       <Panel tone="stone" className="flex flex-col gap-4 p-6 sm:p-8">
+        {a.multiRegion && (
+          <div
+            className={`flex flex-wrap items-center justify-between gap-2 rounded-[10px] border px-4 py-2 transition-all ${
+              isNew("multiRegion")
+                ? "lab-pop border-[var(--accent-teal)] bg-[rgba(0,168,126,0.06)]"
+                : "border-dashed border-[var(--hairline-light)] bg-white"
+            }`}
+          >
+            <span className="font-mono text-[11px] text-[var(--charcoal)]">
+              🌎 geo-DNS · routes each user to their nearest healthy region
+            </span>
+            <span className="font-mono text-[10px] text-[var(--stone-text)]">
+              US-East x% · US-West (100-x)% · async cross-region replication
+            </span>
+          </div>
+        )}
+        {a.multiRegion && (
+          <p className="-mb-1 text-center font-mono text-[10px] uppercase tracking-wide text-[var(--stone-text)]">
+            ↓ each region below runs a full copy of this stack ↓
+          </p>
+        )}
         {a.observability && (
           <div
             className={`flex items-center justify-between rounded-[10px] border px-4 py-2 transition-all ${
@@ -283,6 +316,15 @@ export default function SystemEvolution() {
           <p className="mt-3 text-[15px] leading-[1.6] text-[var(--ink)]">{stage.watch}</p>
         </Panel>
       </div>
+
+      <Callout label="// the scaling playbook" tone="key">
+        Eight principles carry you from one box to millions of users:{" "}
+        <strong>keep the web tier stateless</strong>, build redundancy at every
+        tier, cache as much as you can, host static assets on a CDN, support
+        multiple data centers, scale the data tier by sharding, split tiers into
+        independent services, and monitor everything with automation. Every
+        stage above is just one of these applied at the right moment.
+      </Callout>
 
       <Note>
         Every box on this diagram was added to relieve real pressure, and each

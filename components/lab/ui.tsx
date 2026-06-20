@@ -193,3 +193,62 @@ export function Note({ children }: { children: React.ReactNode }) {
     </p>
   );
 }
+
+// A flagged callout box for highlighting an important takeaway. Three tones:
+// "key" (cobalt, the default "remember this"), "info" (teal/neutral),
+// "warn" (the gotcha / trade-off to watch).
+export function Callout({
+  label,
+  tone = "key",
+  children,
+}: {
+  label: string;
+  tone?: "key" | "info" | "warn";
+  children: React.ReactNode;
+}) {
+  const tones = {
+    key: {
+      ring: "ring-[rgba(73,79,223,0.25)]",
+      bg: "bg-[rgba(73,79,223,0.05)]",
+      label: "text-[var(--primary)]",
+    },
+    info: {
+      ring: "ring-[rgba(0,168,126,0.25)]",
+      bg: "bg-[rgba(0,168,126,0.05)]",
+      label: "text-[var(--accent-teal)]",
+    },
+    warn: {
+      ring: "ring-[rgba(236,126,0,0.28)]",
+      bg: "bg-[rgba(236,126,0,0.06)]",
+      label: "text-[var(--accent-warning)]",
+    },
+  }[tone];
+  return (
+    <div className={`rounded-[14px] p-5 ring-1 ${tones.ring} ${tones.bg}`}>
+      <p className={`mono-label ${tones.label}`}>{label}</p>
+      <div className="mt-2.5 text-[15px] leading-[1.6] text-[var(--ink)]">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// A pull-quote with attribution - for letting a source speak in its own words.
+export function Quote({
+  children,
+  cite,
+}: {
+  children: React.ReactNode;
+  cite?: string;
+}) {
+  return (
+    <figure className="rounded-[16px] bg-[var(--near-black)] p-6 text-white sm:p-8">
+      <blockquote className="display text-[clamp(1.1rem,2.2vw,1.5rem)] leading-[1.35] tracking-[-0.01em]">
+        &ldquo;{children}&rdquo;
+      </blockquote>
+      {cite && (
+        <figcaption className="mono-label mt-4 text-white/55">{cite}</figcaption>
+      )}
+    </figure>
+  );
+}
