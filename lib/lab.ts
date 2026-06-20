@@ -5,11 +5,13 @@
 export type LabKind = "essay" | "tool";
 
 /**
- * "concept" = a single CS / systems idea (the original explainers).
- * "design"  = a full "design X" walkthrough mapped from the system design
- *             interview canon (Alex Xu vol.1), shown in its own gallery band.
+ * "concept"  = a single CS / systems idea (the original explainers).
+ * "design"   = a full "design X" walkthrough mapped from the system design
+ *              interview canon (Alex Xu vol.1), shown in its own gallery band.
+ * "advanced" = the harder, location-heavy designs from Alex Xu vol.2
+ *              (proximity service, nearby friends) - their own gallery band.
  */
-export type LabGroup = "concept" | "design";
+export type LabGroup = "concept" | "design" | "advanced";
 
 export type LabEntry = {
   slug: string;
@@ -260,6 +262,30 @@ export const lab: LabEntry[] = [
     tags: ["block sync", "dedup", "metadata"],
     status: "live",
     group: "design",
+  },
+
+  // --- Advanced system designs (Alex Xu vol.2, ch.1-2) ---
+  {
+    slug: "proximity-service",
+    title: "Design a proximity service",
+    blurb:
+      "Find every business inside a radius without scanning the planet. Watch a naive lat/lng scan crawl, build a geohash bit by bit, hit the boundary problem head-on, then let a quadtree carve the map exactly where the density is.",
+    kind: "tool",
+    topic: "Advanced design",
+    tags: ["geohash", "quadtree", "spatial index"],
+    status: "live",
+    group: "advanced",
+  },
+  {
+    slug: "nearby-friends",
+    title: "Design nearby friends",
+    blurb:
+      "Stream a moving user's location to only the friends within a 5-mile radius. Watch a peer-to-peer mesh collapse, push updates through WebSockets and Redis Pub/Sub, filter by distance, and shard the channels across a ring as load explodes.",
+    kind: "tool",
+    topic: "Advanced design",
+    tags: ["websocket", "pub/sub", "geofencing"],
+    status: "live",
+    group: "advanced",
   },
 ];
 

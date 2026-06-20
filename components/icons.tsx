@@ -421,6 +421,30 @@ function FolderSyncIcon({ className = "" }: { className?: string }) {
   );
 }
 
+function ProximityIcon({ className = "" }: { className?: string }) {
+  // a grid with a location pin dropped on it - spatial indexing
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 4.5h17v17h-17Z" />
+      <path d="M9 4.5v17M15 4.5v17M3.5 10h17M3.5 15.5h17" />
+      <path d="M12 7.5a2.6 2.6 0 0 1 2.6 2.6c0 1.9-2.6 4.4-2.6 4.4s-2.6-2.5-2.6-4.4A2.6 2.6 0 0 1 12 7.5Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function NearbyFriendsIcon({ className = "" }: { className?: string }) {
+  // a person at the centre of a radar ping with nearby dots
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="4.6" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="6.5" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="5.5" cy="17.5" r="1.4" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 // Lookup by lab slug. Falls back are handled by the caller.
 export const labIcons: Record<
   string,
@@ -448,4 +472,6 @@ export const labIcons: Record<
   "search-autocomplete": SearchIcon,
   "video-streaming": PlayIcon,
   "file-storage": FolderSyncIcon,
+  "proximity-service": ProximityIcon,
+  "nearby-friends": NearbyFriendsIcon,
 };

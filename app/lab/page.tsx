@@ -21,6 +21,8 @@ const concepts = lab.filter(
 );
 // Full "design X" walkthroughs mapped from the system design interview canon.
 const designs = lab.filter((e) => e.group === "design");
+// The harder, location-heavy designs from vol.2 (proximity, nearby friends).
+const advanced = lab.filter((e) => e.group === "advanced");
 
 function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
   return (
@@ -152,6 +154,27 @@ export default function LabIndex() {
             </Reveal>
             <div className="mt-7">
               <LabGroup label="" entries={designs} />
+            </div>
+          </div>
+
+          {/* Advanced system designs - the location-heavy vol.2 walkthroughs */}
+          <div>
+            <Reveal>
+              <p className="mono-label text-[var(--charcoal)]">
+                // advanced systems
+              </p>
+            </Reveal>
+            <Reveal delay={60}>
+              <p className="mt-4 max-w-[68ch] text-[16px] leading-[1.55] text-[var(--slate)]">
+                The hard ones - location-based systems where the data is
+                geographic and constantly moving. Each concept from the chapter,
+                from spatial indexing to real-time fan-out, rebuilt as something
+                you can step through and watch run: geohashing, quadtrees,
+                WebSocket pipelines and Redis Pub/Sub.
+              </p>
+            </Reveal>
+            <div className="mt-7">
+              <LabGroup label="" entries={advanced} />
             </div>
           </div>
         </div>
