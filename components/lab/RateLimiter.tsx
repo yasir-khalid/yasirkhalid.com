@@ -233,7 +233,7 @@ export default function RateLimiter() {
         options={ALGOS}
       />
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
         {/* Controls */}
         <Panel className="flex flex-col gap-6 self-start p-6">
           <div className="flex items-center gap-2">
@@ -268,8 +268,8 @@ export default function RateLimiter() {
         </Panel>
 
         {/* Visualization */}
-        <div className="flex flex-col gap-5">
-          <div className="grid gap-5 sm:grid-cols-[160px_1fr]">
+        <div className="flex min-w-0 flex-col gap-5">
+          <div className="grid gap-5 sm:grid-cols-[160px_minmax(0,1fr)]">
             {/* vessel */}
             <Panel tone="stone" className="flex flex-col items-center gap-3 p-5">
               <p className="mono-label text-[var(--mute)]">{isWindow ? "window" : algo === "token" ? "tokens" : "queue"}</p>
@@ -314,7 +314,7 @@ export default function RateLimiter() {
                 <span className="inline-flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-[var(--accent-danger)]" /> 429</span>
               </span>
             </div>
-            <div className="mt-3 flex h-7 items-center justify-end gap-1 overflow-hidden">
+            <div className="mt-3 flex h-7 min-w-0 items-center justify-end gap-1 overflow-hidden">
               {stream.length === 0 && (
                 <span className="mr-auto font-mono text-[11px] text-[var(--stone-text)]">waiting for traffic…</span>
               )}
