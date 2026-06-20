@@ -16,11 +16,20 @@ function rand() {
   return Math.random().toString(16).slice(2, 8);
 }
 
+// Deterministic per-index hash for the INITIAL render so server and client
+// markup match (Math.random in initial state causes a hydration mismatch).
+// Edits use rand() since they only ever run client-side.
+function seedHash(i: number): string {
+  let h = ((i + 1) * 0x9e3779b1) >>> 0;
+  h = (h ^ (h >>> 15)) >>> 0;
+  return (h >>> 8).toString(16).padStart(6, "0").slice(0, 6);
+}
+
 type Block = { id: number; hash: string; synced: string };
 
 function freshBlocks(): Block[] {
   return Array.from({ length: COUNT }, (_, i) => {
-    const h = rand();
+    const h = seedHash(i);
     return { id: i, hash: h, synced: h };
   });
 }

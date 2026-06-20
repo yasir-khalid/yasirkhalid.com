@@ -11,3 +11,6 @@ next-env.d.ts
 
 # local screenshots from scripts/shot.sh
 .shots/
+
+# playwright mcp output
+.playwright-mcp/
