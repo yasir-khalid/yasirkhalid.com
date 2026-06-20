@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { LabEntry } from "@/lib/lab";
+import { labIcons } from "@/components/icons";
 
 // Shared page chrome for an individual explainer: a back button, the header
 // block, and the interactive body (children). No persistent nav bar.
@@ -28,6 +29,14 @@ export default function LabShell({
         </Link>
 
         <header className="mt-8 border-b border-[var(--hairline)] pb-10">
+          {(() => {
+            const Icon = labIcons[entry.slug];
+            return Icon ? (
+              <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-[16px] bg-[var(--near-black)] text-white">
+                <Icon className="h-7 w-7" />
+              </span>
+            ) : null;
+          })()}
           <div className="flex flex-wrap items-center gap-3">
             <span className="mono-label text-[var(--coral)]">{entry.topic}</span>
             <span className="text-[var(--hairline)]">·</span>

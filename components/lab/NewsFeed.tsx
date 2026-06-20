@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Callout, Note, Panel, Segmented, Slider } from "@/components/lab/ui";
+import { ActionButton, Callout, Note, Panel, Segmented, Slider } from "@/components/lab/ui";
 
 // =====================================================================
 // Design a news feed (Alex Xu vol.1, ch.11). The whole design hinges on
@@ -20,6 +20,7 @@ function human(n: number): string {
 export default function NewsFeed() {
   const [model, setModel] = useState<Model>("write");
   const [exp, setExp] = useState(2.3); // log10 followers, ~200
+  const [run, setRun] = useState(0); // bump to replay the fan-out animation
   const followers = Math.round(Math.pow(10, exp));
 
   // cost model (in "cache writes" / "feed reads merged")
@@ -39,15 +40,20 @@ export default function NewsFeed() {
         everyone you follow when you open the app.
       </Note>
 
-      <Segmented
-        label="fan-out model"
-        value={model}
-        onChange={(v) => setModel(v as Model)}
-        options={[
-          { value: "write", label: "On write (push)" },
-          { value: "read", label: "On read (pull)" },
-        ]}
-      />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Segmented
+          label="fan-out model"
+          value={model}
+          onChange={(v) => setModel(v as Model)}
+          options={[
+            { value: "write", label: "On write (push)" },
+            { value: "read", label: "On read (pull)" },
+          ]}
+        />
+        <ActionButton onClick={() => setRun((x) => x + 1)}>
+          {model === "write" ? "▶ Publish post" : "▶ Open feed"}
+        </ActionButton>
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_minmax(0,300px)]">
         {/* diagram */}
@@ -58,7 +64,9 @@ export default function NewsFeed() {
               <div className="font-mono text-[11px] text-[var(--stone-text)]">↓ push into {human(followers)} feed caches now</div>
               <div className="flex max-w-[320px] flex-wrap justify-center gap-2">
                 {Array.from({ length: fanCount }).map((_, i) => (
-                  <div key={i} className="h-9 w-9 rounded-[8px] border border-[rgba(73,79,223,0.3)] bg-[rgba(73,79,223,0.08)]" />
+                  <div key={`${run}-${i}`} className="lab-pop flex h-9 w-9 items-center justify-center rounded-[8px] border border-[rgba(73,79,223,0.3)] bg-[rgba(73,79,223,0.08)] text-[10px] text-[var(--primary)]" style={{ animationDelay: `${i * 55}ms` }}>
+                    ✓
+                  </div>
                 ))}
                 {followers > fanCount && (
                   <div className="flex h-9 items-center px-2 font-mono text-[12px] text-[var(--primary)]">+{human(followers - fanCount)}</div>
@@ -74,7 +82,7 @@ export default function NewsFeed() {
               <div className="font-mono text-[11px] text-[var(--stone-text)]">↑ merge latest from {FOLLOWEES} followees on read</div>
               <div className="flex max-w-[320px] flex-wrap justify-center gap-2">
                 {Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className="h-9 w-9 rounded-[8px] border border-[rgba(0,168,126,0.3)] bg-[rgba(0,168,126,0.08)]" />
+                  <div key={`${run}-${i}`} className="lab-pop h-9 w-9 rounded-[8px] border border-[rgba(0,168,126,0.3)] bg-[rgba(0,168,126,0.08)]" style={{ animationDelay: `${i * 55}ms` }} />
                 ))}
                 <div className="flex h-9 items-center px-2 font-mono text-[12px] text-[var(--accent-teal)]">+{FOLLOWEES - 12}</div>
               </div>
