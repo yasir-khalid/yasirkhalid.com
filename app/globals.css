@@ -368,3 +368,25 @@ body {
 .lab-inflow {
   animation: lab-inflow 0.6s linear forwards;
 }
+
+/* Flow drips: tokens refilling into a bucket / a leaking bucket draining out.
+   Distance + speed are driven by inline CSS vars so a stage can match the
+   refill / outflow rate. */
+@keyframes lab-drip {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(var(--drip-dist, 34px)) scale(0.65); opacity: 0; }
+}
+.lab-drip { animation: lab-drip var(--drip-dur, 1s) linear infinite; }
+
+/* A token coin being spent: pops and fades as it leaves the bucket. */
+@keyframes lab-spend {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.2) translateY(-10px); opacity: 0; }
+}
+.lab-spend { animation: lab-spend 0.4s ease-in forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-drip, .lab-spend { animation: none; }
+}
