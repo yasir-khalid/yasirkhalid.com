@@ -35,13 +35,38 @@ function mulberry32(seed: number) {
   };
 }
 
-function fnv1a(s: string): number {
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < s.length; i++) {
-    h = (h ^ s.charCodeAt(i)) >>> 0;
-    h = Math.imul(h, 16777619) >>> 0;
+// Well-mixed string hash -> a position in [0,1) on the ring. Plain FNV-1a
+// clusters badly on near-identical short names ("srv-0", "srv-1", ...) - the
+// trailing char barely moves the high bits, so every server collapses onto the
+// same point and the ring stops working. This avalanches (xmur3 + a finalizer)
+// so similar names scatter evenly, which is what a real hash like SHA-1 does.
+function hashPos(str: string): number {
+  let h = (1779033703 ^ str.length) >>> 0;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
   }
-  return h;
+  h = Math.imul(h ^ (h >>> 16), 2246822507);
+  h = Math.imul(h ^ (h >>> 13), 3266489909);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967296;
+}
+
+// ---- ring geometry (12 o'clock = 0, clockwise) ----
+const RING_CX = 150;
+const RING_CY = 150;
+const TAU = Math.PI * 2;
+function ringPt(p: number, r: number): [number, number] {
+  const a = p * TAU - Math.PI / 2;
+  return [RING_CX + r * Math.cos(a), RING_CY + r * Math.sin(a)];
+}
+function ringArc(a: number, b: number, r: number): string {
+  const [x1, y1] = ringPt(a, r);
+  const [x2, y2] = ringPt(b, r);
+  let span = b - a;
+  if (span < 0) span += 1;
+  const large = span > 0.5 ? 1 : 0;
+  return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
 }
 
 function SectionLabel({ step, children }: { step: string; children: React.ReactNode }) {
@@ -415,87 +440,139 @@ function PubSubFanout() {
  * ============================================================ */
 const RING_COLORS = [COBALT, TEAL, AMBER, "#7c5cff", "#0891b2"];
 
+const R = 100;
+
 function PubSubRing() {
-  const [servers, setServers] = useState(3);
+  const [servers, setServers] = useState(4);
   const channels = useMemo(() => Array.from({ length: 14 }, (_, i) => `chan-${i}`), []);
   const [moved, setMoved] = useState<Set<string>>(new Set());
-
-  const cx = 150;
-  const cy = 150;
-  const R = 110;
-  const pos = (s: string) => fnv1a(s) / 4294967296;
+  const [tick, setTick] = useState(0);
+  const reduced = useRef(false);
 
   const serverPts = useMemo(
-    () => Array.from({ length: servers }, (_, s) => ({ s, p: pos(`pubsub-server-${s}`) })).sort((a, b) => a.p - b.p),
+    () => Array.from({ length: servers }, (_, s) => ({ s, p: hashPos(`srv-${s}`) })).sort((a, b) => a.p - b.p),
     [servers]
   );
 
+  // A channel is handled by the first server clockwise from its hash position.
   const ownerOf = (p: number, pts: { s: number; p: number }[]) => {
     for (const pt of pts) if (pt.p >= p) return pt.s;
-    return pts.length ? pts[0].s : 0;
+    return pts.length ? pts[0].s : 0; // wrap past 12 o'clock
   };
 
   const assignment = useMemo(() => {
     const m: Record<string, number> = {};
-    for (const ch of channels) m[ch] = ownerOf(pos(ch), serverPts);
+    for (const ch of channels) m[ch] = ownerOf(hashPos(ch), serverPts);
     return m;
   }, [channels, serverPts]);
 
-  const onRing = (p: number, r = R) => {
-    const a = p * Math.PI * 2 - Math.PI / 2;
-    return [cx + r * Math.cos(a), cy + r * Math.sin(a)] as const;
-  };
-
-  function change(next: number) {
-    const beforePts = serverPts;
-    const before: Record<string, number> = {};
-    for (const ch of channels) before[ch] = ownerOf(pos(ch), beforePts);
-    const afterPts = Array.from({ length: next }, (_, s) => ({ s, p: pos(`pubsub-server-${s}`) })).sort((a, b) => a.p - b.p);
-    const m = new Set<string>();
-    for (const ch of channels) if (before[ch] !== ownerOf(pos(ch), afterPts)) m.add(ch);
-    setMoved(m);
-    setServers(next);
-  }
+  // Each server is responsible for the hash range from the previous server
+  // (clockwise) up to itself - the coloured arc in the book's Figure 2.9.
+  const arcs = useMemo(() => {
+    if (serverPts.length <= 1) return [];
+    return serverPts.map((pt, i) => {
+      const prev = serverPts[(i - 1 + serverPts.length) % serverPts.length];
+      return { from: prev.p, to: pt.p, server: pt.s };
+    });
+  }, [serverPts]);
 
   const counts = useMemo(() => {
     const c = new Array(servers).fill(0);
     for (const ch of channels) c[assignment[ch]]++;
     return c;
   }, [assignment, servers, channels]);
+  const maxCount = Math.max(1, ...counts);
+
+  // The routing pulse: cycle through channels, showing each one being published
+  // to its server. Honours reduced-motion (then it just rests on one channel).
+  useEffect(() => {
+    reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced.current) return;
+    const id = window.setInterval(() => setTick((t) => t + 1), 2000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const routed = channels[tick % channels.length];
+  const routedOwner = assignment[routed];
+  const routedChanP = hashPos(routed);
+  const routedServerP = serverPts.find((s) => s.s === routedOwner)?.p ?? 0;
+  const routeD = ringArc(routedChanP, routedServerP, R);
+
+  function change(next: number) {
+    const before: Record<string, number> = { ...assignment };
+    const afterPts = Array.from({ length: next }, (_, s) => ({ s, p: hashPos(`srv-${s}`) })).sort((a, b) => a.p - b.p);
+    const m = new Set<string>();
+    for (const ch of channels) if (before[ch] !== ownerOf(hashPos(ch), afterPts)) m.add(ch);
+    setMoved(m);
+    setServers(next);
+  }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,380px)_1fr]">
       <Panel tone="stone" className="flex flex-col items-center gap-3 p-5">
-        <svg viewBox="0 0 300 300" className="w-full max-w-[320px]" role="img" aria-label="Consistent-hash ring distributing Pub/Sub channels across servers">
-          <circle cx={cx} cy={cy} r={R} fill="none" stroke="var(--hairline-light)" strokeWidth={10} />
-          {/* server ticks */}
+        <svg viewBox="0 0 300 300" className="w-full max-w-[340px]" role="img" aria-label="Consistent-hash ring: channels routed to the first Pub/Sub server clockwise">
+          {/* base track */}
+          <circle cx={RING_CX} cy={RING_CY} r={R} fill="none" stroke="var(--hairline-light)" strokeWidth={12} />
+          {/* each server's responsible hash range */}
+          {serverPts.length <= 1 ? (
+            <circle cx={RING_CX} cy={RING_CY} r={R} fill="none" stroke={RING_COLORS[serverPts[0]?.s ?? 0]} strokeWidth={12} strokeOpacity={0.5} />
+          ) : (
+            arcs.map((a, i) => (
+              <path key={i} d={ringArc(a.from, a.to, R)} fill="none" stroke={RING_COLORS[a.server]} strokeWidth={12} strokeOpacity={a.server === routedOwner ? 0.85 : 0.4} />
+            ))
+          )}
+          {/* the dashed "walk clockwise to your server" arc for the routed channel */}
+          <path d={routeD} fill="none" stroke={RING_COLORS[routedOwner]} strokeWidth={2} strokeDasharray="3 3" opacity={0.95} />
+          {/* server nodes + labels (p1..pN) */}
           {serverPts.map((pt) => {
-            const [x1, y1] = onRing(pt.p, R - 8);
-            const [x2, y2] = onRing(pt.p, R + 8);
-            return <line key={pt.s} x1={x1} y1={y1} x2={x2} y2={y2} stroke={RING_COLORS[pt.s]} strokeWidth={3} strokeLinecap="round" />;
-          })}
-          {/* channels */}
-          {channels.map((ch) => {
-            const [x, y] = onRing(pos(ch), R);
-            const mv = moved.has(ch);
+            const [x, y] = ringPt(pt.p, R);
+            const [lx, ly] = ringPt(pt.p, R + 23);
+            const hot = pt.s === routedOwner;
             return (
-              <g key={ch}>
-                {mv && <circle cx={x} cy={y} r={7.5} fill="none" stroke="var(--ink)" strokeWidth={1.4} className="lab-pop" />}
-                <circle cx={x} cy={y} r={4} fill={RING_COLORS[assignment[ch]]} stroke="#fff" strokeWidth={1.3} />
+              <g key={pt.s}>
+                {hot && <circle cx={x} cy={y} r={11} fill="none" stroke={RING_COLORS[pt.s]} strokeWidth={1.5} opacity={0.6} />}
+                <circle cx={x} cy={y} r={7} fill={RING_COLORS[pt.s]} stroke="#fff" strokeWidth={2} />
+                <text x={lx} y={ly + 3.5} textAnchor="middle" className="font-mono" fontSize={11} fontWeight={600} fill={RING_COLORS[pt.s]}>p{pt.s + 1}</text>
               </g>
             );
           })}
-          <text x={cx} y={cy} textAnchor="middle" className="font-mono" fontSize={10} fill="var(--stone-text)">channel → server ↻</text>
+          {/* channels */}
+          {channels.map((ch) => {
+            const [x, y] = ringPt(hashPos(ch), R);
+            const mv = moved.has(ch);
+            const isRouted = ch === routed;
+            return (
+              <g key={ch}>
+                {mv && <circle cx={x} cy={y} r={8} fill="none" stroke="var(--ink)" strokeWidth={1.4} className="lab-pop" />}
+                {isRouted && <circle cx={x} cy={y} r={8} fill="none" stroke={RING_COLORS[routedOwner]} strokeWidth={1.8} />}
+                <circle cx={x} cy={y} r={isRouted ? 4.5 : 3.4} fill={RING_COLORS[assignment[ch]]} stroke="#fff" strokeWidth={1.2} />
+              </g>
+            );
+          })}
+          {/* the location update travelling from channel to its server */}
+          {!reduced.current && (
+            <g key={tick}>
+              <circle r={4.5} cx={0} cy={0} fill={RING_COLORS[routedOwner]} stroke="#fff" strokeWidth={1.5}>
+                <animateMotion path={routeD} dur="1.3s" fill="freeze" />
+              </circle>
+            </g>
+          )}
+          {/* center label */}
+          <text x={RING_CX} y={RING_CY - 4} textAnchor="middle" className="font-mono" fontSize={10} fill="var(--stone-text)">hash ring</text>
+          <text x={RING_CX} y={RING_CY + 11} textAnchor="middle" className="font-mono" fontSize={9} fill="var(--stone-text)">channel → next server ↻</text>
         </svg>
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1.5">
-          {Array.from({ length: servers }).map((_, s) => (
-            <span key={s} className="inline-flex items-center gap-1.5 text-[12px] text-[var(--ink)]">
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: RING_COLORS[s] }} />
-              server {s} · {counts[s]}
-            </span>
-          ))}
+        {/* routing caption - mirrors the book's two numbered steps */}
+        <div className="text-center">
+          <p className="font-mono text-[12.5px] text-[var(--ink)]">
+            hash(<span className="font-semibold" style={{ color: RING_COLORS[routedOwner] }}>{routed}</span>) falls in <span className="font-semibold" style={{ color: RING_COLORS[routedOwner] }}>p{routedOwner + 1}</span>&apos;s range
+          </p>
+          <p className="mt-1 text-[12px] leading-[1.45] text-[var(--muted)]">
+            a WebSocket server hashes the channel name, walks clockwise to the next
+            server, and publishes the update there.
+          </p>
         </div>
       </Panel>
+
       <div className="flex flex-col gap-5">
         <div className="flex items-center justify-between">
           <span className="mono-label text-[var(--slate)]">Pub/Sub servers</span>
@@ -505,27 +582,47 @@ function PubSubRing() {
             <ActionButton onClick={() => change(servers + 1)} disabled={servers >= 5}>+ add</ActionButton>
           </div>
         </div>
+
+        {/* load per server - shows how lumpy ownership is without virtual nodes */}
+        <Panel tone="stone" className="p-5">
+          <p className="mono-label text-[var(--mute)]">channels handled per server</p>
+          <div className="mt-3 flex flex-col gap-2">
+            {Array.from({ length: servers }).map((_, s) => (
+              <div key={s} className="flex items-center gap-2.5">
+                <span className="w-6 font-mono text-[12px] font-semibold" style={{ color: RING_COLORS[s] }}>p{s + 1}</span>
+                <div className="relative h-3 flex-1 overflow-hidden rounded-full bg-[var(--hairline-light)]">
+                  <div className="absolute inset-y-0 left-0 rounded-full transition-all" style={{ width: `${Math.max(3, (counts[s] / maxCount) * 100)}%`, background: RING_COLORS[s] }} />
+                </div>
+                <span className="w-6 text-right font-mono text-[12px] text-[var(--charcoal)]">{counts[s]}</span>
+              </div>
+            ))}
+          </div>
+        </Panel>
+
         {moved.size > 0 ? (
           <Callout label="// resharding" tone={moved.size > channels.length / 3 ? "warn" : "info"}>
-            Only <strong>{moved.size} of {channels.length}</strong> channels moved
-            to a different server (outlined). Every other channel kept its home, so
-            its subscribers stay connected. The WebSocket servers learn the new
+            Only <strong>{moved.size} of {channels.length}</strong> channels changed
+            owner (outlined on the ring). Every other channel kept its server, so
+            its subscribers stay connected. The WebSocket servers pick up the new
             ring through service discovery and re-subscribe only the affected
-            channels.
+            channels - no global reshuffle.
           </Callout>
         ) : (
-          <Callout label="// scaling the bus" tone="key">
-            One Redis server can&apos;t fan out millions of updates a second. Spread
-            the channels across a <strong>cluster</strong>, placing each on a{" "}
-            <strong>consistent-hash ring</strong> so adding or removing a server
-            moves only a thin slice of channels - not all of them. Add and remove
-            servers and watch how few channels relocate.
+          <Callout label="// why a ring, not modulo" tone="key">
+            One Redis server can&apos;t fan out millions of updates a second, so the
+            channels are spread across a <strong>cluster</strong>. Place each
+            server and channel on a <strong>hash ring</strong> and a channel is
+            owned by the first server clockwise. Add or remove a server and only
+            the channels in <em>that one arc</em> move - with plain{" "}
+            <code className="font-mono text-[13px]">hash % N</code> almost every
+            channel would relocate. Add and remove servers and watch.
           </Callout>
         )}
         <Note>
-          This is the same ring trick from the{" "}
+          This is the same ring from the{" "}
           <a href="/lab/consistent-hashing" className="text-[var(--primary)] underline underline-offset-2">consistent hashing</a>{" "}
-          lab, applied to Pub/Sub channels instead of cache keys.
+          lab (there with virtual nodes to even out the lumpy arcs you can see
+          here), applied to Pub/Sub channels instead of cache keys.
         </Note>
       </div>
     </div>
@@ -629,9 +726,11 @@ export default function NearbyFriends() {
       <section className="flex flex-col gap-6">
         <SectionLabel step="05">Sharding the channels</SectionLabel>
         <Note>
-          Millions of channels won&apos;t fit on one Redis server. Spread them
-          across a cluster with a hash ring so growth doesn&apos;t reshuffle
-          everything.
+          Millions of channels won&apos;t fit on one Redis server, so they&apos;re
+          spread across a cluster. Watch a publish event route itself: a
+          channel hashes to a point on the ring, and whichever server owns that
+          arc handles it. The pulse shows each channel finding its server; add or
+          remove a server to see how few channels have to move.
         </Note>
         <PubSubRing />
       </section>
