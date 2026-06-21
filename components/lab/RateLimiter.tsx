@@ -19,7 +19,16 @@ const ALGOS: { value: Algo; label: string }[] = [
   { value: "sliding", label: "Sliding window" },
 ];
 
-const ALGO_INFO: Record<Algo, { tag: string; tone: "key" | "info" | "warn"; body: React.ReactNode }> = {
+type AlgoInfo = {
+  tag: string;
+  tone: "key" | "info" | "warn";
+  body: React.ReactNode;
+  bestFor: string;
+  watchOut: string;
+  usedBy: string;
+};
+
+const ALGO_INFO: Record<Algo, AlgoInfo> = {
   token: {
     tag: "token bucket",
     tone: "key",
@@ -32,6 +41,11 @@ const ALGO_INFO: Record<Algo, { tag: string; tone: "key" | "info" | "warn"; body
         gateways.
       </>
     ),
+    bestFor:
+      "Public APIs and gateways that must bound the average rate but still let real clients fire short bursts.",
+    watchOut:
+      "A client can drain a full bucket instantly - size the burst to what your backend can actually absorb.",
+    usedBy: "AWS API Gateway, Stripe, GitHub API, Envoy, NGINX upstream",
   },
   leaky: {
     tag: "leaking bucket",
@@ -44,6 +58,11 @@ const ALGO_INFO: Record<Algo, { tag: string; tone: "key" | "info" | "warn"; body
         wait. Shopify rate-limits this way.
       </>
     ),
+    bestFor:
+      "Traffic shaping - feeding a fragile downstream (payments, legacy DB, a metered 3rd-party API) a perfectly constant rate.",
+    watchOut:
+      "Queuing adds latency, and under sustained load a stale queue drops fresh requests while old ones wait.",
+    usedBy: "NGINX limit_req, Shopify, job / message pipelines",
   },
   fixed: {
     tag: "fixed window counter",
@@ -56,6 +75,11 @@ const ALGO_INFO: Record<Algo, { tag: string; tone: "key" | "info" | "warn"; body
         back to zero each window.
       </>
     ),
+    bestFor:
+      "Coarse quotas and billing counters - '10k requests/day', '5 OTPs/hour' - where the exact edge doesn't matter.",
+    watchOut:
+      "A burst centred on the boundary can pass up to 2× the limit in a short span.",
+    usedBy: "In-house quota counters, early-stage APIs",
   },
   sliding: {
     tag: "sliding window counter",
@@ -68,6 +92,11 @@ const ALGO_INFO: Record<Algo, { tag: string; tone: "key" | "info" | "warn"; body
         Cloudflare found it mis-classifies only ~0.003% of requests.
       </>
     ),
+    bestFor:
+      "Accurate, fair limiting at high scale - abuse/DDoS protection at the edge - without the fixed-window loophole.",
+    watchOut:
+      "The exact log variant is memory-heavy (one entry per request); the counter is a tiny approximation.",
+    usedBy: "Cloudflare, Kong, Redis cell-rate limiters",
   },
 };
 
@@ -594,6 +623,22 @@ export default function RateLimiter() {
         {info.body}
       </Callout>
 
+      {/* contextual "when to use this one" for the selected algorithm */}
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div className="rounded-[14px] bg-[rgba(0,168,126,0.05)] p-5 ring-1 ring-[rgba(0,168,126,0.22)]">
+          <p className="mono-label text-[var(--accent-teal)]">best for</p>
+          <p className="mt-2 text-[14px] leading-[1.5] text-[var(--ink)]">{info.bestFor}</p>
+        </div>
+        <div className="rounded-[14px] bg-[rgba(236,126,0,0.06)] p-5 ring-1 ring-[rgba(236,126,0,0.25)]">
+          <p className="mono-label text-[var(--accent-warning)]">watch out</p>
+          <p className="mt-2 text-[14px] leading-[1.5] text-[var(--ink)]">{info.watchOut}</p>
+        </div>
+        <div className="rounded-[14px] bg-[var(--surface-soft)] p-5 ring-1 ring-[var(--hairline-light)]">
+          <p className="mono-label text-[var(--primary)]">used by</p>
+          <p className="mt-2 font-mono text-[13px] leading-[1.55] text-[var(--charcoal)]">{info.usedBy}</p>
+        </div>
+      </div>
+
       <Note>
         Try this: set the arrival rate well above the refill rate and hit{" "}
         <strong>Burst</strong>. Token bucket swallows the burst until its tokens
@@ -602,6 +647,59 @@ export default function RateLimiter() {
         sliding window keeps the rolling total honest. Same flood, four very
         different shapes of pain.
       </Note>
+
+      {/* ---- choosing one + the industry default ---- */}
+      <div className="flex flex-col gap-6 border-t border-[var(--hairline)] pt-10">
+        <div className="flex items-baseline gap-3">
+          <span className="font-mono text-[13px] font-semibold text-[var(--primary)]">→</span>
+          <h2 className="heading text-[clamp(1.4rem,3vw,1.9rem)] text-[var(--ink)]">
+            Which one should you reach for?
+          </h2>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {ALGOS.map((a) => {
+            const ai = ALGO_INFO[a.value];
+            const isDefault = a.value === "token";
+            return (
+              <button
+                key={a.value}
+                onClick={() => setAlgo(a.value)}
+                className={`flex flex-col rounded-[16px] p-5 text-left ring-1 transition-all ${
+                  algo === a.value
+                    ? "bg-[var(--surface-soft)] ring-[var(--ink)]"
+                    : "bg-white ring-[var(--hairline-light)] hover:ring-[var(--charcoal)]"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <p className="heading text-[18px] text-[var(--ink)]">{a.label}</p>
+                  {isDefault && (
+                    <span className="shrink-0 rounded-full bg-[rgba(73,79,223,0.1)] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-[var(--primary)]">
+                      industry default
+                    </span>
+                  )}
+                </div>
+                <p className="mt-2 flex-1 text-[14px] leading-[1.5] text-[var(--slate)]">{ai.bestFor}</p>
+                <p className="mt-3 font-mono text-[11px] text-[var(--stone-text)]">{ai.usedBy}</p>
+              </button>
+            );
+          })}
+        </div>
+
+        <Callout label="// the go-to standard right now" tone="key">
+          <strong>Token bucket is the de facto default</strong> for API rate
+          limiting today - AWS API Gateway, Stripe, GitHub and most gateways ship
+          it because it bounds the <em>average</em> rate while still permitting
+          the short bursts real clients produce, in O(1) memory that maps cleanly
+          onto a single Redis counter (often a <code>GCRA</code> variant). Reach
+          past it only for a specific reason: a <strong>sliding window
+          counter</strong> when boundary accuracy and fairness beat burst
+          tolerance (the edge-CDN / anti-abuse choice), a <strong>leaking
+          bucket</strong> when a fragile downstream needs perfectly smooth input,
+          and a <strong>fixed window</strong> only for cheap, coarse quotas where
+          the 2× edge doesn&apos;t matter.
+        </Callout>
+      </div>
 
       <Callout label="// the rest of the design" tone="info">
         The algorithm is the easy part. A production limiter stores counters in{" "}
