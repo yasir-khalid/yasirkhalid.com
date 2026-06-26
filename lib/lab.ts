@@ -44,10 +44,10 @@ export const lab: LabEntry[] = [
     slug: "hashing",
     title: "Hashing",
     blurb:
-      "How keys get scattered into buckets - and what happens when two land in the same place. Tune the table size and watch collisions form chains.",
-    kind: "essay",
+      "From hash tables to consistent rings to hot key meltdowns - three chapters in one lab. Watch collisions form, see why plain hash % N breaks when a server leaves, and watch a single viral key overwhelm one server while its peers sit idle.",
+    kind: "tool",
     topic: "Data structures",
-    tags: ["hash function", "collisions", "load factor"],
+    tags: ["hash function", "consistent hashing", "hot keys"],
     status: "live",
   },
   {
@@ -130,17 +130,6 @@ export const lab: LabEntry[] = [
     tags: ["scaling", "architecture", "stages"],
     status: "live",
   },
-  {
-    slug: "consistent-hashing",
-    title: "Consistent hashing",
-    blurb:
-      "Plain hash % N reshuffles almost every key when a server joins or leaves. Map servers and keys onto a ring instead, add virtual nodes, and watch only a thin slice of keys move - the trick behind Dynamo, Cassandra and every distributed cache.",
-    kind: "tool",
-    topic: "Distributed systems",
-    tags: ["hash ring", "virtual nodes", "rebalancing"],
-    status: "live",
-  },
-
   // --- Example system designs (Alex Xu vol.1, ch.4-15) ---
   {
     slug: "rate-limiter",

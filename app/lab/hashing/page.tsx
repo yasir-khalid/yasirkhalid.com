@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import LabShell from "@/components/lab/LabShell";
-import Hashing from "@/components/lab/Hashing";
+import HashingLab from "@/components/lab/HashingLab";
 import { getEntry } from "@/lib/lab";
 
 const entry = getEntry("hashing")!;
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <LabShell entry={entry}>
-      <Hashing />
+      <HashingLab />
     </LabShell>
   );
 }
