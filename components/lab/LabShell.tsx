@@ -25,7 +25,8 @@ export default function LabShell({
           href="/lab"
           className="inline-flex items-center gap-2 rounded-[4px] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
         >
-          ← Back to The Lab
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 11L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          Back to The Lab
         </Link>
 
         <header className="mt-8 border-b border-[var(--hairline)] pb-10">

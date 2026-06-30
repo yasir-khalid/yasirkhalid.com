@@ -108,10 +108,11 @@ export default function LabIndex() {
             href="/"
             className="inline-flex items-center gap-2 rounded-[4px] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
           >
-            ← Back to portfolio
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 11L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Back to portfolio
           </Link>
           <Reveal>
-            <p className="mono-label mt-8 text-[var(--muted)]">// the lab</p>
+            <p className="mono-label mt-8 text-[var(--muted)]">the lab</p>
           </Reveal>
           <Reveal delay={60}>
             <h1 className="display mt-6 max-w-[18ch] text-[clamp(2.6rem,7vw,5rem)] text-[var(--ink)]">
@@ -132,14 +133,14 @@ export default function LabIndex() {
       {/* Gallery - system design featured, then the rest */}
       <section className="bg-white">
         <div className="mx-auto flex max-w-[1100px] flex-col gap-14 px-5 py-16 sm:px-8 md:py-20">
-          <LabGroup label="// system design - start here" entries={featured} />
-          <LabGroup label="// concepts" entries={concepts} />
+          <LabGroup label="system design - start here" entries={featured} />
+          <LabGroup label="concepts" entries={concepts} />
 
           {/* Example system designs - the "design X" walkthroughs */}
           <div>
             <Reveal>
               <p className="mono-label text-[var(--charcoal)]">
-                // example system designs
+                example system designs
               </p>
             </Reveal>
             <Reveal delay={60}>
@@ -161,7 +162,7 @@ export default function LabIndex() {
           <div>
             <Reveal>
               <p className="mono-label text-[var(--charcoal)]">
-                // advanced systems
+                advanced systems
               </p>
             </Reveal>
             <Reveal delay={60}>
@@ -190,7 +191,8 @@ export default function LabIndex() {
             href="/"
             className="text-[14px] text-white/70 transition-colors hover:text-white"
           >
-            ← Back to portfolio
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="inline-block"><path d="M9 11L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            {" "}Back to portfolio
           </Link>
         </div>
       </footer>

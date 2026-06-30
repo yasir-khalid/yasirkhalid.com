@@ -129,31 +129,64 @@ export default function Home() {
       <Nav />
 
       {/* ===================================================== Hero (dark band) */}
-      <section className="flex min-h-[88vh] items-center bg-black">
-        <div className="mx-auto w-full max-w-[1040px] px-5 py-24 sm:px-8 sm:py-32">
-          <Reveal>
-            <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
-              {profile.headline}
-            </h1>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="mt-7 max-w-[54ch] text-[16px] leading-[1.55] text-[var(--on-dark-mute)]">
-              {profile.sub}
-            </p>
-          </Reveal>
-          <Reveal delay={180}>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <a href="#contact" className="btn btn-primary">
-                Get in touch
-              </a>
-              <a href="#work" className="btn btn-outline-dark">
-                Explore my work
-              </a>
-              <Link href="/lab" className="btn btn-outline-dark">
-                Explore simulation lab →
-              </Link>
+      <section className="flex min-h-[78vh] items-center bg-black">
+        <div className="mx-auto w-full max-w-[1040px] px-5 py-20 sm:px-8 sm:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_360px]">
+            {/* Left: text */}
+            <div>
+              <Reveal>
+                <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
+                  {profile.headline}
+                </h1>
+              </Reveal>
+              <Reveal delay={120}>
+                <p className="mt-7 max-w-[54ch] text-[16px] leading-[1.55] text-[var(--on-dark-mute)]">
+                  {profile.sub}
+                </p>
+              </Reveal>
+              <Reveal delay={180}>
+                <div className="mt-9 flex flex-wrap items-center gap-4">
+                  <a href="#contact" className="btn btn-primary">
+                    Get in touch
+                  </a>
+                  <a href="#work" className="btn btn-outline-dark">
+                    Explore my work
+                  </a>
+                  <Link href="/lab" className="btn btn-outline-dark">
+                    Explore simulation lab →
+                  </Link>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+
+            {/* Right: stacked build tiles */}
+            <div className="hidden lg:flex lg:flex-col lg:gap-3">
+              {projects.map((p, i) => {
+                const Icon = BUILD_ICONS[p.name];
+                return (
+                  <Reveal key={p.name} delay={120 + i * 80}>
+                    <div
+                      className="flex items-center gap-4 rounded-[12px] border border-white/[0.08] bg-white/[0.03] px-5 py-4 transition-colors duration-[330ms] hover:border-white/[0.16] hover:bg-white/[0.06]"
+                      style={{ transform: `translateX(${i * 12}px)` }}
+                    >
+                      {Icon && (
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[var(--primary)]/12 text-[var(--primary)]">
+                          <Icon className="h-[18px] w-[18px]" />
+                        </span>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="heading truncate text-[15px] text-white">{p.name}</span>
+                          {p.badge && <BuildBadge label={p.badge} />}
+                        </div>
+                        <p className="mt-0.5 truncate text-[13px] text-white/40">{p.blurb.split(".")[0]}.</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -161,7 +194,7 @@ export default function Home() {
       <section className="border-b border-[var(--hairline-light)] bg-white">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">// in short</p>
+            <p className="mono-label text-[var(--charcoal)]">in short</p>
           </Reveal>
           <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             {pillars.map((p, i) => (
@@ -206,7 +239,7 @@ export default function Home() {
       <section className="bg-black text-white">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">// agentic AI, specifically</p>
+            <p className="mono-label text-[var(--on-dark-mute)]">agentic AI, specifically</p>
             <h2 className="heading mt-6 max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-white">
               The parts that decide whether agents work in production.
             </h2>
@@ -231,7 +264,7 @@ export default function Home() {
       <section id="work" className="border-b border-[var(--hairline-light)] bg-white">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">// experience</p>
+            <p className="mono-label text-[var(--charcoal)]">experience</p>
             <h2 className="heading mt-6 text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
               Where I&apos;ve shipped.
             </h2>
@@ -278,7 +311,7 @@ export default function Home() {
       <section id="projects" className="bg-black">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-28">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">// builds</p>
+            <p className="mono-label text-[var(--on-dark-mute)]">builds</p>
             <h2 className="heading mt-6 max-w-[22ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-white">
               Things I build and own, end to end.
             </h2>
@@ -301,7 +334,7 @@ export default function Home() {
       <section className="border-b border-[var(--hairline-light)] bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">// interactive</p>
+            <p className="mono-label text-[var(--charcoal)]">interactive</p>
             <Link
               href="/lab"
               className="group mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-5"
@@ -338,7 +371,7 @@ export default function Home() {
       <section className="bg-black text-white">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">// impact</p>
+            <p className="mono-label text-[var(--on-dark-mute)]">impact</p>
           </Reveal>
           <div className="mt-10 grid grid-cols-2 gap-x-10 gap-y-12 lg:grid-cols-4">
             {metrics.map((m, i) => (
@@ -362,7 +395,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-[1040px] gap-16 px-5 py-24 sm:px-8 md:grid-cols-[1.7fr_1fr] md:py-24">
           <div>
             <Reveal>
-              <p className="mono-label text-[var(--charcoal)]">// toolkit</p>
+              <p className="mono-label text-[var(--charcoal)]">toolkit</p>
               <h2 className="heading mt-6 text-[clamp(1.5rem,3.2vw,2.2rem)] text-[var(--ink)]">
                 The stack I reach for.
               </h2>
@@ -388,7 +421,7 @@ export default function Home() {
           <div className="flex flex-col gap-5">
             <Reveal>
               <div className="rounded-[12px] bg-[var(--surface-soft)] p-7">
-                <h3 className="mono-label text-[var(--mute)]">// speaking</h3>
+                <h3 className="mono-label text-[var(--mute)]">speaking</h3>
                 <p className="heading mt-5 text-[19px] leading-[1.2] text-[var(--ink)]">
                   {speaking.title}.
                 </p>
@@ -400,7 +433,7 @@ export default function Home() {
 
             <Reveal delay={60}>
               <div className="rounded-[12px] bg-[var(--surface-soft)] p-7">
-                <h3 className="mono-label text-[var(--mute)]">// education</h3>
+                <h3 className="mono-label text-[var(--mute)]">education</h3>
                 <div className="mt-5 flex flex-col gap-5">
                   {education.map((e) => (
                     <div key={e.school}>
@@ -422,7 +455,7 @@ export default function Home() {
 
             <Reveal delay={120}>
               <div className="card-light p-7">
-                <h3 className="mono-label text-[var(--mute)]">// certifications</h3>
+                <h3 className="mono-label text-[var(--mute)]">certifications</h3>
                 <ul className="mt-5 flex flex-col gap-2.5">
                   {certifications.map((c) => (
                     <li
@@ -438,7 +471,7 @@ export default function Home() {
 
             <Reveal delay={180}>
               <div className="card-light p-7">
-                <h3 className="mono-label text-[var(--mute)]">// languages</h3>
+                <h3 className="mono-label text-[var(--mute)]">languages</h3>
                 <div className="mt-5 flex flex-col gap-3">
                   {languages.map((l) => (
                     <div key={l.name} className="flex items-center justify-between">
@@ -460,7 +493,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1040px] px-5 py-28 sm:px-8 md:py-28">
           <div className="grid gap-12 md:grid-cols-[1.3fr_1fr] md:items-end">
             <Reveal>
-              <p className="mono-label text-[var(--on-dark-mute)]">// get in touch</p>
+              <p className="mono-label text-[var(--on-dark-mute)]">get in touch</p>
               <h2 className="display mt-6 max-w-[16ch] text-[clamp(1.9rem,4.5vw,3.2rem)] text-white">
                 Let&apos;s build something dependable.
               </h2>
