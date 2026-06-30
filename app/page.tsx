@@ -47,8 +47,8 @@ export default function Home() {
       <Nav />
 
       {/* ===================================================== Hero (dark band) */}
-      <section className="bg-black">
-        <div className="mx-auto max-w-[1040px] px-5 pb-20 pt-20 sm:px-8 sm:pt-28 md:pb-28">
+      <section className="flex min-h-[88vh] items-center bg-black">
+        <div className="mx-auto w-full max-w-[1040px] px-5 py-24 sm:px-8 sm:py-32">
           <Reveal>
             <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
               {profile.headline}
@@ -255,7 +255,7 @@ export default function Home() {
                   →
                 </span>
               </h2>
-              <span className="btn btn-cobalt">Open the lab</span>
+              <span className="btn btn-primary">Open the lab</span>
             </Link>
             <p className="mt-6 max-w-[58ch] text-[16px] leading-[1.55] text-[var(--mute)]">
               Visual, hands-on explainers - bloom filters, hashing, load
@@ -330,7 +330,7 @@ export default function Home() {
 
           <div className="flex flex-col gap-5">
             <Reveal>
-              <div className="rounded-[20px] bg-[var(--surface-soft)] p-7">
+              <div className="rounded-[12px] bg-[var(--surface-soft)] p-7">
                 <h3 className="mono-label text-[var(--mute)]">// speaking</h3>
                 <p className="heading mt-5 text-[19px] leading-[1.2] text-[var(--ink)]">
                   {speaking.title}.
@@ -342,7 +342,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={60}>
-              <div className="rounded-[20px] bg-[var(--surface-soft)] p-7">
+              <div className="rounded-[12px] bg-[var(--surface-soft)] p-7">
                 <h3 className="mono-label text-[var(--mute)]">// education</h3>
                 <div className="mt-5 flex flex-col gap-5">
                   {education.map((e) => (

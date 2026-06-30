@@ -18,7 +18,7 @@ export function Panel({
     ink: "bg-[var(--near-black)] text-white ring-1 ring-white/10",
   };
   return (
-    <div className={`rounded-[16px] ${tones[tone]} ${className}`}>{children}</div>
+    <div className={`rounded-[12px] ${tones[tone]} ${className}`}>{children}</div>
   );
 }
 
@@ -146,7 +146,7 @@ export function ActionButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`btn !min-h-0 !px-5 !py-2.5 !text-[14px] ${
+      className={`btn !min-h-0 !px-5 !py-2.5 !text-[13px] !rounded-[4px] ${
         variant === "primary" ? "btn-dark" : ""
       } ${
         variant === "ghost"
@@ -224,7 +224,7 @@ export function Callout({
     },
   }[tone];
   return (
-    <div className={`rounded-[14px] p-5 ring-1 ${tones.ring} ${tones.bg}`}>
+    <div className={`rounded-[12px] p-5 ring-1 ${tones.ring} ${tones.bg}`}>
       <p className={`mono-label ${tones.label}`}>{label}</p>
       <div className="mt-2.5 text-[15px] leading-[1.6] text-[var(--ink)]">
         {children}

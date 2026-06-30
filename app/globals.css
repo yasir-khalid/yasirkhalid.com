@@ -1,46 +1,46 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------------------------------
-   Design tokens - Revolut-style two-mode canvas (see DESIGN.md).
-   True-black storytelling bands · white catalogue bands · cobalt-violet stamp.
-   Inter Tight (display) · Inter (body) · IBM Plex Mono (technical/lab).
-   Flat depth: canvas switches + surface-luminance shifts. No drop shadows.
+   Design tokens - Tesla-inspired minimal canvas.
+   Electric Blue primary · Carbon Dark bands · white catalogue bands.
+   Inter Tight (display) · Inter (body) · IBM Plex Mono (lab/technical).
+   Flat depth: no shadows, no gradients. Separation via spacing + borders.
 ---------------------------------------------------------------------------- */
 :root {
-  /* Brand & accent - cobalt violet, used scarcely */
-  --primary: #494fdf;
-  --primary-bright: #4f55f1;
-  --primary-deep: #3a40c4;
+  /* Brand & accent - Electric Blue, exclusive to primary CTA */
+  --primary: #3E6AE1;
+  --primary-bright: #4d78e8;
+  --primary-deep: #2e56c4;
   --on-primary: #ffffff;
 
   /* Surface */
   --canvas-light: #ffffff;
-  --canvas-dark: #000000;
-  --surface-soft: #f4f4f4;
+  --canvas-dark: #171A20;
+  --surface-soft: #F4F4F4;
   --surface-card: #ffffff;
-  --surface-deep: #0a0a0a;
-  --surface-elevated: #16181a;
+  --surface-deep: #171A20;
+  --surface-elevated: #393C41;
 
   /* Hairlines */
-  --hairline-light: #e2e2e7;
+  --hairline-light: #EEEEEE;
   --hairline-dark: rgba(255, 255, 255, 0.12);
-  --hairline-strong: #191c1f;
+  --hairline-strong: #D0D1D2;
 
-  /* Text */
-  --ink: #191c1f;
-  --body: #1f2226;
-  --charcoal: #3a3d40;
-  --mute: #505a63;
-  --ash: #5c5e60;
-  --stone-text: #8d969e;
-  --faint: #c9c9cd;
+  /* Text - Tesla palette */
+  --ink: #171A20;        /* Carbon Dark - headings, nav */
+  --body: #393C41;       /* Graphite - body text */
+  --charcoal: #393C41;   /* Graphite */
+  --mute: #5C5E62;       /* Pewter - tertiary text */
+  --ash: #5C5E62;
+  --stone-text: #8E8E8E; /* Silver Fog - placeholders, timestamps */
+  --faint: #D0D1D2;      /* Pale Silver */
   --on-dark: #ffffff;
   --on-dark-mute: rgba(255, 255, 255, 0.72);
 
-  /* Semantic / illustration palette (mockups + lab only) */
+  /* Semantic / illustration palette (lab visualizations only) */
   --accent-teal: #00a87e;
   --accent-light-blue: #007bc2;
-  --accent-blue-link: #376cd5;
+  --accent-blue-link: #3E6AE1;
   --accent-light-green: #428619;
   --accent-green-text: #006400;
   --accent-yellow: #b09000;
@@ -49,28 +49,28 @@
   --accent-danger: #e23b4a;
   --accent-deep-red: #8b0000;
   --accent-brown: #936d62;
-  --link: #376cd5;
+  --link: #3E6AE1;
 
   /* --------------------------------------------------------------------------
-     Legacy aliases - older component classNames reference these. Re-pointed
-     onto the new system so the lab and any leftover utilities stay coherent.
+     Legacy aliases - lab components reference these names. Re-pointed
+     onto the new palette so all lab classes stay coherent without rewrites.
      -------------------------------------------------------------------------- */
   --black: #000000;
-  --near-black: #000000;
-  --green: #000000;        /* former dark "green" bands → true black */
-  --navy: #000000;         /* former dark "navy" bands → true black */
+  --near-black: #171A20;
+  --green: #171A20;
+  --navy: #171A20;
   --canvas: #ffffff;
-  --stone: #f4f4f4;        /* soft surface */
-  --green-wash: #f4f4f4;
+  --stone: #F4F4F4;
+  --green-wash: #F4F4F4;
   --blue-wash: #ffffff;
-  --card-border: #e2e2e7;
-  --blue: #376cd5;
-  --coral: #494fdf;        /* lab/illustration accent → cobalt */
-  --coral-soft: #b9bcf4;
-  --muted: #8d969e;
-  --slate: #505a63;
-  --hairline: #e2e2e7;
-  --border-light: #e2e2e7;
+  --card-border: #EEEEEE;
+  --blue: #3E6AE1;
+  --coral: #3E6AE1;       /* lab accent - was cobalt, now Electric Blue */
+  --coral-soft: #b8c9f7;
+  --muted: #8E8E8E;
+  --slate: #5C5E62;
+  --hairline: #EEEEEE;
+  --border-light: #EEEEEE;
 }
 
 @theme inline {
@@ -89,7 +89,6 @@
   --color-on-dark: var(--on-dark);
   --color-link: var(--link);
 
-  /* legacy color names kept available to Tailwind utilities */
   --color-near-black: var(--near-black);
   --color-green: var(--green);
   --color-navy: var(--navy);
@@ -103,11 +102,12 @@
   --font-sans: var(--font-sans), "Inter", Arial, ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "IBM Plex Mono", monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --radius-pill: 9999px;
+  /* Tesla border-radius scale */
+  --radius-sm: 4px;      /* buttons, interactive elements */
+  --radius-md: 12px;     /* cards, panels */
+  --radius-lg: 12px;     /* larger cards */
+  --radius-xl: 16px;     /* modals, sheets */
+  --radius-pill: 9999px; /* dots, avatars */
 }
 
 html {
@@ -120,7 +120,7 @@ body {
   background: var(--canvas-light);
   color: var(--ink);
   font-family: var(--font-sans);
-  letter-spacing: 0.01em;
+  /* Tesla: normal letter-spacing everywhere */
 }
 
 ::selection {
@@ -128,23 +128,22 @@ body {
   color: #fff;
 }
 
-/* ---- Display typography: Inter Tight 500, tight stacking ---- */
+/* ---- Display typography: Inter Tight 500 ---- */
 .display {
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1.0;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 .heading {
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
 }
 .body-lg {
   font-size: 18px;
   line-height: 1.55;
-  letter-spacing: -0.005em;
 }
 .mono-label {
   font-family: var(--font-mono);
@@ -154,108 +153,130 @@ body {
   text-transform: uppercase;
 }
 
-/* ---- Buttons - all pills ---- */
+/* ---- Buttons - Tesla: 4px radius, sharp technical rectangles ---- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-weight: 600;
-  letter-spacing: 0.24px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: normal;
   white-space: nowrap;
-  border-radius: var(--radius-pill);
-  padding: 13px 28px;
-  min-height: 48px;
-  font-size: 16px;
-  transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+  border-radius: 4px;
+  padding: 0 20px;
+  min-height: 40px;
+  border: 1px solid transparent;
+  transition: background-color 0.33s, color 0.33s, border-color 0.33s, opacity 0.33s;
+  cursor: pointer;
 }
-/* primary = white pill on dark canvas */
+
+/* Primary CTA - Electric Blue, works on dark and light backgrounds */
 .btn-primary {
-  background: var(--canvas-light);
-  color: var(--canvas-dark);
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
 }
-.btn-primary:hover { background: var(--faint); }
-/* dark pill on light canvas */
+.btn-primary:hover { background: var(--primary-deep); border-color: var(--primary-deep); }
+
+/* Secondary on dark - white fill, dark text */
+.btn-secondary {
+  background: #ffffff;
+  color: var(--ink);
+  border-color: #ffffff;
+}
+.btn-secondary:hover { background: var(--surface-soft); border-color: var(--surface-soft); }
+
+/* Dark button on light canvas */
 .btn-dark {
   background: var(--canvas-dark);
-  color: var(--on-dark);
+  color: #ffffff;
+  border-color: var(--canvas-dark);
 }
-.btn-dark:hover { opacity: 0.88; }
-/* soft surface CTA on light */
+.btn-dark:hover { opacity: 0.85; }
+
+/* Soft - light ash surface */
 .btn-soft {
   background: var(--surface-soft);
   color: var(--ink);
+  border-color: var(--surface-soft);
 }
-.btn-soft:hover { background: #ececec; }
-/* outline on light / dark */
+.btn-soft:hover { background: #e8e8e8; }
+
+/* Outline on light canvas */
 .btn-outline-light {
-  background: var(--canvas-light);
+  background: #ffffff;
   color: var(--ink);
-  border: 1px solid var(--hairline-strong);
+  border-color: var(--hairline-strong);
 }
 .btn-outline-light:hover { background: var(--surface-soft); }
+
+/* Outline on dark canvas - white border + text */
 .btn-outline-dark {
   background: transparent;
-  color: var(--on-dark);
-  border: 1px solid var(--on-dark);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.6);
 }
-.btn-outline-dark:hover { background: rgba(255, 255, 255, 0.1); }
-/* cobalt secondary (white-canvas regions only, scarce) */
+.btn-outline-dark:hover { border-color: #ffffff; background: rgba(255,255,255,0.06); }
+
+/* Legacy alias: btn-cobalt → same as btn-primary */
 .btn-cobalt {
   background: var(--primary);
-  color: var(--on-primary);
+  color: #ffffff;
+  border-color: var(--primary);
 }
-.btn-cobalt:hover { background: var(--primary-deep); }
-/* legacy alias */
-.btn-on-dark { background: #fff; color: var(--canvas-dark); }
+.btn-cobalt:hover { background: var(--primary-deep); border-color: var(--primary-deep); }
+
+.btn-on-dark { background: #fff; color: var(--canvas-dark); border-color: #fff; }
 .btn-on-dark:hover { opacity: 0.88; }
 
-/* Secondary action = underlined text link */
+/* Secondary action - underlined text link */
 .btn-text {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.16px;
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-  transition: color 0.18s ease;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--mute);
+  text-decoration: none;
+  transition: color 0.33s;
 }
-.btn-text:hover { color: var(--link); }
+.btn-text:hover { color: var(--ink); }
 
-/* Outlined chip / pill */
+/* Outlined chip */
 .pill-outline {
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--hairline-light);
-  border-radius: var(--radius-pill);
-  padding: 7px 16px;
-  font-size: 14px;
-  color: var(--ink);
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--body);
   background: transparent;
+  transition: border-color 0.33s, color 0.33s;
 }
+.pill-outline:hover { border-color: var(--ink); color: var(--ink); }
 
-/* Soft neutral tag */
+/* Chip - solid small badge */
 .chip-coral {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--radius-pill);
-  padding: 4px 12px;
-  font-size: 13px;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--on-primary);
   background: var(--primary);
 }
 
-/* Feature badge - cobalt stamp */
+/* Feature badge */
 .badge-feature {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--radius-pill);
-  padding: 4px 12px;
-  font-size: 13px;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--on-primary);
   background: var(--primary);
 }
@@ -268,10 +289,11 @@ body {
   font-size: 12px;
   letter-spacing: 0.02em;
   border: 1px solid var(--hairline-light);
-  border-radius: var(--radius-sm);
-  padding: 4px 9px;
+  border-radius: 4px;
+  padding: 3px 8px;
   color: var(--mute);
   background: #fff;
+  transition: border-color 0.33s;
 }
 
 /* Inline link */
@@ -279,30 +301,31 @@ body {
   color: var(--link);
   text-decoration: underline;
   text-underline-offset: 3px;
+  transition: color 0.33s;
 }
 
-/* Card surfaces */
+/* Card surfaces - Tesla: 12px radius, no shadow */
 .card-light {
   background: var(--surface-card);
   border: 1px solid var(--hairline-light);
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
 }
 .card-dark {
   background: var(--surface-elevated);
   color: var(--on-dark);
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
 }
 .card-featured {
   background: var(--primary);
   color: var(--on-primary);
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
 }
 
 /* ---- Reveal on scroll ---- */
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.in { opacity: 1; transform: none; }
 
@@ -358,7 +381,6 @@ body {
   to { transform: translateX(var(--fly-x, 100px)); }
 }
 
-/* Incoming-request stream: dots enter left, flow right toward the fleet */
 @keyframes lab-inflow {
   0% { left: -4%; opacity: 0; }
   15% { opacity: 1; }
@@ -369,9 +391,6 @@ body {
   animation: lab-inflow 0.6s linear forwards;
 }
 
-/* Flow drips: tokens refilling into a bucket / a leaking bucket draining out.
-   Distance + speed are driven by inline CSS vars so a stage can match the
-   refill / outflow rate. */
 @keyframes lab-drip {
   0% { transform: translateY(0) scale(1); opacity: 0; }
   15% { opacity: 1; }
@@ -380,7 +399,6 @@ body {
 }
 .lab-drip { animation: lab-drip var(--drip-dur, 1s) linear infinite; }
 
-/* A token coin being spent: pops and fades as it leaves the bucket. */
 @keyframes lab-spend {
   0% { transform: scale(1); opacity: 1; }
   100% { transform: scale(0.2) translateY(-10px); opacity: 0; }
