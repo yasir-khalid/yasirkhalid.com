@@ -181,6 +181,48 @@ export function ShieldIcon({ className = "" }: { className?: string }) {
   );
 }
 
+// --- Project / build glyphs (stroke, currentColor, exported) ---
+
+export function SportIcon({ className = "" }: { className?: string }) {
+  // sports court with center line and service circle - Sportscanner
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2.5" y="6" width="19" height="12" rx="1.5" />
+      <path d="M12 6v12" />
+      <path d="M2.5 12h19" />
+      <ellipse cx="12" cy="12" rx="3.5" ry="4.2" />
+    </svg>
+  );
+}
+
+export function TraceIcon({ className = "" }: { className?: string }) {
+  // trace waterfall - spans cascading left-to-right like a Jaeger trace
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 6h16" />
+      <path d="M5 10.5h13" />
+      <path d="M7 15h9" />
+      <path d="M9 19.5h5" />
+      <circle cx="3" cy="6" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="5" cy="10.5" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="7" cy="15" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="19.5" r="1.3" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function LabFlaskIcon({ className = "" }: { className?: string }) {
+  // chemistry flask with liquid bubbles - Simulation Lab
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 3h6" />
+      <path d="M10 3v7L5.5 17.5A1.8 1.8 0 0 0 7.2 20h9.6a1.8 1.8 0 0 0 1.7-2.5L14 10V3" />
+      <circle cx="10.5" cy="16.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="14" cy="14.5" r="0.85" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 // --- Lab concept glyphs (stroke, currentColor) - one per explainer ---
 // Used on the /lab gallery cards. Same line-icon language as the latency
 // glyphs: 24x24, 1.7 stroke, rounded caps/joins.

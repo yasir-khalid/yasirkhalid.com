@@ -9,8 +9,8 @@ export const profile = {
   x: "https://x.com/yasirrkhalid",
   site: "https://yasir-khalid.github.io/",
   current: "Lead Developer, HSBC",
-  headline: "I build AI products - and own them end to end.",
-  sub: "Lead developer shipping agentic AI in regulated banking. I love figuring out what people actually need, taking raw data all the way to something they use, and owning the whole loop - research, design, engineering, release, support.",
+  headline: "I build things end to end - and ship them.",
+  sub: "Lead developer at HSBC shipping agentic AI. Founder of Sportscanner, built solo from frustration to 800+ players. Now building Traceyard for agent observability. I take ideas all the way - data pipeline, backend, UI, release, support.",
 };
 
 export const announcement = {
@@ -182,13 +182,25 @@ export const projects: Project[] = [
   {
     name: "Traceyard",
     badge: "Building",
-    blurb: "An evals & observability framework for multi-agent systems.",
+    blurb: "An evals and observability framework for multi-agent systems.",
     points: [
-      "Maps agent semantics - runs, steps, tool calls, sub-agent handoffs - into one trace layer.",
-      "Works across frameworks: Google ADK, LangGraph, custom.",
+      "Maps agent semantics - runs, steps, tool calls, sub-agent handoffs - into one unified trace layer.",
+      "Framework-agnostic: works across Google ADK, LangGraph, and custom pipelines.",
       "No vendor-specific instrumentation shims required.",
     ],
     stack: ["OpenTelemetry", "Google ADK", "LangGraph", "Tracing"],
+  },
+  {
+    name: "Simulation Lab",
+    href: "/lab",
+    badge: "Open",
+    blurb: "Interactive system design explainers - every chapter of Alex Xu's books, playable in the browser.",
+    points: [
+      "25+ hands-on simulations: rate limiters, consistent hashing, hot keys, nearby friends.",
+      "Each lab is a self-contained React component - no backend, runs entirely client-side.",
+      "Full Vol.1 coverage plus advanced designs from Vol.2.",
+    ],
+    stack: ["Next.js 15", "React 19", "TypeScript", "Tailwind v4"],
   },
 ];
 

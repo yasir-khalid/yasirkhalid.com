@@ -1,9 +1,11 @@
+import React from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
-import { GitHubIcon, XIcon, LinkedInIcon, EmailIcon } from "@/components/icons";
+import { GitHubIcon, XIcon, LinkedInIcon, EmailIcon, SportIcon, TraceIcon, LabFlaskIcon } from "@/components/icons";
 import { liveLab } from "@/lib/lab";
 import {
+  type Project,
   profile,
   trustMarks,
   pillars,
@@ -17,6 +19,86 @@ import {
   languages,
   education,
 } from "@/lib/content";
+
+// Icon mapping for each project - by name
+const BUILD_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Sportscanner: SportIcon,
+  Traceyard: TraceIcon,
+  "Simulation Lab": LabFlaskIcon,
+};
+
+// Status badge color: live products get teal, in-progress get amber, open get blue
+function BuildBadge({ label }: { label: string }) {
+  const lower = label.toLowerCase();
+  const cls = lower.includes("live") || lower.includes("open")
+    ? "bg-[var(--accent-teal)]/15 text-[var(--accent-teal)]"
+    : "bg-[var(--accent-warning)]/15 text-[var(--accent-warning)]";
+  return (
+    <span className={`rounded-[4px] px-2 py-0.5 font-mono text-[11px] font-medium ${cls}`}>
+      {label}
+    </span>
+  );
+}
+
+function BuildCard({ project }: { project: Project }) {
+  const Icon = BUILD_ICONS[project.name];
+  const linkClass = "mt-auto pt-6 inline-flex items-center gap-1.5 text-[13px] text-white/40 transition-colors duration-[330ms] hover:text-white";
+
+  return (
+    <article className="flex h-full flex-col rounded-[12px] border border-white/[0.08] bg-white/[0.03] p-7">
+      {/* Icon */}
+      {Icon && (
+        <div className="flex h-10 w-10 items-center justify-center rounded-[8px] bg-[var(--primary)]/12 text-[var(--primary)]">
+          <Icon className="h-5 w-5" />
+        </div>
+      )}
+
+      {/* Name + badge */}
+      <div className="mt-5 flex flex-wrap items-start justify-between gap-2">
+        <h3 className="heading text-[21px] text-white">{project.name}</h3>
+        {project.badge && <BuildBadge label={project.badge} />}
+      </div>
+
+      {/* Blurb */}
+      <p className="mt-2 text-[14px] leading-[1.6] text-white/55">{project.blurb}</p>
+
+      {/* Bullets */}
+      <ul className="mt-5 flex flex-col gap-2.5">
+        {project.points.map((pt) => (
+          <li key={pt} className="flex items-start gap-3 text-[14px] leading-[1.5] text-white/70">
+            <span className="mt-[8px] block h-px w-3 shrink-0 bg-white/25" aria-hidden />
+            {pt}
+          </li>
+        ))}
+      </ul>
+
+      {/* Stack tags */}
+      <div className="mt-5 flex flex-wrap gap-1.5">
+        {project.stack.map((s) => (
+          <span
+            key={s}
+            className="rounded-[4px] border border-white/10 px-2 py-0.5 font-mono text-[11px] text-white/45"
+          >
+            {s}
+          </span>
+        ))}
+      </div>
+
+      {/* Link */}
+      {project.href && (
+        project.href.startsWith("/") ? (
+          <Link href={project.href} className={linkClass}>
+            yasirkhalid.com{project.href} &#8594;
+          </Link>
+        ) : (
+          <a href={project.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+            {project.href.replace(/^https?:\/\/(www\.)?/, "")} &#8594;
+          </a>
+        )
+      )}
+    </article>
+  );
+}
 
 function Bullets({ points, dark = false }: { points: string[]; dark?: boolean }) {
   return (
@@ -192,48 +274,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============================================ Projects (feature cards) */}
-      <section id="projects" className="border-b border-[var(--hairline-light)] bg-white">
-        <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
+      {/* ============================================== Builds (dark showcase) */}
+      <section id="projects" className="bg-black">
+        <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-28">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">// building</p>
-            <h2 className="heading mt-6 text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
-              Things I own end to end.
+            <p className="mono-label text-[var(--on-dark-mute)]">// builds</p>
+            <h2 className="heading mt-6 max-w-[22ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-white">
+              Things I build and own, end to end.
             </h2>
+            <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-white/50">
+              Each one started with a real problem. Each one is still running.
+            </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((p, i) => (
-              <Reveal key={p.name} delay={i * 70}>
-                <article className="card-light flex h-full flex-col p-8">
-                  <div className="flex items-center gap-3">
-                    <h3 className="heading text-[28px] text-[var(--ink)]">
-                      {p.name}
-                    </h3>
-                    {p.badge && <span className="badge-feature">{p.badge}</span>}
-                  </div>
-                  <p className="mt-2 text-[16px] text-[var(--body)]">{p.blurb}</p>
-                  <div className="mt-5">
-                    <Bullets points={p.points} />
-                  </div>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {p.stack.map((s) => (
-                      <span key={s} className="tag-mono">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                  {p.href && (
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-text mt-7 w-fit"
-                    >
-                      {p.href.replace(/^https?:\/\/(www\.)?/, "")} →
-                    </a>
-                  )}
-                </article>
+              <Reveal key={p.name} delay={i * 80}>
+                <BuildCard project={p} />
               </Reveal>
             ))}
           </div>

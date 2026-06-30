@@ -1,5 +1,9 @@
 # Design Guide - yasirkhalid.com
 
+## Copy Conventions
+
+- **No em dashes (U+2014) anywhere on the site.** Not in copy, JSX, metadata titles, comments, or documentation. Use a regular hyphen (-) where a dash is needed, or rephrase. This is a hard rule - violations must be fixed before merging.
+
 ## Overview
 
 This site runs a high-contrast **two-mode canvas system** adapted from
