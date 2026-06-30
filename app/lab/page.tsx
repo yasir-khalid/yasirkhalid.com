@@ -37,7 +37,7 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
           const Icon = labIcons[e.slug];
           const card = (
             <div
-              className={`group flex h-full flex-col rounded-[22px] p-7 ring-1 transition-all ${
+              className={`group flex h-full flex-col rounded-[12px] p-7 ring-1 transition-all ${
                 e.status === "live"
                   ? "bg-white ring-[var(--card-border)] hover:ring-[var(--ink)]"
                   : "bg-[var(--stone)] ring-transparent"
@@ -45,7 +45,7 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`flex h-11 w-11 items-center justify-center rounded-[13px] transition-colors ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-[8px] transition-colors ${
                     e.status === "live"
                       ? "bg-[var(--surface-soft)] text-[var(--charcoal)] group-hover:bg-[var(--ink)] group-hover:text-white"
                       : "bg-white/60 text-[var(--muted)]"
@@ -54,7 +54,7 @@ function LabGroup({ label, entries }: { label: string; entries: LabEntry[] }) {
                   {Icon ? <Icon className="h-[22px] w-[22px]" /> : null}
                 </span>
                 <span
-                  className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide ${
+                  className={`rounded-[4px] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide ${
                     e.kind === "essay"
                       ? "bg-[var(--surface-soft)] text-[var(--charcoal)]"
                       : "bg-[rgba(73,79,223,0.1)] text-[var(--primary)]"
@@ -106,7 +106,7 @@ export default function LabIndex() {
         <div className="mx-auto max-w-[1100px] px-5 pb-16 pt-10 sm:px-8 sm:pt-14">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
+            className="inline-flex items-center gap-2 rounded-[4px] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
           >
             ← Back to portfolio
           </Link>

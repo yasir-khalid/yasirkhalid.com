@@ -127,7 +127,7 @@ export default function BloomFilter() {
               onChange={(e) => setAddInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && add(addInput)}
               placeholder="type a word…"
-              className="w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+              className="w-full rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
             />
             <ActionButton onClick={() => add(addInput)}>Add</ActionButton>
           </div>
@@ -168,7 +168,7 @@ export default function BloomFilter() {
               onChange={(e) => setQueryInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && query(queryInput)}
               placeholder="is it in the set?"
-              className="w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+              className="w-full rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
             />
             <ActionButton variant="ghost" onClick={() => query(queryInput)}>
               Check
@@ -178,7 +178,7 @@ export default function BloomFilter() {
           {result && (
             <div className="mt-5">
               <div
-                className={`rounded-[10px] px-4 py-3 ${
+                className={`rounded-[4px] px-4 py-3 ${
                   result.present
                     ? "bg-[var(--green-wash)]"
                     : "bg-[#fff5f2]"

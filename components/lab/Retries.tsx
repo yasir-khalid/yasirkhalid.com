@@ -156,7 +156,7 @@ export default function Retries() {
           </span>
         </div>
 
-        <div className="relative mt-5 flex h-40 items-end gap-[3px] rounded-[10px] border border-[var(--hairline-light)] bg-white p-3">
+        <div className="relative mt-5 flex h-40 items-end gap-[3px] rounded-[4px] border border-[var(--hairline-light)] bg-white p-3">
           {/* capacity line */}
           <div
             className="pointer-events-none absolute inset-x-3 border-t border-dashed border-[var(--accent-danger)]/50"

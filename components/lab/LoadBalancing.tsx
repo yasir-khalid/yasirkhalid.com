@@ -247,7 +247,7 @@ export default function LoadBalancing() {
             const pct = Math.min(100, (s.active / CAPACITY) * 100);
             return (
               <div key={i} className="flex flex-col">
-                <div className="relative h-44 overflow-hidden rounded-[10px] border border-[var(--hairline-light)] bg-white">
+                <div className="relative h-44 overflow-hidden rounded-[4px] border border-[var(--hairline-light)] bg-white">
                   {/* capacity line */}
                   <div className="absolute inset-x-0 top-0 border-b border-dashed border-[var(--hairline-light)]" />
                   <div

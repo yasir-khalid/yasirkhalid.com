@@ -66,7 +66,7 @@ export default function UrlShortener() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && shorten()}
-            className="mt-3 w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+            className="mt-3 w-full rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
           />
         </div>
         <ActionButton onClick={shorten}>Shorten →</ActionButton>

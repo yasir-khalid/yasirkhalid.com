@@ -212,7 +212,7 @@ function TrafficCurve({ avg, peak }: { avg: number; peak: number }) {
 function MetricCard({ label, value, tone = "ink" }: { label: string; value: string; tone?: "ink" | "blue" | "red" }) {
   const c = tone === "blue" ? "var(--accent-blue-link)" : tone === "red" ? "var(--accent-danger)" : "var(--ink)";
   return (
-    <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+    <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
       <p className="mono-label text-[10px] text-[var(--stone-text)]">{label}</p>
       <p className="display mt-2 text-[clamp(1.3rem,2.2vw,1.9rem)]" style={{ color: c }}>
         {value}
@@ -465,7 +465,7 @@ export default function SystemMath() {
   function SectionHeader({ n, title, Icon }: { n: string; title: string; Icon: IconType }) {
     return (
       <div className="flex items-center gap-3">
-        <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-[rgba(73,79,223,0.1)] text-[var(--primary)]">
+        <span className="grid h-9 w-9 place-items-center rounded-[4px] bg-[rgba(73,79,223,0.1)] text-[var(--primary)]">
           <Icon className="h-[18px] w-[18px]" />
         </span>
         <span className="mono-label text-[var(--primary)]">{n}</span>

@@ -84,7 +84,7 @@ export default function Hashing() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && add(input)}
               placeholder="type a key…"
-              className="w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+              className="w-full rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
             />
             <ActionButton onClick={() => add(input)}>Hash</ActionButton>
           </div>

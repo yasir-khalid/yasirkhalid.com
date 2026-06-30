@@ -135,7 +135,7 @@ function HashTables() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && add(input)}
               placeholder="type a key..."
-              className="w-full rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+              className="w-full rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
             />
             <ActionButton onClick={() => add(input)}>Hash</ActionButton>
           </div>
@@ -709,7 +709,7 @@ function HotKeys() {
                 <button
                   key={n}
                   onClick={() => setShards(n)}
-                  className={`rounded-[7px] px-3 py-1 font-mono text-[13px] transition-colors ${
+                  className={`rounded-[4px] px-3 py-1 font-mono text-[13px] transition-colors ${
                     shards === n
                       ? "bg-[var(--near-black)] text-white"
                       : "border border-[var(--hairline)] text-[var(--ink)] hover:border-[var(--ink)]"
@@ -748,7 +748,7 @@ function HotKeys() {
           return (
             <div
               key={i}
-              className={`rounded-[14px] p-4 ring-1 transition-colors duration-500 ${c.ring} ${c.bg}`}
+              className={`rounded-[12px] p-4 ring-1 transition-colors duration-500 ${c.ring} ${c.bg}`}
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[13px] font-medium text-[var(--ink)]">

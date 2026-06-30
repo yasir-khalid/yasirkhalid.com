@@ -129,16 +129,16 @@ export default function NotificationSystem() {
       {/* stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         {CHANNELS.map((c) => (
-          <div key={c.key} className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+          <div key={c.key} className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
             <p className="mono-label text-[10px]" style={{ color: c.color }}>{c.label} sent</p>
             <p className="display mt-1.5 text-[1.5rem] text-[var(--ink)]">{delivered[c.key]}</p>
           </div>
         ))}
-        <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+        <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <p className="mono-label text-[10px] text-[var(--accent-warning)]">retried</p>
           <p className="display mt-1.5 text-[1.5rem] text-[var(--accent-warning)]">{retries}</p>
         </div>
-        <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+        <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <p className="mono-label text-[10px] text-[var(--accent-danger)]">dropped</p>
           <p className="display mt-1.5 text-[1.5rem] text-[var(--accent-danger)]">{failed}</p>
         </div>

@@ -81,7 +81,7 @@ export default function VideoStreaming() {
               const bg = st === "done" ? "var(--accent-teal)" : st === "active" ? "var(--primary)" : "#fff";
               const fg = st === "todo" ? "var(--mute)" : "#fff";
               return (
-                <div key={s.key} className={`flex flex-col gap-1 rounded-[10px] border p-3 transition-colors ${st === "active" ? "lab-pop" : ""}`}
+                <div key={s.key} className={`flex flex-col gap-1 rounded-[4px] border p-3 transition-colors ${st === "active" ? "lab-pop" : ""}`}
                   style={{ background: bg, borderColor: st === "todo" ? "var(--hairline-light)" : "transparent" }}>
                   <span className="text-[13px] font-medium" style={{ color: fg }}>{s.label}</span>
                   <span className="font-mono text-[9px]" style={{ color: st === "todo" ? "var(--stone-text)" : "rgba(255,255,255,0.8)" }}>{s.sub}</span>
@@ -94,7 +94,7 @@ export default function VideoStreaming() {
             <p className="font-mono text-[10px] text-[var(--stone-text)]">transcode DAG fans into:</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {[...TIERS.map((t) => t.name), "thumbnail", "watermark"].map((t) => (
-                <span key={t} className={`rounded-[7px] border px-2.5 py-1 font-mono text-[11px] transition-colors ${progress >= 84 ? "border-transparent bg-[var(--accent-teal)] text-white" : progress >= 42 ? "border-[rgba(73,79,223,0.3)] bg-[rgba(73,79,223,0.08)] text-[var(--primary)]" : "border-[var(--hairline-light)] text-[var(--stone-text)]"}`}>
+                <span key={t} className={`rounded-[4px] border px-2.5 py-1 font-mono text-[11px] transition-colors ${progress >= 84 ? "border-transparent bg-[var(--accent-teal)] text-white" : progress >= 42 ? "border-[rgba(73,79,223,0.3)] bg-[rgba(73,79,223,0.08)] text-[var(--primary)]" : "border-[var(--hairline-light)] text-[var(--stone-text)]"}`}>
                   {t}
                 </span>
               ))}

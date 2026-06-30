@@ -72,11 +72,11 @@ export default function NewsFeed() {
                   <div className="flex h-9 items-center px-2 font-mono text-[12px] text-[var(--primary)]">+{human(followers - fanCount)}</div>
                 )}
               </div>
-              <div className="rounded-[10px] border border-[var(--hairline-light)] bg-white px-4 py-2 text-[13px] text-[var(--ink)]">reader opens app → feed already built ⚡</div>
+              <div className="rounded-[4px] border border-[var(--hairline-light)] bg-white px-4 py-2 text-[13px] text-[var(--ink)]">reader opens app → feed already built ⚡</div>
             </>
           ) : (
             <>
-              <div className="rounded-[10px] border border-[var(--hairline-light)] bg-white px-4 py-2 text-[13px] text-[var(--ink)]">poster publishes → 1 write</div>
+              <div className="rounded-[4px] border border-[var(--hairline-light)] bg-white px-4 py-2 text-[13px] text-[var(--ink)]">poster publishes → 1 write</div>
               <div className="font-mono text-[11px] text-[var(--stone-text)]">↓ nothing pushed</div>
               <div className="rounded-[12px] bg-[var(--accent-teal)] px-5 py-3 text-[14px] font-medium text-white">reader opens app</div>
               <div className="font-mono text-[11px] text-[var(--stone-text)]">↑ merge latest from {FOLLOWEES} followees on read</div>

@@ -38,14 +38,14 @@ export function Segmented<T extends string>({
       {label && (
         <p className="mono-label mb-2 text-[var(--slate)]">{label}</p>
       )}
-      <div className="inline-flex flex-wrap gap-1 rounded-[10px] border border-[var(--hairline)] bg-[var(--stone)] p-1">
+      <div className="inline-flex flex-wrap gap-1 rounded-[4px] border border-[var(--hairline)] bg-[var(--stone)] p-1">
         {options.map((o) => {
           const active = o.value === value;
           return (
             <button
               key={o.value}
               onClick={() => onChange(o.value)}
-              className={`rounded-[7px] px-3 py-1.5 text-[13px] font-medium transition-colors ${
+              className={`rounded-[4px] px-3 py-1.5 text-[13px] font-medium transition-colors ${
                 active
                   ? "bg-[var(--near-black)] text-white"
                   : "text-[var(--slate)] hover:text-[var(--ink)]"
@@ -242,7 +242,7 @@ export function Quote({
   cite?: string;
 }) {
   return (
-    <figure className="rounded-[16px] bg-[var(--near-black)] p-6 text-white sm:p-8">
+    <figure className="rounded-[12px] bg-[var(--near-black)] p-6 text-white sm:p-8">
       <blockquote className="display text-[clamp(1.1rem,2.2vw,1.5rem)] leading-[1.35] tracking-[-0.01em]">
         &ldquo;{children}&rdquo;
       </blockquote>

@@ -196,7 +196,7 @@ export default function DistributedCaching() {
                     : "border-[var(--accent-teal)]"
               }`}
             >
-              <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-[var(--primary)] font-mono text-[11px] font-semibold text-white">
+              <span className="grid h-9 w-9 place-items-center rounded-[4px] bg-[var(--primary)] font-mono text-[11px] font-semibold text-white">
                 R
               </span>
               <div>

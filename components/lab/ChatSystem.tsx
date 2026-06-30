@@ -62,7 +62,7 @@ export default function ChatSystem() {
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send()}
             placeholder="message from Ann…"
-            className="w-56 rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
+            className="w-56 rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[14px] outline-none focus:border-[var(--ink)]"
           />
           <ActionButton onClick={send} disabled={phase !== "idle"}>Send →</ActionButton>
         </div>
@@ -84,19 +84,19 @@ export default function ChatSystem() {
 
           {/* Ann */}
           <div className="z-10 flex flex-col items-center gap-2">
-            <div className="grid h-16 w-16 place-items-center rounded-[14px] bg-[var(--primary)] text-[15px] font-semibold text-white">Ann</div>
+            <div className="grid h-16 w-16 place-items-center rounded-[12px] bg-[var(--primary)] text-[15px] font-semibold text-white">Ann</div>
             <span className="font-mono text-[10px] text-[var(--accent-teal)]">ws ● open</span>
           </div>
 
           {/* chat server */}
           <div className="z-10 flex flex-col items-center gap-2">
-            <div className="grid h-16 w-20 place-items-center rounded-[14px] border border-[var(--hairline-strong)] bg-white text-[12px] font-medium text-[var(--ink)]">chat<br />server</div>
+            <div className="grid h-16 w-20 place-items-center rounded-[12px] border border-[var(--hairline-strong)] bg-white text-[12px] font-medium text-[var(--ink)]">chat<br />server</div>
             <span className="font-mono text-[10px] text-[var(--stone-text)]">stateful</span>
           </div>
 
           {/* Ben */}
           <div className="z-10 flex flex-col items-center gap-2">
-            <div className={`grid h-16 w-16 place-items-center rounded-[14px] text-[15px] font-semibold text-white ${online ? "bg-[var(--accent-teal)]" : "bg-[var(--stone-text)]"}`}>Ben</div>
+            <div className={`grid h-16 w-16 place-items-center rounded-[12px] text-[15px] font-semibold text-white ${online ? "bg-[var(--accent-teal)]" : "bg-[var(--stone-text)]"}`}>Ben</div>
             <span className={`font-mono text-[10px] ${online ? "text-[var(--accent-teal)]" : "text-[var(--accent-danger)]"}`}>
               ws {online ? "● open" : "○ closed"}
             </span>

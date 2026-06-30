@@ -83,7 +83,7 @@ export default function FileStorage() {
               <button
                 key={b.id}
                 onClick={() => edit(b.id)}
-                className={`flex flex-col items-center gap-1 rounded-[10px] border p-3 transition-all ${
+                className={`flex flex-col items-center gap-1 rounded-[4px] border p-3 transition-all ${
                   isDirty
                     ? "lab-pop border-[var(--accent-warning)] bg-[rgba(236,126,0,0.1)]"
                     : "border-[var(--hairline-light)] bg-white hover:border-[var(--ink)]"
@@ -100,15 +100,15 @@ export default function FileStorage() {
 
       {/* transfer comparison */}
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+        <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <p className="mono-label text-[10px] text-[var(--stone-text)]">full re-upload</p>
           <p className="display mt-1.5 text-[1.6rem] text-[var(--stone-text)]">{fullMb} MB</p>
         </div>
-        <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+        <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <p className="mono-label text-[10px] text-[var(--accent-warning)]">delta sync now</p>
           <p className="display mt-1.5 text-[1.6rem] text-[var(--ink)]">{deltaMb} MB</p>
         </div>
-        <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+        <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
           <p className="mono-label text-[10px] text-[var(--accent-teal)]">bandwidth saved</p>
           <p className="display mt-1.5 text-[1.6rem] text-[var(--accent-teal)]">{dirty.length ? `${savedPct}%` : "-"}</p>
         </div>

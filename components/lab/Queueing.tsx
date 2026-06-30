@@ -159,7 +159,7 @@ export default function Queueing() {
 
         <div className="mt-5 flex items-center gap-4">
           {/* the line */}
-          <div className="flex min-h-[3rem] flex-1 flex-wrap content-start gap-1.5 rounded-[10px] border border-[var(--hairline-light)] bg-white p-3">
+          <div className="flex min-h-[3rem] flex-1 flex-wrap content-start gap-1.5 rounded-[4px] border border-[var(--hairline-light)] bg-white p-3">
             {queue.length === 0 && (
               <span className="font-mono text-[11px] text-[var(--stone-text)]">empty queue</span>
             )}

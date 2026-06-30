@@ -138,7 +138,7 @@ function Box({
   };
   return (
     <div
-      className={`relative rounded-[10px] border text-center font-medium transition-all ${tones[tone]} ${
+      className={`relative rounded-[4px] border text-center font-medium transition-all ${tones[tone]} ${
         small ? "px-3 py-2 text-[12px]" : "px-4 py-3 text-[13px]"
       } ${isNew ? "lab-pop ring-2 ring-[var(--primary)]" : ""}`}
     >
@@ -213,7 +213,7 @@ export default function SystemEvolution() {
       <Panel tone="stone" className="flex flex-col gap-4 p-6 sm:p-8">
         {a.multiRegion && (
           <div
-            className={`flex flex-wrap items-center justify-between gap-2 rounded-[10px] border px-4 py-2 transition-all ${
+            className={`flex flex-wrap items-center justify-between gap-2 rounded-[4px] border px-4 py-2 transition-all ${
               isNew("multiRegion")
                 ? "lab-pop border-[var(--accent-teal)] bg-[rgba(0,168,126,0.06)]"
                 : "border-dashed border-[var(--hairline-light)] bg-white"
@@ -234,7 +234,7 @@ export default function SystemEvolution() {
         )}
         {a.observability && (
           <div
-            className={`flex items-center justify-between rounded-[10px] border px-4 py-2 transition-all ${
+            className={`flex items-center justify-between rounded-[4px] border px-4 py-2 transition-all ${
               isNew("observability")
                 ? "lab-pop border-[var(--primary)] bg-[rgba(73,79,223,0.06)]"
                 : "border-dashed border-[var(--hairline-light)] bg-white"

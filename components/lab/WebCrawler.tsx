@@ -163,7 +163,7 @@ export default function WebCrawler() {
                 <span className="font-mono text-[12px] text-[var(--stone-text)]">empty</span>
               ) : (
                 s.frontier.map((id, i) => (
-                  <span key={id} className={`grid h-7 w-7 place-items-center rounded-[7px] font-mono text-[12px] ${i === 0 ? "bg-[var(--primary)] text-white" : "border border-[var(--hairline-light)] text-[var(--ink)]"}`}>
+                  <span key={id} className={`grid h-7 w-7 place-items-center rounded-[4px] font-mono text-[12px] ${i === 0 ? "bg-[var(--primary)] text-white" : "border border-[var(--hairline-light)] text-[var(--ink)]"}`}>
                     {id}
                   </span>
                 ))

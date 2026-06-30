@@ -575,15 +575,15 @@ export default function RateLimiter() {
 
           {/* stat cards */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+            <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
               <p className="mono-label text-[10px] text-[var(--accent-teal)]">accepted</p>
               <p className="display mt-1.5 text-[clamp(1.4rem,2.4vw,2rem)] text-[var(--ink)]">{totals.ok}</p>
             </div>
-            <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+            <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
               <p className="mono-label text-[10px] text-[var(--accent-danger)]">429 rejected</p>
               <p className="display mt-1.5 text-[clamp(1.4rem,2.4vw,2rem)] text-[var(--accent-danger)]">{totals.no}</p>
             </div>
-            <div className="col-span-2 rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+            <div className="col-span-2 rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
               <div className="flex items-baseline justify-between">
                 <p className="mono-label text-[10px] text-[var(--stone-text)]">accept rate</p>
                 <p className="font-mono text-[13px] text-[var(--charcoal)]">{acceptPct}%</p>
@@ -625,15 +625,15 @@ export default function RateLimiter() {
 
       {/* contextual "when to use this one" for the selected algorithm */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-[14px] bg-[rgba(0,168,126,0.05)] p-5 ring-1 ring-[rgba(0,168,126,0.22)]">
+        <div className="rounded-[12px] bg-[rgba(0,168,126,0.05)] p-5 ring-1 ring-[rgba(0,168,126,0.22)]">
           <p className="mono-label text-[var(--accent-teal)]">best for</p>
           <p className="mt-2 text-[14px] leading-[1.5] text-[var(--ink)]">{info.bestFor}</p>
         </div>
-        <div className="rounded-[14px] bg-[rgba(236,126,0,0.06)] p-5 ring-1 ring-[rgba(236,126,0,0.25)]">
+        <div className="rounded-[12px] bg-[rgba(236,126,0,0.06)] p-5 ring-1 ring-[rgba(236,126,0,0.25)]">
           <p className="mono-label text-[var(--accent-warning)]">watch out</p>
           <p className="mt-2 text-[14px] leading-[1.5] text-[var(--ink)]">{info.watchOut}</p>
         </div>
-        <div className="rounded-[14px] bg-[var(--surface-soft)] p-5 ring-1 ring-[var(--hairline-light)]">
+        <div className="rounded-[12px] bg-[var(--surface-soft)] p-5 ring-1 ring-[var(--hairline-light)]">
           <p className="mono-label text-[var(--primary)]">used by</p>
           <p className="mt-2 font-mono text-[13px] leading-[1.55] text-[var(--charcoal)]">{info.usedBy}</p>
         </div>

@@ -23,7 +23,7 @@ export default function LabShell({
       >
         <Link
           href="/lab"
-          className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
+          className="inline-flex items-center gap-2 rounded-[4px] border border-[var(--hairline-strong)] px-4 py-2 text-[14px] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]"
         >
           ← Back to The Lab
         </Link>
@@ -32,7 +32,7 @@ export default function LabShell({
           {(() => {
             const Icon = labIcons[entry.slug];
             return Icon ? (
-              <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-[16px] bg-[var(--near-black)] text-white">
+              <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-[12px] bg-[var(--near-black)] text-white">
                 <Icon className="h-7 w-7" />
               </span>
             ) : null;

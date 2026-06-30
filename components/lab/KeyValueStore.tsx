@@ -136,7 +136,7 @@ export default function KeyValueStore() {
 
           {/* read result */}
           {readResult && (
-            <div className={`rounded-[14px] p-4 ring-1 ${readResult.fresh ? "bg-[rgba(0,168,126,0.06)] ring-[rgba(0,168,126,0.3)]" : "bg-[rgba(236,126,0,0.07)] ring-[rgba(236,126,0,0.35)]"}`}>
+            <div className={`rounded-[12px] p-4 ring-1 ${readResult.fresh ? "bg-[rgba(0,168,126,0.06)] ring-[rgba(0,168,126,0.3)]" : "bg-[rgba(236,126,0,0.07)] ring-[rgba(236,126,0,0.35)]"}`}>
               <p className="text-[15px] text-[var(--ink)]">
                 Read returned <b className="font-mono">v{readResult.got}</b> -{" "}
                 {readResult.fresh ? (
@@ -150,17 +150,17 @@ export default function KeyValueStore() {
 
           {/* verdicts */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+            <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
               <p className="mono-label text-[10px] text-[var(--stone-text)]">write</p>
               <p className="display mt-1.5 text-[1.4rem]" style={{ color: writeReachable ? "var(--accent-teal)" : "var(--accent-danger)" }}>{writeReachable ? "ok" : "blocked"}</p>
               <p className="mt-1 font-mono text-[11px] text-[var(--mute)]">needs {w} acks</p>
             </div>
-            <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+            <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
               <p className="mono-label text-[10px] text-[var(--stone-text)]">read</p>
               <p className="display mt-1.5 text-[1.4rem]" style={{ color: readReachable ? "var(--accent-teal)" : "var(--accent-danger)" }}>{readReachable ? "ok" : "blocked"}</p>
               <p className="mt-1 font-mono text-[11px] text-[var(--mute)]">needs {r} replies</p>
             </div>
-            <div className="rounded-[14px] border border-[var(--hairline-light)] bg-white p-4">
+            <div className="rounded-[12px] border border-[var(--hairline-light)] bg-white p-4">
               <p className="mono-label text-[10px] text-[var(--stone-text)]">W + R vs N</p>
               <p className="display mt-1.5 text-[1.4rem]" style={{ color: strong ? "var(--accent-teal)" : "var(--accent-warning)" }}>{w + r} {strong ? ">" : "≤"} {n}</p>
               <p className="mt-1 font-mono text-[11px] text-[var(--mute)]">{strong ? "strong" : "eventual"}</p>

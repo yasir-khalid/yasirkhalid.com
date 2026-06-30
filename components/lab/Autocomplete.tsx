@@ -84,7 +84,7 @@ export default function Autocomplete() {
       return (
         <div key={next} className="flex flex-col" style={{ marginLeft: depth ? 14 : 0 }}>
           <div className="flex items-center gap-2 py-0.5">
-            <span className={`grid h-7 w-7 place-items-center rounded-[7px] border font-mono text-[13px] ${tone}`}>{child.ch}</span>
+            <span className={`grid h-7 w-7 place-items-center rounded-[4px] border font-mono text-[13px] ${tone}`}>{child.ch}</span>
             {child.freq > 0 && (
               <span className="font-mono text-[11px] text-[var(--stone-text)]">{next} · {child.freq}</span>
             )}
@@ -111,7 +111,7 @@ export default function Autocomplete() {
           value={prefix}
           onChange={(e) => setPrefix(e.target.value.toLowerCase().replace(/[^a-z]/g, ""))}
           placeholder="type a prefix (try, th, to…)"
-          className="flex-1 rounded-[10px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[15px] outline-none focus:border-[var(--ink)]"
+          className="flex-1 rounded-[4px] border border-[var(--hairline)] bg-white px-3 py-2.5 text-[15px] outline-none focus:border-[var(--ink)]"
         />
       </Panel>
 
