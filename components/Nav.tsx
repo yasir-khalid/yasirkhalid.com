@@ -6,11 +6,11 @@ import { profile, announcement } from "@/lib/content";
 import { GitHubIcon, XIcon } from "@/components/icons";
 
 const links = [
-  { href: "#work", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
+  { href: "/#work", label: "Experience" },
+  { href: "/#projects", label: "Builds" },
   { href: "/lab", label: "The Lab" },
-  { href: "#contact", label: "Contact" },
+  { href: "/resume", label: "Resume" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -67,7 +67,7 @@ export default function Nav() {
       >
         <nav className="mx-auto flex h-16 max-w-[1040px] items-center justify-between px-5 sm:px-8">
           {/* Wordmark */}
-          <a href="#top" className="flex items-center gap-2.5">
+          <Link href="/#top" className="flex items-center gap-2.5">
             <span className="grid h-7 w-7 place-items-center rounded-[4px] bg-[var(--primary)] text-[12px] font-semibold text-white">
               YK
             </span>
@@ -78,7 +78,7 @@ export default function Nav() {
             >
               Yasir Khalid
             </span>
-          </a>
+          </Link>
 
           {/* Center nav links */}
           <div className="hidden items-center gap-7 md:flex">
@@ -123,12 +123,12 @@ export default function Nav() {
             >
               <XIcon className="h-[16px] w-[16px]" />
             </a>
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="btn btn-primary !min-h-0 !px-5 !py-2 !text-[13px]"
             >
               Get in touch
-            </a>
+            </Link>
           </div>
 
           {/* Mobile hamburger */}
@@ -207,13 +207,13 @@ export default function Nav() {
                   <XIcon className="h-[18px] w-[18px]" />
                 </a>
               </div>
-              <a
-                href="#contact"
+              <Link
+                href="/#contact"
                 onClick={() => setOpen(false)}
                 className="btn btn-primary mt-4 !text-[14px]"
               >
                 Get in touch
-              </a>
+              </Link>
             </div>
           </div>
         )}
