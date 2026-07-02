@@ -26,7 +26,7 @@ export default function AgentConsole() {
           >
             <span
               className="h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ background: r.kind.includes("eval") ? "#494fdf" : "#50e3c2" }}
+              style={{ background: r.kind.includes("eval") ? "#FF5600" : "#50e3c2" }}
             />
             <span className="font-mono text-[13px] text-white/90">{r.name}</span>
             <span className="rounded-full bg-white/[0.06] px-2 py-0.5 font-mono text-[10px] text-white/45">
@@ -39,9 +39,9 @@ export default function AgentConsole() {
               className="rounded-full px-2 py-0.5 font-mono text-[10px]"
               style={{
                 background: r.status.includes("score")
-                  ? "rgba(73,79,223,0.20)"
+                  ? "rgba(255,86,0,0.20)"
                   : "rgba(80,227,194,0.14)",
-                color: r.status.includes("score") ? "#b9bcf4" : "#7ef0d8",
+                color: r.status.includes("score") ? "#ffb98a" : "#7ef0d8",
               }}
             >
               {r.status}

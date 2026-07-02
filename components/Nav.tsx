@@ -25,17 +25,17 @@ export default function Nav() {
   }, []);
 
   const linkClass = scrolled
-    ? "text-[#393C41] hover:text-[#171A20]"
+    ? "text-[var(--body)] hover:text-[var(--ink)]"
     : "text-white/80 hover:text-white";
   const iconClass = scrolled
-    ? "text-[#5C5E62] hover:text-[#171A20]"
+    ? "text-[var(--mute)] hover:text-[var(--ink)]"
     : "text-white/60 hover:text-white";
 
   return (
     <>
       {/* Announcement bar - scrolls away naturally */}
       {barOpen && (
-        <div className="relative flex h-9 items-center justify-center bg-[#171A20] px-4 text-center text-[13px] text-white/70">
+        <div className="relative flex h-9 items-center justify-center bg-[var(--canvas-dark)] px-4 text-center text-[13px] text-white/70">
           <p className="truncate">
             {announcement.text}{" "}
             <a
@@ -61,19 +61,19 @@ export default function Nav() {
       <header
         className={`sticky top-0 z-50 transition-all duration-[330ms] ${
           scrolled
-            ? "border-b border-[#EEEEEE] bg-white/90 backdrop-blur-md"
+            ? "border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]/90 backdrop-blur-md"
             : "bg-transparent"
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-[1040px] items-center justify-between px-5 sm:px-8">
           {/* Wordmark */}
           <Link href="/#top" className="flex items-center gap-2.5">
-            <span className="grid h-7 w-7 place-items-center rounded-[4px] bg-[var(--primary)] text-[12px] font-semibold text-white">
+            <span className="grid h-7 w-7 place-items-center rounded-[6px] bg-[var(--primary)] text-[12px] font-semibold text-[var(--ink)]">
               YK
             </span>
             <span
               className={`display text-[16px] transition-colors duration-[330ms] ${
-                scrolled ? "text-[#171A20]" : "text-white"
+                scrolled ? "text-[var(--ink)]" : "text-white"
               }`}
             >
               Yasir Khalid
@@ -135,18 +135,18 @@ export default function Nav() {
           <button
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            className={`flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-[4px] border transition-colors duration-[330ms] md:hidden ${
-              scrolled ? "border-[#EEEEEE]" : "border-white/25"
+            className={`flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-[6px] border transition-colors duration-[330ms] md:hidden ${
+              scrolled ? "border-[var(--hairline-light)]" : "border-white/25"
             }`}
           >
             <span
               className={`block h-[1.5px] w-4 transition-colors duration-[330ms] ${
-                scrolled ? "bg-[#171A20]" : "bg-white"
+                scrolled ? "bg-[var(--ink)]" : "bg-white"
               }`}
             />
             <span
               className={`block h-[1.5px] w-4 transition-colors duration-[330ms] ${
-                scrolled ? "bg-[#171A20]" : "bg-white"
+                scrolled ? "bg-[var(--ink)]" : "bg-white"
               }`}
             />
           </button>
@@ -157,8 +157,8 @@ export default function Nav() {
           <div
             className={`border-t px-5 py-3 md:hidden ${
               scrolled
-                ? "border-[#EEEEEE] bg-white"
-                : "border-white/10 bg-[#171A20]/96 backdrop-blur-md"
+                ? "border-[var(--hairline-light)] bg-[var(--canvas-light)]"
+                : "border-white/10 bg-[var(--canvas-dark)]/96 backdrop-blur-md"
             }`}
           >
             <div className="flex flex-col">
@@ -169,7 +169,7 @@ export default function Nav() {
                     href={l.href}
                     onClick={() => setOpen(false)}
                     className={`px-1 py-2.5 text-[15px] font-medium ${
-                      scrolled ? "text-[#393C41]" : "text-white/85"
+                      scrolled ? "text-[var(--body)]" : "text-white/85"
                     }`}
                   >
                     {l.label}
@@ -180,7 +180,7 @@ export default function Nav() {
                     href={l.href}
                     onClick={() => setOpen(false)}
                     className={`px-1 py-2.5 text-[15px] font-medium ${
-                      scrolled ? "text-[#393C41]" : "text-white/85"
+                      scrolled ? "text-[var(--body)]" : "text-white/85"
                     }`}
                   >
                     {l.label}
@@ -193,7 +193,7 @@ export default function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className={scrolled ? "text-[#5C5E62]" : "text-white/60"}
+                  className={scrolled ? "text-[var(--mute)]" : "text-white/60"}
                 >
                   <GitHubIcon className="h-5 w-5" />
                 </a>
@@ -202,7 +202,7 @@ export default function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="X (Twitter)"
-                  className={scrolled ? "text-[#5C5E62]" : "text-white/60"}
+                  className={scrolled ? "text-[var(--mute)]" : "text-white/60"}
                 >
                   <XIcon className="h-[18px] w-[18px]" />
                 </a>

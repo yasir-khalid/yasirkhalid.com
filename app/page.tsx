@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
+import TestimonialCard from "@/components/TestimonialCard";
 import { GitHubIcon, XIcon, LinkedInIcon, EmailIcon } from "@/components/icons";
 import { BUILD_ICONS, BuildBadge } from "@/components/ProfileBlocks";
 import { profile, experience, projects } from "@/lib/content";
@@ -11,10 +12,10 @@ export default function Home() {
       <Nav />
 
       {/* ===================================================== Hero (dark band) */}
-      <section className="flex min-h-[70vh] items-center bg-black">
+      <section className="flex min-h-[70vh] items-center bg-[var(--canvas-dark)]">
         <div className="mx-auto w-full max-w-[720px] px-5 py-24 sm:px-8">
           <Reveal>
-            <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] text-white">
+            <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] font-light text-white">
               {profile.headline}
             </h1>
           </Reveal>
@@ -37,7 +38,7 @@ export default function Home() {
       </section>
 
       {/* ============================================== Builds (dark, plain list) */}
-      <section id="projects" className="bg-black">
+      <section id="projects" className="bg-[var(--canvas-dark)]">
         <div className="mx-auto max-w-[720px] px-5 py-20 sm:px-8">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">builds</p>
@@ -97,7 +98,7 @@ export default function Home() {
       </section>
 
       {/* ================================================ Experience (compact list) */}
-      <section id="work" className="border-b border-[var(--hairline-light)] bg-white">
+      <section id="work" className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[720px] px-5 py-20 sm:px-8">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">experience</p>
@@ -140,8 +141,17 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============================================== Testimonial (catalogue) */}
+      <section className="border-b border-[var(--hairline-light)] bg-[var(--surface-soft)]">
+        <div className="mx-auto max-w-[720px] px-5 py-20 sm:px-8">
+          <Reveal>
+            <TestimonialCard />
+          </Reveal>
+        </div>
+      </section>
+
       {/* ========================================================= Contact CTA */}
-      <section id="contact" className="bg-black text-white">
+      <section id="contact" className="bg-[var(--canvas-dark)] text-white">
         <div className="mx-auto max-w-[720px] px-5 py-24 sm:px-8">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">get in touch</p>
@@ -207,11 +217,11 @@ export default function Home() {
       </section>
 
       {/* ============================================================== Footer */}
-      <footer className="bg-black text-white">
+      <footer className="bg-[var(--canvas-dark)] text-white">
         <div className="mx-auto flex max-w-[720px] flex-col gap-8 px-5 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="grid h-6 w-6 place-items-center rounded-[6px] bg-[var(--primary)] text-[11px] font-semibold text-white">
+              <span className="grid h-6 w-6 place-items-center rounded-[6px] bg-[var(--primary)] text-[11px] font-semibold text-[var(--ink)]">
                 YK
               </span>
               <span className="display text-[15px]">Yasir Khalid</span>

@@ -31,7 +31,7 @@ export default function ResumePage() {
       <Nav />
 
       {/* ===================================================== Header (dark band) */}
-      <section className="bg-black">
+      <section className="bg-[var(--canvas-dark)]">
         <div className="mx-auto w-full max-w-[1040px] px-5 py-20 sm:px-8 sm:py-24">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">full resume</p>
@@ -53,7 +53,7 @@ export default function ResumePage() {
       </section>
 
       {/* ============================================ Pillars (white catalogue) */}
-      <section className="border-b border-[var(--hairline-light)] bg-white">
+      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">in short</p>
@@ -77,7 +77,7 @@ export default function ResumePage() {
       </section>
 
       {/* ====================================================== Trust strip */}
-      <section className="border-b border-[var(--hairline-light)] bg-white">
+      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-14 text-center sm:px-8">
           <Reveal>
             <p className="mono-label text-[var(--stone-text)]">Built &amp; shipped with</p>
@@ -98,7 +98,7 @@ export default function ResumePage() {
       </section>
 
       {/* ====================================== Agentic AI proof (dark band) */}
-      <section className="bg-black text-white">
+      <section className="bg-[var(--canvas-dark)] text-white">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">agentic AI, specifically</p>
@@ -123,7 +123,7 @@ export default function ResumePage() {
       </section>
 
       {/* ================================================ Experience (table) */}
-      <section className="border-b border-[var(--hairline-light)] bg-white">
+      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">experience</p>
@@ -170,7 +170,7 @@ export default function ResumePage() {
       </section>
 
       {/* ============================================== Builds (dark showcase) */}
-      <section id="projects" className="bg-black">
+      <section id="projects" className="bg-[var(--canvas-dark)]">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-28">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">builds</p>
@@ -230,7 +230,7 @@ export default function ResumePage() {
       </section>
 
       {/* ============================================== Metrics (dark band) */}
-      <section className="bg-black text-white">
+      <section className="bg-[var(--canvas-dark)] text-white">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--on-dark-mute)]">impact</p>
@@ -253,7 +253,7 @@ export default function ResumePage() {
       </section>
 
       {/* ===================================================== Skills + sidebar */}
-      <section className="border-b border-[var(--hairline-light)] bg-white">
+      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto grid max-w-[1040px] gap-16 px-5 py-24 sm:px-8 md:grid-cols-[1.7fr_1fr] md:py-24">
           <div>
             <Reveal>
@@ -351,7 +351,7 @@ export default function ResumePage() {
       </section>
 
       {/* ========================================================= Footer link back */}
-      <section className="bg-black">
+      <section className="bg-[var(--canvas-dark)]">
         <div className="mx-auto max-w-[1040px] px-5 py-16 text-center sm:px-8">
           <Link href="/#contact" className="btn btn-primary">
             Get in touch →

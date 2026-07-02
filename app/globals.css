@@ -1,46 +1,47 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------------------------------
-   Design tokens - Tesla-inspired minimal canvas.
-   Electric Blue primary · Carbon Dark bands · white catalogue bands.
-   Inter Tight (display) · Inter (body) · IBM Plex Mono (lab/technical).
-   Flat depth: no shadows, no gradients. Separation via spacing + borders.
+   Design tokens - faithful to the real fin.ai site (verified live, not the
+   generic "Fin/Intercom" palette guesses that circulate as lookalike docs).
+   Warm off-white canvas · off-black ink · Fraunces serif display · Inter body.
+   Orange is the single scarce accent - never a button surface, only
+   highlights, badges, and the odd illustration. Flat depth, hairline borders.
 ---------------------------------------------------------------------------- */
 :root {
-  /* Brand & accent - Electric Blue, exclusive to primary CTA */
-  --primary: #3E6AE1;
-  --primary-bright: #4d78e8;
-  --primary-deep: #2e56c4;
-  --on-primary: #ffffff;
+  /* Brand & accent - fin.ai orange, scarce (highlights/badges, not buttons) */
+  --primary: #FF5600;
+  --primary-bright: #FF6B1A;
+  --primary-deep: #D94800;
+  --on-primary: #111111; /* orange is a highlighter tone - never carries white text */
 
-  /* Surface */
-  --canvas-light: #ffffff;
-  --canvas-dark: #171A20;
-  --surface-soft: #F4F4F4;
+  /* Surface - warm off-white canvas, dark navy-black storytelling canvas */
+  --canvas-light: #FAF9F6;
+  --canvas-dark: #020917;
+  --surface-soft: #F4F3EC;
   --surface-card: #ffffff;
-  --surface-deep: #171A20;
-  --surface-elevated: #393C41;
+  --surface-deep: #020917;
+  --surface-elevated: #10141f;
 
-  /* Hairlines */
-  --hairline-light: #EEEEEE;
+  /* Hairlines - warm, not cool gray */
+  --hairline-light: #E7E3DB;
   --hairline-dark: rgba(255, 255, 255, 0.12);
-  --hairline-strong: #D0D1D2;
+  --hairline-strong: #D3CEC6;
 
-  /* Text - Tesla palette */
-  --ink: #171A20;        /* Carbon Dark - headings, nav */
-  --body: #393C41;       /* Graphite - body text */
-  --charcoal: #393C41;   /* Graphite */
-  --mute: #5C5E62;       /* Pewter - tertiary text */
-  --ash: #5C5E62;
-  --stone-text: #8E8E8E; /* Silver Fog - placeholders, timestamps */
-  --faint: #D0D1D2;      /* Pale Silver */
+  /* Text - warm off-black, not pure gray */
+  --ink: #111111;        /* off-black - headings, nav */
+  --body: #313130;       /* warm charcoal - body text */
+  --charcoal: #313130;
+  --mute: #626260;       /* tertiary text */
+  --ash: #626260;
+  --stone-text: #8d8a83; /* placeholders, timestamps */
+  --faint: #D3CEC6;
   --on-dark: #ffffff;
   --on-dark-mute: rgba(255, 255, 255, 0.72);
 
   /* Semantic / illustration palette (lab visualizations only) */
   --accent-teal: #00a87e;
   --accent-light-blue: #007bc2;
-  --accent-blue-link: #3E6AE1;
+  --accent-blue-link: #376cd5;
   --accent-light-green: #428619;
   --accent-green-text: #006400;
   --accent-yellow: #b09000;
@@ -49,28 +50,28 @@
   --accent-danger: #e23b4a;
   --accent-deep-red: #8b0000;
   --accent-brown: #936d62;
-  --link: #3E6AE1;
+  --link: #376cd5;
 
   /* --------------------------------------------------------------------------
      Legacy aliases - lab components reference these names. Re-pointed
      onto the new palette so all lab classes stay coherent without rewrites.
      -------------------------------------------------------------------------- */
-  --black: #000000;
-  --near-black: #171A20;
-  --green: #171A20;
-  --navy: #171A20;
-  --canvas: #ffffff;
-  --stone: #F4F4F4;
-  --green-wash: #F4F4F4;
+  --black: #111111;
+  --near-black: #020917;
+  --green: #020917;
+  --navy: #020917;
+  --canvas: #FAF9F6;
+  --stone: #F4F3EC;
+  --green-wash: #F4F3EC;
   --blue-wash: #ffffff;
-  --card-border: #EEEEEE;
-  --blue: #3E6AE1;
-  --coral: #3E6AE1;       /* lab accent - was cobalt, now Electric Blue */
-  --coral-soft: #b8c9f7;
-  --muted: #8E8E8E;
-  --slate: #5C5E62;
-  --hairline: #EEEEEE;
-  --border-light: #EEEEEE;
+  --card-border: #E7E3DB;
+  --blue: #FF5600;
+  --coral: #FF5600;       /* lab accent - fin.ai orange */
+  --coral-soft: #ffd3bd;
+  --muted: #8d8a83;
+  --slate: #626260;
+  --hairline: #E7E3DB;
+  --border-light: #E7E3DB;
 }
 
 @theme inline {
@@ -98,29 +99,36 @@
   --color-slate: var(--slate);
   --color-muted: var(--muted);
 
-  --font-display: var(--font-display), "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), "Fraunces", ui-serif, Georgia, serif;
   --font-sans: var(--font-sans), "Inter", Arial, ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "IBM Plex Mono", monospace;
 
-  /* Tesla border-radius scale */
-  --radius-sm: 4px;      /* buttons, interactive elements */
+  /* fin.ai border-radius scale - measured off the live site (buttons run
+     4-6px, not full pill), cards read rounder for the bento/quote-card feel */
+  --radius-sm: 6px;      /* buttons, interactive elements */
   --radius-md: 12px;     /* cards, panels */
-  --radius-lg: 12px;     /* larger cards */
-  --radius-xl: 16px;     /* modals, sheets */
-  --radius-pill: 9999px; /* dots, avatars */
+  --radius-lg: 20px;     /* larger cards, bento/quote cards */
+  --radius-xl: 28px;     /* media containers */
+  --radius-pill: 9999px; /* dots, avatars, chips */
+
+  /* Mobile-first floor - every interactive element meets this, safe-area
+     insets respected on iOS notch/home-indicator devices */
+  --tap-min: 44px;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  height: -webkit-fill-available;
 }
 
 body {
   background: var(--canvas-light);
   color: var(--ink);
   font-family: var(--font-sans);
-  /* Tesla: normal letter-spacing everywhere */
 }
 
 ::selection {
@@ -128,18 +136,18 @@ body {
   color: #fff;
 }
 
-/* ---- Display typography: Inter Tight 500 ---- */
+/* ---- Display typography: Fraunces serif, tight tracking, lineHeight ~1.0 ---- */
 .display {
   font-family: var(--font-display);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
 }
 .heading {
   font-family: var(--font-display);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.005em;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
 }
 .body-lg {
   font-size: 18px;
@@ -153,7 +161,7 @@ body {
   text-transform: uppercase;
 }
 
-/* ---- Buttons - Tesla: 4px radius, sharp technical rectangles ---- */
+/* ---- Buttons - fin.ai: 6px radius, solid ink fill, never orange ---- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -163,21 +171,22 @@ body {
   font-weight: 500;
   letter-spacing: normal;
   white-space: nowrap;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 0 20px;
-  min-height: 40px;
+  min-height: var(--tap-min);
   border: 1px solid transparent;
   transition: background-color 0.33s, color 0.33s, border-color 0.33s, opacity 0.33s;
   cursor: pointer;
 }
 
-/* Primary CTA - Electric Blue, works on dark and light backgrounds */
+/* Primary CTA - solid off-black, the loudest action on every canvas.
+   Orange is never a button surface - it's reserved for highlights/badges. */
 .btn-primary {
-  background: var(--primary);
+  background: var(--ink);
   color: #ffffff;
-  border-color: var(--primary);
+  border-color: var(--ink);
 }
-.btn-primary:hover { background: var(--primary-deep); border-color: var(--primary-deep); }
+.btn-primary:hover { background: #000000; border-color: #000000; }
 
 /* Secondary on dark - white fill, dark text */
 .btn-secondary {
@@ -219,13 +228,13 @@ body {
 }
 .btn-outline-dark:hover { border-color: #ffffff; background: rgba(255,255,255,0.06); }
 
-/* Legacy alias: btn-cobalt → same as btn-primary */
+/* Legacy alias: btn-cobalt → orange fill, ink text (orange never carries white text) */
 .btn-cobalt {
   background: var(--primary);
-  color: #ffffff;
+  color: var(--ink);
   border-color: var(--primary);
 }
-.btn-cobalt:hover { background: var(--primary-deep); border-color: var(--primary-deep); }
+.btn-cobalt:hover { background: var(--primary-bright); border-color: var(--primary-bright); }
 
 .btn-on-dark { background: #fff; color: var(--canvas-dark); border-color: #fff; }
 .btn-on-dark:hover { opacity: 0.88; }
@@ -304,21 +313,49 @@ body {
   transition: color 0.33s;
 }
 
-/* Card surfaces - Tesla: 12px radius, no shadow */
+/* Card surfaces - fin.ai: rounder (20px), no shadow */
 .card-light {
   background: var(--surface-card);
   border: 1px solid var(--hairline-light);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 .card-dark {
   background: var(--surface-elevated);
   color: var(--on-dark);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 .card-featured {
   background: var(--primary);
   color: var(--on-primary);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
+}
+
+/* ---- Quote card - the corner-registration-mark pull quote, fin.ai's
+   customer-story signature surface. Orange highlights one phrase like a
+   marker stroke; never a solid badge fill. ---- */
+.quote-card {
+  position: relative;
+  background: var(--surface-soft);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+}
+.quote-card__tick {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--hairline-strong);
+}
+.quote-mark {
+  background: var(--primary);
+  color: var(--ink);
+  padding: 0.02em 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ---- Mobile-first floor ---- */
+@media (max-width: 767px) {
+  .btn { min-height: 48px; }
 }
 
 /* ---- Reveal on scroll ---- */

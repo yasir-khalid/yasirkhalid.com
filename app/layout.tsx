@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-// Inter Tight = open-source substitute for Aeonik Pro at display sizes.
-const display = Inter_Tight({
+// Fraunces = open-source substitute for fin.ai's custom "Serrif" display face -
+// a light-weight serif with tight negative tracking at large sizes.
+const display = Fraunces({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
 });

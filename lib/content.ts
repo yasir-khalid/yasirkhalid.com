@@ -204,6 +204,16 @@ export const projects: Project[] = [
   },
 ];
 
+// Placeholder testimonial - swap for a real quote + headshot later.
+export const testimonial = {
+  quote:
+    "We looked at a few different engineers, including full-time hires. Some had impressive portfolios but needed hand-holding on every decision. Yasir just took the problem and ran with it, and shipped something that worked.",
+  highlight: "took the problem and ran with it",
+  name: "Jordan Ellis",
+  role: "Placeholder role, Placeholder company",
+  wordmark: "ACME CO.",
+};
+
 export const metrics = [
   { value: "15,000+", label: "users on the agentic platform" },
   { value: "800+", label: "players on Sportscanner" },
