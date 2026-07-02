@@ -3,52 +3,185 @@ import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import TestimonialCard from "@/components/TestimonialCard";
 import CornerTicks from "@/components/CornerTicks";
+import AgentConsole from "@/components/AgentConsole";
 import { GitHubIcon, XIcon, LinkedInIcon, EmailIcon } from "@/components/icons";
 import { BUILD_ICONS, BuildBadge } from "@/components/ProfileBlocks";
-import { profile, experience, projects } from "@/lib/content";
+import {
+  profile,
+  trustMarks,
+  pillars,
+  capabilities,
+  experience,
+  projects,
+  metrics,
+} from "@/lib/content";
+
+const footerColumns = [
+  {
+    heading: "Site",
+    links: [
+      { label: "Experience", href: "/#work" },
+      { label: "Builds", href: "/#projects" },
+      { label: "The Lab", href: "/lab" },
+      { label: "Resume", href: "/resume" },
+    ],
+  },
+  {
+    heading: "Builds",
+    links: [
+      { label: "Sportscanner", href: "https://www.sportscanner.co.uk" },
+      { label: "Traceyard", href: "/#projects" },
+      { label: "Simulation Lab", href: "/lab" },
+    ],
+  },
+  {
+    heading: "Connect",
+    links: [
+      { label: "Email", href: `mailto:${profile.email}` },
+      { label: "LinkedIn", href: profile.linkedin },
+      { label: "GitHub", href: profile.github },
+      { label: "X / Twitter", href: profile.x },
+    ],
+  },
+];
 
 export default function Home() {
   return (
     <main id="top">
       <Nav />
 
-      {/* ===================================================== Hero (cream, unframed) */}
-      <section className="flex min-h-[70vh] items-center bg-[var(--canvas-light)]">
-        <div className="mx-auto w-full max-w-[720px] px-5 py-24 sm:px-8">
+      {/* ===================================================== 00 Hero */}
+      <section className="bg-[var(--canvas-light)]">
+        <div className="mx-auto grid max-w-[1100px] gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16">
+          <div>
+            <Reveal>
+              <h1 className="display max-w-[16ch] text-[clamp(2.5rem,2rem+4.5vw,5.25rem)] font-light leading-[0.98] tracking-tight text-[var(--ink)]">
+                {profile.headline}
+              </h1>
+            </Reveal>
+            <Reveal delay={120}>
+              <p className="mt-7 max-w-[48ch] text-[18px] leading-[1.4] text-[var(--body)]">
+                {profile.sub}
+              </p>
+            </Reveal>
+            <Reveal delay={180}>
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <a href="#contact" className="btn btn-primary">
+                  Get in touch
+                </a>
+                <Link href="/lab" className="btn btn-outline-light">
+                  Explore simulation lab →
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={220}>
+            <AgentConsole />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===================================================== 01 Pillars */}
+      <section id="about" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+        <div className="mx-auto max-w-[1100px] px-5 py-20 sm:px-8 sm:py-24">
           <Reveal>
-            <h1 className="display max-w-[18ch] text-[clamp(2.1rem,5.2vw,3.9rem)] font-light text-[var(--ink)]">
-              {profile.headline}
-            </h1>
+            <div className="flex items-start gap-5">
+              <span className="numeral">01</span>
+              <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.9rem,1.5rem+2vw,3rem)] font-light text-[var(--ink)]">
+                I take ideas to production and own the whole loop.
+              </h2>
+            </div>
           </Reveal>
-          <Reveal delay={120}>
-            <p className="mt-7 max-w-[54ch] text-[16px] leading-[1.55] text-[var(--mute)]">
-              {profile.sub}
-            </p>
+
+          <div className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((p, i) => (
+              <Reveal key={p.title} delay={i * 70}>
+                <div className="border-t border-[var(--hairline-light)] pt-6">
+                  <p className="mono-label text-[var(--stone-text)]">{p.label}</p>
+                  <h3 className="heading mt-4 text-[19px] text-[var(--ink)]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-[14px] leading-[1.5] text-[var(--mute)]">
+                    {p.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================== 02 Trust marks (logo grid) */}
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+        <div className="mx-auto max-w-[1100px] px-5 py-20 sm:px-8 sm:py-24">
+          <Reveal>
+            <div className="flex items-start gap-5">
+              <span className="numeral">02</span>
+              <h2 className="display mt-1 max-w-[22ch] text-[clamp(1.9rem,1.5rem+2vw,3rem)] font-light text-[var(--ink)]">
+                Shipped inside teams that can&apos;t afford to get it wrong.
+              </h2>
+            </div>
           </Reveal>
-          <Reveal delay={180}>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <a href="#contact" className="btn btn-primary">
-                Get in touch
-              </a>
-              <Link href="/lab" className="btn btn-outline-light">
-                Explore simulation lab →
-              </Link>
+          <Reveal delay={100}>
+            <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-[var(--hairline-light)] pt-10 sm:grid-cols-5">
+              {trustMarks.map((m) => (
+                <span
+                  key={m}
+                  className="display text-center text-[22px] text-[var(--ink)] opacity-40 grayscale"
+                >
+                  {m}
+                </span>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ============================================== Builds (cream, plain numbered list) */}
-      <section id="projects" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
-        <div className="mx-auto max-w-[720px] px-5 py-20 sm:px-8">
+      {/* ===================================================== 03 Agentic AI (gradient band) */}
+      <section className="gradient-band border-t border-[var(--hairline-light)]">
+        <div className="mx-auto max-w-[1100px] px-5 py-20 sm:px-8 sm:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">builds</p>
-            <h2 className="heading mt-4 text-[clamp(1.4rem,3vw,1.9rem)] text-[var(--ink)]">
-              Things I build and own, end to end.
-            </h2>
+            <div className="flex items-start gap-5">
+              <span className="numeral">03</span>
+              <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.9rem,1.5rem+2vw,3rem)] font-light text-[var(--ink)]">
+                Agentic AI, specifically.
+              </h2>
+            </div>
+            <p className="mt-6 max-w-[58ch] pl-[52px] text-[16px] leading-[1.5] text-[var(--body)]">
+              Evals, tracing, guardrails, and MCP - the unglamorous parts that
+              decide whether agents actually work in production.
+            </p>
           </Reveal>
 
-          <div className="mt-12 flex flex-col border-t border-[var(--hairline-light)]">
+          <div className="mt-14 grid gap-x-10 gap-y-10 border-t border-[var(--hairline-strong)] pt-10 sm:grid-cols-2 lg:grid-cols-4">
+            {capabilities.map((c, i) => (
+              <Reveal key={c.label} delay={i * 70}>
+                <div>
+                  <h3 className="heading text-[18px] text-[var(--ink)]">{c.label}</h3>
+                  <p className="mt-3 text-[14px] leading-[1.5] text-[var(--body)]">
+                    {c.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================== 04 Builds */}
+      <section id="projects" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+        <div className="mx-auto max-w-[1100px] px-5 py-20 sm:px-8 sm:py-24">
+          <Reveal>
+            <div className="flex items-start gap-5">
+              <span className="numeral">04</span>
+              <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.9rem,1.5rem+2vw,3rem)] font-light text-[var(--ink)]">
+                Things I build and own, end to end.
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="mt-14 flex flex-col border-t border-[var(--hairline-light)]">
             {projects.map((p, i) => {
               const Icon = BUILD_ICONS[p.name];
               const href = p.href;
@@ -98,17 +231,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================================================ Experience (compact list) */}
+      {/* ===================================================== 05 Experience */}
       <section id="work" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
-        <div className="mx-auto max-w-[720px] px-5 py-20 sm:px-8">
+        <div className="mx-auto max-w-[1100px] px-5 py-20 sm:px-8 sm:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">experience</p>
-            <h2 className="heading mt-4 text-[clamp(1.4rem,3vw,1.9rem)] text-[var(--ink)]">
-              Where I&apos;ve shipped.
-            </h2>
+            <div className="flex items-start gap-5">
+              <span className="numeral">05</span>
+              <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.9rem,1.5rem+2vw,3rem)] font-light text-[var(--ink)]">
+                Where I&apos;ve shipped.
+              </h2>
+            </div>
           </Reveal>
 
-          <div className="mt-12 flex flex-col border-t border-[var(--hairline-light)]">
+          <div className="mt-14 flex flex-col border-t border-[var(--hairline-light)]">
             {experience.map((job, i) => (
               <Reveal key={job.company + job.period} delay={i * 40}>
                 <article className="flex flex-col gap-2 border-b border-[var(--hairline-light)] py-7 md:flex-row md:items-baseline md:gap-8">
@@ -142,7 +277,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============================================== Testimonial (catalogue) */}
+      {/* ===================================================== Impact (tick-framed stat panel) */}
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+        <div className="mx-auto max-w-[1100px] px-5 py-20 sm:px-8">
+          <Reveal>
+            <div className="tick-frame border border-[var(--hairline-light)] bg-[var(--surface-soft)]">
+              <CornerTicks />
+              <p className="mono-label text-[var(--charcoal)]">impact</p>
+              <div className="mt-10 grid grid-cols-2 gap-x-10 gap-y-10 lg:grid-cols-4">
+                {metrics.map((m, i) => (
+                  <Reveal key={m.label} delay={i * 60}>
+                    <div className="border-t border-[var(--hairline-strong)] pt-5">
+                      <div className="display text-[clamp(1.7rem,3vw,2.4rem)] font-light text-[var(--primary)]">
+                        {m.value}
+                      </div>
+                      <p className="mt-2 text-[14px] leading-snug text-[var(--mute)]">
+                        {m.label}
+                      </p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===================================================== Testimonial */}
       <section className="border-t border-[var(--hairline-light)] bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-[720px] px-5 py-20 sm:px-8">
           <Reveal>
@@ -151,7 +312,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========================================================= Contact CTA (tick-framed, like fin.ai's closing panel) */}
+      {/* ===================================================== Contact CTA (tick-framed) */}
       <section id="contact" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[720px] px-5 py-24 sm:px-8">
           <Reveal>
@@ -218,65 +379,90 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============================================================== Footer (cream, plain black text) */}
+      {/* ===================================================== Footer (multi-column, fin.ai style) */}
       <footer className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
-        <div className="mx-auto flex max-w-[720px] flex-col gap-8 px-5 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <div>
+        <div className="mx-auto max-w-[1100px] px-5 py-16 sm:px-8">
+          <div className="flex flex-wrap gap-x-16 gap-y-10">
+            {footerColumns.map((col) => (
+              <div key={col.heading} className="min-w-[140px]">
+                <p className="mono-label text-[var(--stone-text)]">{col.heading}</p>
+                <ul className="mt-4 flex flex-col gap-2.5">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      {l.href.startsWith("/") ? (
+                        <Link
+                          href={l.href}
+                          className="text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
+                        >
+                          {l.label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={l.href}
+                          target={l.href.startsWith("mailto:") ? undefined : "_blank"}
+                          rel="noopener noreferrer"
+                          className="text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
+                        >
+                          {l.label}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-14 flex flex-col gap-6 border-t border-[var(--hairline-light)] pt-8 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2.5">
               <span className="grid h-6 w-6 place-items-center rounded-[6px] bg-[var(--primary)] text-[11px] font-semibold text-[var(--ink)]">
                 YK
               </span>
               <span className="display text-[15px] text-[var(--ink)]">Yasir Khalid</span>
+              <span className="mono-label text-[12px] text-[var(--stone-text)]">
+                {profile.location}
+              </span>
             </div>
-            <p className="mono-label mt-4 text-[12px] text-[var(--stone-text)]">
-              {profile.location} · {profile.role}
-            </p>
-            <Link
-              href="/resume"
-              className="mono-label mt-3 inline-block text-[12px] text-[var(--mute)] underline underline-offset-2 hover:text-[var(--ink)]"
-            >
-              Full CV & skills →
-            </Link>
-          </div>
-          <div className="flex items-center gap-6">
-            <a
-              href={`mailto:${profile.email}`}
-              aria-label="Email"
-              className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
-            >
-              <EmailIcon className="h-5 w-5" />
-            </a>
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
-            >
-              <GitHubIcon className="h-5 w-5" />
-            </a>
-            <a
-              href={profile.x}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X (Twitter)"
-              className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
-            >
-              <XIcon className="h-[18px] w-[18px]" />
-            </a>
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
-            >
-              <LinkedInIcon className="h-5 w-5" />
-            </a>
+            <div className="flex items-center gap-5">
+              <a
+                href={`mailto:${profile.email}`}
+                aria-label="Email"
+                className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
+              >
+                <EmailIcon className="h-5 w-5" />
+              </a>
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
+              >
+                <GitHubIcon className="h-5 w-5" />
+              </a>
+              <a
+                href={profile.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+                className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
+              >
+                <XIcon className="h-[18px] w-[18px]" />
+              </a>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-[var(--mute)] transition-colors hover:text-[var(--ink)]"
+              >
+                <LinkedInIcon className="h-5 w-5" />
+              </a>
+            </div>
           </div>
         </div>
         <div className="border-t border-[var(--hairline-light)]">
-          <p className="mono-label mx-auto max-w-[720px] px-5 py-5 text-[11px] text-[var(--stone-text)] sm:px-8">
+          <p className="mono-label mx-auto max-w-[1100px] px-5 py-5 text-[11px] text-[var(--stone-text)] sm:px-8">
             © {new Date().getFullYear()} Yasir Khalid - built with Next.js.
           </p>
         </div>

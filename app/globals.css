@@ -356,6 +356,24 @@ body {
   -webkit-box-decoration-break: clone;
 }
 
+/* ---- Numbered section device - fin.ai numbers every content section
+   (01, 02, 03...) in the display serif at 32px/300. Order is real: page
+   sections top to bottom. ---- */
+.numeral {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 32px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ---- Warm gradient band - fin.ai drops one feature section onto a soft
+   orange watercolor gradient instead of a flat surface. Used sparingly
+   (one band per page) for the agentic-AI proof section. ---- */
+.gradient-band {
+  background: linear-gradient(135deg, #f4ead9 0%, #f7ebd8 35%, #f0e3d0 65%, #ecd9c3 100%);
+}
+
 /* ---- Mobile-first floor ---- */
 @media (max-width: 767px) {
   .btn { min-height: 48px; }

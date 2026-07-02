@@ -57,7 +57,12 @@ export default function ResumePage() {
       <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">in short</p>
+            <div className="flex items-start gap-5">
+              <span className="numeral">01</span>
+              <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.6rem,1.3rem+1.6vw,2.5rem)] font-light text-[var(--ink)]">
+                In short.
+              </h2>
+            </div>
           </Reveal>
           <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             {pillars.map((p, i) => (
@@ -79,16 +84,21 @@ export default function ResumePage() {
 
       {/* ====================================================== Trust strip */}
       <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
-        <div className="mx-auto max-w-[1040px] px-5 py-14 text-center sm:px-8">
+        <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--stone-text)]">Built &amp; shipped with</p>
+            <div className="flex items-start gap-5">
+              <span className="numeral">02</span>
+              <h2 className="display mt-1 max-w-[22ch] text-[clamp(1.6rem,1.3rem+1.6vw,2.5rem)] font-light text-[var(--ink)]">
+                Shipped inside teams that can&apos;t afford to get it wrong.
+              </h2>
+            </div>
           </Reveal>
           <Reveal delay={80}>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+            <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-[var(--hairline-light)] pt-10 sm:grid-cols-5">
               {trustMarks.map((m) => (
                 <span
                   key={m}
-                  className="display text-[20px] text-[var(--ink)] opacity-50 sm:text-[24px]"
+                  className="display text-center text-[22px] text-[var(--ink)] opacity-40 grayscale"
                 >
                   {m}
                 </span>
@@ -104,10 +114,15 @@ export default function ResumePage() {
           <Reveal>
             <div className="tick-frame border border-[var(--hairline-light)] bg-[var(--surface-soft)]">
               <CornerTicks />
-              <p className="mono-label text-[var(--charcoal)]">agentic AI, specifically</p>
-              <h2 className="heading mt-6 max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
+              <div className="flex items-start gap-5">
+                <span className="numeral">03</span>
+                <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.6rem,1.3rem+1.6vw,2.5rem)] font-light text-[var(--ink)]">
+                  Agentic AI, specifically.
+                </h2>
+              </div>
+              <p className="mt-4 max-w-[58ch] pl-[52px] text-[15px] leading-[1.5] text-[var(--mute)]">
                 The parts that decide whether agents work in production.
-              </h2>
+              </p>
 
               <div className="mt-16 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
                 {capabilities.map((c, i) => (
@@ -130,10 +145,12 @@ export default function ResumePage() {
       <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">experience</p>
-            <h2 className="heading mt-6 text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
-              Where I&apos;ve shipped.
-            </h2>
+            <div className="flex items-start gap-5">
+              <span className="numeral">04</span>
+              <h2 className="display mt-1 max-w-[20ch] text-[clamp(1.6rem,1.3rem+1.6vw,2.5rem)] font-light text-[var(--ink)]">
+                Where I&apos;ve shipped.
+              </h2>
+            </div>
           </Reveal>
 
           <div className="mt-14 border-t border-[var(--hairline-light)]">
@@ -177,11 +194,13 @@ export default function ResumePage() {
       <section id="projects" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-28">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">builds</p>
-            <h2 className="heading mt-6 max-w-[22ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
-              Things I build and own, end to end.
-            </h2>
-            <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-[var(--mute)]">
+            <div className="flex items-start gap-5">
+              <span className="numeral">05</span>
+              <h2 className="display mt-1 max-w-[22ch] text-[clamp(1.6rem,1.3rem+1.6vw,2.5rem)] font-light text-[var(--ink)]">
+                Things I build and own, end to end.
+              </h2>
+            </div>
+            <p className="mt-4 max-w-[52ch] pl-[52px] text-[15px] leading-[1.6] text-[var(--mute)]">
               Each one started with a real problem. Each one is still running.
             </p>
           </Reveal>
@@ -200,7 +219,10 @@ export default function ResumePage() {
       <section className="border-t border-[var(--hairline-light)] bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--charcoal)]">interactive</p>
+            <div className="flex items-start gap-5">
+              <span className="numeral">06</span>
+              <p className="mono-label mt-2 text-[var(--charcoal)]">interactive</p>
+            </div>
             <Link
               href="/lab"
               className="group mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-5"
@@ -264,10 +286,12 @@ export default function ResumePage() {
         <div className="mx-auto grid max-w-[1040px] gap-16 px-5 py-24 sm:px-8 md:grid-cols-[1.7fr_1fr] md:py-24">
           <div>
             <Reveal>
-              <p className="mono-label text-[var(--charcoal)]">toolkit</p>
-              <h2 className="heading mt-6 text-[clamp(1.5rem,3.2vw,2.2rem)] text-[var(--ink)]">
-                The stack I reach for.
-              </h2>
+              <div className="flex items-start gap-5">
+                <span className="numeral">07</span>
+                <h2 className="display mt-1 max-w-[16ch] text-[clamp(1.5rem,1.2rem+1.4vw,2.2rem)] font-light text-[var(--ink)]">
+                  The stack I reach for.
+                </h2>
+              </div>
             </Reveal>
             <div className="mt-12 flex flex-col gap-10">
               {skills.map((s, i) => (

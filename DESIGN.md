@@ -6,21 +6,33 @@
 
 ## Overview
 
-This site's visual language is a faithful reskin of the real **fin.ai**
-marketing site (checked live with a browser, not a generic "Fin/Intercom
-brand" guess). fin.ai's actual homepage runs **cream/off-white end to end -
-there is no dark band anywhere on it.** An earlier pass of this reskin
-carried over the previous design's alternating dark/light bands, which does
-not match the real site and was corrected. Emphasis panels (stats, the
-closing CTA, customer quotes) use a **corner-tick registration-mark frame**
-instead of ever switching to a dark canvas - that's fin.ai's actual device
-for creating visual weight. Display headlines run in a **light serif**
-(fin.ai's custom "Serrif" face; this site substitutes the free **Fraunces**),
-set at `lineHeight: 1.0` with tight negative tracking. Body copy stays in
-**Inter**. **Orange (`#FF5600`)** is fin.ai's single accent - used scarcely,
-as a highlighter behind text, a chart/icon tint, or a big stat number,
-**never** as a button fill. The dominant button/surface color is solid
-off-black ink on the cream canvas - not the accent.
+This site's structure and visual language are a faithful copy of the real
+**fin.ai** marketing homepage (checked live with a browser - full scroll,
+computed styles, the works - not a generic "Fin/Intercom brand" guess).
+That means matching fin.ai's actual **page structure**, not just its color
+tokens: a two-column hero (headline + CTAs on the left, a real product
+visual on the right), a run of **numbered sections** (`01`, `02`, `03`...
+in the display serif, order is real), a grayscale customer-logo grid, one
+section dropped onto a **warm gradient/watercolor band**, framed stat
+panels, and a multi-column footer - all on a **single cream canvas, hero to
+footer, with no dark band anywhere** (verified by scrolling fin.ai's real
+homepage top to bottom). Two earlier passes got this wrong in different
+ways: the first carried over the previous design's alternating dark/light
+bands; the second fixed the color/band mistake but kept the old single-
+column list layout instead of fin.ai's actual numbered two-column
+structure. Both were corrected - see git history on this file for the full
+story if reintroducing either mistake is tempting.
+
+Emphasis panels (stats, the closing CTA, customer quotes) use a
+**corner-tick registration-mark frame** instead of ever switching to a dark
+canvas - that's fin.ai's actual device for creating visual weight. Display
+headlines run in a **light serif** (fin.ai's custom "Serrif" face; this site
+substitutes the free **Fraunces**), set at `lineHeight: 1.0` with tight
+negative tracking. Body copy stays in **Inter**. **Orange (`#FF5600`)** is
+fin.ai's single accent - used scarcely, as a highlighter behind text, a
+chart/icon tint, or a big stat number, **never** as a button fill. The
+dominant button/surface color is solid off-black ink on the cream canvas -
+not the accent.
 
 **Key Characteristics:**
 - **Single cream canvas** (`{colors.canvas-light}` `#FAF9F6`) - the whole
@@ -118,10 +130,40 @@ Unchanged from before - these are functional, not brand-name-specific:
 
 ## Layout
 
-- Max content width 720-1040px depending on section (unchanged from the
-  single-column read layout).
+- Max content width 1040-1100px on the homepage/resume (fin.ai's own content
+  measures ~1100-1300px), 720px on the narrower testimonial/CTA panels.
 - Band padding: 80-120px vertical on desktop, tighter on mobile.
 - Hairline dividers replace shadow throughout.
+
+## Structure (homepage & resume)
+
+fin.ai's real homepage is not a flat list of sections - it's a **numbered
+narrative** (`01`, `02`, `03`...) with a couple of distinct set-pieces
+repeated throughout. This site copies that structure:
+
+1. **Hero** - two-column on desktop (headline/sub/CTAs left, a real visual
+   right - here, the `AgentConsole` trace mockup), stacks text-then-visual
+   on mobile. Headline is `font-weight: 300` Fraunces, `lineHeight: 0.98`.
+2. **Numbered sections** - `.numeral` (Fraunces 300, 32px) beside a
+   `font-light` heading, `flex items-start gap-5`. Body copy sits indented
+   `pl-[52px]` to align under the heading. Order is real - don't renumber
+   without reordering the sections.
+3. **Logo/trust grid** - grayscale (`opacity-40 grayscale`) wordmarks in a
+   5-up grid under its own numbered section, matching fin.ai's customer-logo
+   wall under their "02 Companies" section.
+4. **Gradient band** (`.gradient-band`) - exactly one section per page drops
+   onto a warm watercolor gradient instead of flat cream, for the single
+   most feature-dense section (agentic AI capabilities). Don't add a second
+   one - fin.ai uses this sparingly too.
+5. **Tick-framed panels** - stat/impact numbers and the closing CTA, per the
+   corner-tick device above.
+6. **Multi-column footer** - `Site` / `Builds` / `Connect` columns, mono-label
+   gray headers, plain black links, wordmark + social icons below, hairline
+   + copyright bar at the very bottom.
+
+`components/CornerTicks.tsx` and the `.numeral`/`.gradient-band` classes in
+`globals.css` are the reusable primitives for all of this - reach for them
+before inventing a new section treatment.
 
 ## Shapes
 

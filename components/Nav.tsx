@@ -58,7 +58,7 @@ export default function Nav() {
             : "bg-[var(--canvas-light)]"
         }`}
       >
-        <nav className="mx-auto flex h-16 max-w-[1040px] items-center justify-between px-5 sm:px-8">
+        <nav className="mx-auto flex h-16 max-w-[1100px] items-center justify-between px-5 sm:px-8">
           {/* Wordmark */}
           <Link href="/#top" className="flex items-center gap-2.5">
             <span className="grid h-7 w-7 place-items-center rounded-[6px] bg-[var(--primary)] text-[12px] font-semibold text-[var(--ink)]">
@@ -76,7 +76,7 @@ export default function Nav() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="text-[14px] font-medium text-[var(--body)] transition-colors duration-[330ms] hover:text-[var(--ink)]"
+                  className="text-[15px] font-normal text-[var(--body)] transition-colors duration-[330ms] hover:text-[var(--ink)]"
                 >
                   {l.label}
                 </Link>
@@ -84,7 +84,7 @@ export default function Nav() {
                 <a
                   key={l.href}
                   href={l.href}
-                  className="text-[14px] font-medium text-[var(--body)] transition-colors duration-[330ms] hover:text-[var(--ink)]"
+                  className="text-[15px] font-normal text-[var(--body)] transition-colors duration-[330ms] hover:text-[var(--ink)]"
                 >
                   {l.label}
                 </a>
