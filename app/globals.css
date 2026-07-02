@@ -330,20 +330,23 @@ body {
   border-radius: var(--radius-lg);
 }
 
-/* ---- Quote card - the corner-registration-mark pull quote, fin.ai's
-   customer-story signature surface. Orange highlights one phrase like a
-   marker stroke; never a solid badge fill. ---- */
-.quote-card {
+/* ---- Corner-tick frame - fin.ai's repeated device for emphasis panels:
+   quote cards, stat/chart panels, the closing-CTA block. Four small square
+   registration marks at the corners of a soft or cream surface. This is
+   how the real site creates emphasis WITHOUT ever going to a dark canvas. ---- */
+.tick-frame {
   position: relative;
-  background: var(--surface-soft);
   border-radius: var(--radius-lg);
   padding: 40px 32px;
 }
-.quote-card__tick {
+.tick-frame__tick {
   position: absolute;
   width: 8px;
   height: 8px;
   background: var(--hairline-strong);
+}
+.quote-card {
+  background: var(--surface-soft);
 }
 .quote-mark {
   background: var(--primary);

@@ -1,4 +1,5 @@
 import { testimonial } from "@/lib/content";
+import CornerTicks from "@/components/CornerTicks";
 
 // Pull-quote card - fin.ai's customer-story signature surface: corner
 // registration marks, a serif quote with one phrase run through an orange
@@ -10,11 +11,8 @@ export default function TestimonialCard() {
     : [testimonial.quote, ""];
 
   return (
-    <div className="quote-card mx-auto max-w-[520px]">
-      <span className="quote-card__tick left-3 top-3" aria-hidden />
-      <span className="quote-card__tick right-3 top-3" aria-hidden />
-      <span className="quote-card__tick left-3 bottom-3" aria-hidden />
-      <span className="quote-card__tick right-3 bottom-3" aria-hidden />
+    <div className="tick-frame quote-card mx-auto max-w-[520px]">
+      <CornerTicks />
 
       <p className="mono-label text-[var(--stone-text)]">
         {testimonial.wordmark}

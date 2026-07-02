@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
+import CornerTicks from "@/components/CornerTicks";
 import { liveLab } from "@/lib/lab";
 import { BuildCard, Bullets } from "@/components/ProfileBlocks";
 import {
@@ -30,21 +31,21 @@ export default function ResumePage() {
     <main id="top">
       <Nav />
 
-      {/* ===================================================== Header (dark band) */}
-      <section className="bg-[var(--canvas-dark)]">
+      {/* ===================================================== Header (cream) */}
+      <section className="bg-[var(--canvas-light)]">
         <div className="mx-auto w-full max-w-[1040px] px-5 py-20 sm:px-8 sm:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">full resume</p>
-            <h1 className="display mt-6 max-w-[20ch] text-[clamp(1.9rem,4.5vw,3.2rem)] text-white">
+            <p className="mono-label text-[var(--charcoal)]">full resume</p>
+            <h1 className="display mt-6 max-w-[20ch] text-[clamp(1.9rem,4.5vw,3.2rem)] font-light text-[var(--ink)]">
               {profile.name}
             </h1>
-            <p className="mt-4 max-w-[54ch] text-[16px] leading-[1.55] text-[var(--on-dark-mute)]">
+            <p className="mt-4 max-w-[54ch] text-[16px] leading-[1.55] text-[var(--mute)]">
               {profile.current} · {profile.location}
             </p>
           </Reveal>
           <Reveal delay={100}>
             <div className="mt-8">
-              <Link href="/" className="btn btn-outline-dark">
+              <Link href="/" className="btn btn-outline-light">
                 ← Back to homepage
               </Link>
             </div>
@@ -53,7 +54,7 @@ export default function ResumePage() {
       </section>
 
       {/* ============================================ Pillars (white catalogue) */}
-      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">in short</p>
@@ -77,7 +78,7 @@ export default function ResumePage() {
       </section>
 
       {/* ====================================================== Trust strip */}
-      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-14 text-center sm:px-8">
           <Reveal>
             <p className="mono-label text-[var(--stone-text)]">Built &amp; shipped with</p>
@@ -97,33 +98,36 @@ export default function ResumePage() {
         </div>
       </section>
 
-      {/* ====================================== Agentic AI proof (dark band) */}
-      <section className="bg-[var(--canvas-dark)] text-white">
-        <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
+      {/* ====================================== Agentic AI proof (tick-framed panel) */}
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+        <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">agentic AI, specifically</p>
-            <h2 className="heading mt-6 max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-white">
-              The parts that decide whether agents work in production.
-            </h2>
-          </Reveal>
+            <div className="tick-frame border border-[var(--hairline-light)] bg-[var(--surface-soft)]">
+              <CornerTicks />
+              <p className="mono-label text-[var(--charcoal)]">agentic AI, specifically</p>
+              <h2 className="heading mt-6 max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
+                The parts that decide whether agents work in production.
+              </h2>
 
-          <div className="mt-16 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
-            {capabilities.map((c, i) => (
-              <Reveal key={c.label} delay={i * 70}>
-                <div className="border-t border-[var(--hairline-dark)] pt-6">
-                  <h3 className="heading text-[20px] text-white">{c.label}</h3>
-                  <p className="mt-3 text-[15px] leading-[1.5] text-[var(--on-dark-mute)]">
-                    {c.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+              <div className="mt-16 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+                {capabilities.map((c, i) => (
+                  <Reveal key={c.label} delay={i * 70}>
+                    <div className="border-t border-[var(--hairline-strong)] pt-6">
+                      <h3 className="heading text-[20px] text-[var(--ink)]">{c.label}</h3>
+                      <p className="mt-3 text-[15px] leading-[1.5] text-[var(--mute)]">
+                        {c.body}
+                      </p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ================================================ Experience (table) */}
-      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">experience</p>
@@ -169,15 +173,15 @@ export default function ResumePage() {
         </div>
       </section>
 
-      {/* ============================================== Builds (dark showcase) */}
-      <section id="projects" className="bg-[var(--canvas-dark)]">
+      {/* ============================================== Builds (light showcase) */}
+      <section id="projects" className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-24 sm:px-8 md:py-28">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">builds</p>
-            <h2 className="heading mt-6 max-w-[22ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-white">
+            <p className="mono-label text-[var(--charcoal)]">builds</p>
+            <h2 className="heading mt-6 max-w-[22ch] text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--ink)]">
               Things I build and own, end to end.
             </h2>
-            <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-white/50">
+            <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-[var(--mute)]">
               Each one started with a real problem. Each one is still running.
             </p>
           </Reveal>
@@ -193,7 +197,7 @@ export default function ResumePage() {
       </section>
 
       {/* ==================================== Simulation lab (feature link) */}
-      <section className="border-b border-[var(--hairline-light)] bg-[var(--surface-soft)]">
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
             <p className="mono-label text-[var(--charcoal)]">interactive</p>
@@ -229,31 +233,34 @@ export default function ResumePage() {
         </div>
       </section>
 
-      {/* ============================================== Metrics (dark band) */}
-      <section className="bg-[var(--canvas-dark)] text-white">
+      {/* ============================================== Metrics (tick-framed panel) */}
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-20 sm:px-8 md:py-24">
           <Reveal>
-            <p className="mono-label text-[var(--on-dark-mute)]">impact</p>
+            <div className="tick-frame border border-[var(--hairline-light)] bg-[var(--surface-soft)]">
+              <CornerTicks />
+              <p className="mono-label text-[var(--charcoal)]">impact</p>
+              <div className="mt-10 grid grid-cols-2 gap-x-10 gap-y-12 lg:grid-cols-4">
+                {metrics.map((m, i) => (
+                  <Reveal key={m.label} delay={i * 60}>
+                    <div className="border-t border-[var(--hairline-strong)] pt-5">
+                      <div className="display text-[clamp(1.7rem,3vw,2.4rem)] font-light text-[var(--primary)]">
+                        {m.value}
+                      </div>
+                      <p className="mt-2 text-[14px] leading-snug text-[var(--mute)]">
+                        {m.label}
+                      </p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
           </Reveal>
-          <div className="mt-10 grid grid-cols-2 gap-x-10 gap-y-12 lg:grid-cols-4">
-            {metrics.map((m, i) => (
-              <Reveal key={m.label} delay={i * 60}>
-                <div className="border-t border-[var(--hairline-dark)] pt-5">
-                  <div className="display text-[clamp(1.7rem,3vw,2.4rem)] text-white">
-                    {m.value}
-                  </div>
-                  <p className="mt-2 text-[14px] leading-snug text-[var(--on-dark-mute)]">
-                    {m.label}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* ===================================================== Skills + sidebar */}
-      <section className="border-b border-[var(--hairline-light)] bg-[var(--canvas-light)]">
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto grid max-w-[1040px] gap-16 px-5 py-24 sm:px-8 md:grid-cols-[1.7fr_1fr] md:py-24">
           <div>
             <Reveal>
@@ -351,7 +358,7 @@ export default function ResumePage() {
       </section>
 
       {/* ========================================================= Footer link back */}
-      <section className="bg-[var(--canvas-dark)]">
+      <section className="border-t border-[var(--hairline-light)] bg-[var(--canvas-light)]">
         <div className="mx-auto max-w-[1040px] px-5 py-16 text-center sm:px-8">
           <Link href="/#contact" className="btn btn-primary">
             Get in touch →

@@ -25,10 +25,10 @@ export function BuildBadge({ label }: { label: string }) {
 
 export function BuildCard({ project }: { project: Project }) {
   const Icon = BUILD_ICONS[project.name];
-  const linkClass = "mt-auto pt-6 inline-flex items-center gap-1.5 text-[13px] text-white/40 transition-colors duration-[330ms] hover:text-white";
+  const linkClass = "mt-auto pt-6 inline-flex items-center gap-1.5 text-[13px] text-[var(--mute)] transition-colors duration-[330ms] hover:text-[var(--ink)]";
 
   return (
-    <article className="flex h-full flex-col rounded-[12px] border border-white/[0.08] bg-white/[0.03] p-7">
+    <article className="card-light flex h-full flex-col p-7">
       {/* Icon */}
       {Icon && (
         <div className="flex h-10 w-10 items-center justify-center rounded-[8px] bg-[var(--primary)]/12 text-[var(--primary)]">
@@ -38,18 +38,18 @@ export function BuildCard({ project }: { project: Project }) {
 
       {/* Name + badge */}
       <div className="mt-5 flex flex-wrap items-start justify-between gap-2">
-        <h3 className="heading text-[21px] text-white">{project.name}</h3>
+        <h3 className="heading text-[21px] text-[var(--ink)]">{project.name}</h3>
         {project.badge && <BuildBadge label={project.badge} />}
       </div>
 
       {/* Blurb */}
-      <p className="mt-2 text-[14px] leading-[1.6] text-white/55">{project.blurb}</p>
+      <p className="mt-2 text-[14px] leading-[1.6] text-[var(--body)]">{project.blurb}</p>
 
       {/* Bullets */}
       <ul className="mt-5 flex flex-col gap-2.5">
         {project.points.map((pt) => (
-          <li key={pt} className="flex items-start gap-3 text-[14px] leading-[1.5] text-white/70">
-            <span className="mt-[8px] block h-px w-3 shrink-0 bg-white/25" aria-hidden />
+          <li key={pt} className="flex items-start gap-3 text-[14px] leading-[1.5] text-[var(--body)]">
+            <span className="mt-[8px] block h-px w-3 shrink-0 bg-[var(--hairline-strong)]" aria-hidden />
             {pt}
           </li>
         ))}
@@ -60,7 +60,7 @@ export function BuildCard({ project }: { project: Project }) {
         {project.stack.map((s) => (
           <span
             key={s}
-            className="rounded-[4px] border border-white/10 px-2 py-0.5 font-mono text-[11px] text-white/45"
+            className="rounded-[4px] border border-[var(--hairline-light)] px-2 py-0.5 font-mono text-[11px] text-[var(--mute)]"
           >
             {s}
           </span>
@@ -83,20 +83,13 @@ export function BuildCard({ project }: { project: Project }) {
   );
 }
 
-export function Bullets({ points, dark = false }: { points: string[]; dark?: boolean }) {
+export function Bullets({ points }: { points: string[] }) {
   return (
     <ul className="flex flex-col gap-2.5">
       {points.map((p) => (
-        <li
-          key={p}
-          className={`flex gap-3 text-[15px] leading-[1.5] ${
-            dark ? "text-[var(--on-dark-mute)]" : "text-[var(--body)]"
-          }`}
-        >
+        <li key={p} className="flex gap-3 text-[15px] leading-[1.5] text-[var(--body)]">
           <span
-            className={`mt-[9px] h-1 w-3 shrink-0 rounded-full ${
-              dark ? "bg-white/40" : "bg-[var(--charcoal)]"
-            }`}
+            className="mt-[9px] h-1 w-3 shrink-0 rounded-full bg-[var(--charcoal)]"
             aria-hidden
           />
           <span>{p}</span>

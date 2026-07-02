@@ -7,21 +7,29 @@
 ## Overview
 
 This site's visual language is a faithful reskin of the real **fin.ai**
-marketing site (checked live, not a generic "Fin/Intercom brand" guess): a
-**warm off-white canvas** hosting most content, with full-bleed **dark
-navy-black bands** for the hero, builds list, and closing CTA - the same
-two-mode rhythm as before, just re-hued. Display headlines run in a **light
-serif** (fin.ai's custom "Serrif" face; this site substitutes the free
-**Fraunces**), set at `lineHeight: 1.0` with tight negative tracking. Body
-copy stays in **Inter**. **Orange (`#FF5600`)** is fin.ai's single accent -
-used scarcely, as a highlighter behind text and small icon tints, **never**
-as a button fill. The dominant button/surface color is off-black ink on the
-cream canvas, or white on the dark canvas - not the accent.
+marketing site (checked live with a browser, not a generic "Fin/Intercom
+brand" guess). fin.ai's actual homepage runs **cream/off-white end to end -
+there is no dark band anywhere on it.** An earlier pass of this reskin
+carried over the previous design's alternating dark/light bands, which does
+not match the real site and was corrected. Emphasis panels (stats, the
+closing CTA, customer quotes) use a **corner-tick registration-mark frame**
+instead of ever switching to a dark canvas - that's fin.ai's actual device
+for creating visual weight. Display headlines run in a **light serif**
+(fin.ai's custom "Serrif" face; this site substitutes the free **Fraunces**),
+set at `lineHeight: 1.0` with tight negative tracking. Body copy stays in
+**Inter**. **Orange (`#FF5600`)** is fin.ai's single accent - used scarcely,
+as a highlighter behind text, a chart/icon tint, or a big stat number,
+**never** as a button fill. The dominant button/surface color is solid
+off-black ink on the cream canvas - not the accent.
 
 **Key Characteristics:**
-- Two-mode canvas - warm off-white (`{colors.canvas-light}` `#FAF9F6`) for
-  browsing, dark navy-black (`{colors.canvas-dark}` `#020917`) for
-  storytelling - switched in full-bleed bands.
+- **Single cream canvas** (`{colors.canvas-light}` `#FAF9F6`) - the whole
+  site, hero through footer. No full-bleed dark bands on the homepage or
+  resume page (fin.ai's real homepage has none).
+- **Corner-tick frame** (`.tick-frame` / `<CornerTicks />`) is the emphasis
+  device fin.ai actually uses in place of a dark canvas: a soft-surface
+  panel with four small square registration marks at its corners. Used for
+  stat panels, the closing CTA, and quote cards.
 - Display type is a **light serif** (Fraunces, standing in for fin.ai's
   Serrif) at 20-100px+, `lineHeight: 1.0`, tight negative letter-spacing.
   Hero headline runs at `font-weight: 300` for the true ultralight feel.
@@ -29,11 +37,17 @@ cream canvas, or white on the dark canvas - not the accent.
   pill**, 6px radius - not the accent color. This matches fin.ai's real
   "View demo" button exactly (measured 4-6px radius, not full pill).
 - **Orange (`{colors.primary}` `#FF5600`)** is the single scarce accent -
-  reserved for the quote-card highlighter mark, icon tints, and the odd
-  small badge. Orange **never carries white text** - pair it with
+  reserved for the quote-card highlighter mark, big stat numbers, chart
+  fills, and icon tints. Orange **never carries white text** - pair it with
   `{colors.ink}` (`#111111`), same as the WHOOP-style pull-quote reference.
-- No drop shadows. Depth comes from canvas + surface-luminance shifts and
-  hairline borders.
+- The dark navy token (`{colors.canvas-dark}` `#020917`) is kept in
+  `globals.css` for parity with fin.ai's interior pages (e.g. their
+  `/customers` page has a dark video hero) but is **not used** as a section
+  background on this site's homepage/resume - only as `--near-black` for
+  small dark chips/badges inside lab illustrations, which is a different,
+  legitimate use.
+- No drop shadows. Depth comes from surface-luminance shifts and hairline
+  borders/corner-tick frames, never a canvas-color switch.
 
 ## Colors
 
@@ -127,44 +141,46 @@ geometry than most "SaaS pill" references. Cards read considerably rounder
 
 ### Buttons
 - **`button-primary`** - solid off-black (`{colors.ink}`) fill, white label,
-  6px radius, 44px+ min height. The loudest action on every canvas. **Never
-  orange** - orange is not a button-fill color on the real site.
-- **`button-dark`** - same off-black fill, used on the light canvas.
-- **`button-outline-dark`** - transparent, white border/text, for secondary
-  actions on the dark canvas.
-- **`button-outline-light`** - white bg, ink label, hairline border, on the
-  light canvas.
+  6px radius, 44px+ min height. The loudest action anywhere on the page.
+  **Never orange** - orange is not a button-fill color on the real site.
+- **`button-outline-light`** - white bg, ink label, hairline border. The
+  standard secondary button (the whole site is the light canvas now).
+- **`button-dark`** / **`button-outline-dark`** - kept in `globals.css` for
+  any future dark-canvas use (e.g. an interior page mirroring fin.ai's
+  `/customers` video hero) but not used anywhere on this site today.
 
-### Signature: quote card
-The corner-registration-mark pull-quote (`.quote-card` in `globals.css`,
-component in `components/TestimonialCard.tsx`) is fin.ai's customer-story
-signature surface: a soft-surface card with four small corner tick marks, a
-serif quote with one phrase run through an **orange highlighter** span
-(`.quote-mark` - orange background, ink text, never a solid badge), a
-headshot, name, and role. Content in `lib/content.ts` (`testimonial`) is
-placeholder - swap in a real quote/name/photo when available.
+### Signature: corner-tick frame
+`.tick-frame` + `<CornerTicks />` (`components/CornerTicks.tsx`) is fin.ai's
+real device for emphasis - a soft-surface panel (`{colors.surface-soft}`)
+with four small square registration marks at its corners, used in place of
+ever switching to a dark canvas. Applied to: the testimonial quote
+(`.quote-card`, `components/TestimonialCard.tsx`), the closing contact CTA,
+and the agentic-AI/impact stat panels on the resume page. The quote card
+additionally runs one phrase through an **orange highlighter** span
+(`.quote-mark` - orange background, ink text, never a solid badge).
 
 ### Cards
 - **`feature-card-light`** - `{colors.surface-card}` bg, hairline border,
-  20px radius.
-- **`feature-card-dark`** - `{colors.surface-elevated}` bg, on the dark
-  canvas.
+  20px radius. Build/project cards.
 - **`card-featured`** - orange bg, ink text. The single accent stamp.
 
 ## Do's and Don'ts
 
 ### Do
-- Keep the two-mode canvas rhythm - cream for browsing, dark navy for
-  storytelling - switched in full-bleed bands.
-- Use solid off-black as the loudest action color on every band.
-- Reserve orange for the quote-card highlight, icon tints, and the odd
-  badge - a deliberate, scarce stamp.
+- Keep the **entire site on the cream canvas** - hero through footer, on
+  every page. This is what fin.ai's real homepage actually does.
+- Use the corner-tick frame (`.tick-frame`) for panels that need visual
+  weight - stats, the closing CTA, quote cards - instead of a dark band.
+- Use solid off-black as the loudest button color everywhere.
+- Reserve orange for the quote-card highlight, big stat numbers, chart
+  fills, and icon tints - a deliberate, scarce stamp.
 - Pair orange with `{colors.ink}` text, never white.
 - Set hero headlines in Fraunces at weight 300 with `lineHeight: 1.0`.
 
 ### Don't
+- Don't reintroduce full-bleed dark bands on the homepage or resume page -
+  the real fin.ai homepage has none; this was tried once and reverted.
 - Don't use orange as a button surface.
-- Don't use pure `#000000` for the dark canvas - it's `#020917`.
 - Don't use pure white for the light canvas - it's `#FAF9F6`.
 - Don't put white text on orange.
 - Don't make buttons full pills - fin.ai's real radius is 4-6px.
